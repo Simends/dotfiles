@@ -1,3 +1,6 @@
+# Isync configuration
+
+# Gmail
 IMAPAccount gmail
 Host imap.gmail.com
 User smndagersneve@gmail.com
@@ -10,12 +13,70 @@ Account gmail
 
 MaildirStore gmail-local
 Subfolders Verbatim
-Path ~/Documents/Mail/
-Inbox ~/Documents/Mail/Inbox
+Path ~/Documents/Mail/Gmail/
+Inbox ~/Documents/Mail/Gmail/Inbox
 
 Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Create Both
+SyncState *
+
+# Hotmail
+IMAPAccount hotmail
+Host outlook.office365.com
+Port 993
+User simends@hotmail.no
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/Mail/hotmail.gpg"
+SSLType IMAPS
+SSLVersions TLSv1.2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore hotmail-remote
+Account hotmail
+
+MaildirStore hotmail-local
+Path ~/Documents/Mail/Hotmail/
+Inbox ~/Documents/Mail/Hotmail/INBOX/
+Trash ~/Documents/Mail/Hotmail/Trash/
+SubFolders Verbatim
+
+Channel hotmail
+Master :hotmail-remote:
+Slave :hotmail-local:
+Patterns *
+Expunge None
+CopyArrivalDate yes
+Sync All
+Create Both
+SyncState *
+
+# Studmail
+IMAPAccount studmail
+Host outlook.office365.com
+Port 993
+User simends@ntnu.no
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/Mail/studmail.gpg"
+SSLType IMAPS
+SSLVersions TLSv1.2
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore studmail-remote
+Account studmail
+
+MaildirStore studmail-local
+Path ~/Documents/Mail/Studmail/
+Inbox ~/Documents/Mail/Studmail/INBOX/
+Trash ~/Documents/Mail/Studmail/Trash/
+SubFolders Verbatim
+
+Channel studmail
+Master :studmail-remote:
+Slave :studmail-local:
+Patterns *
+Expunge None
+CopyArrivalDate yes
+Sync All
 Create Both
 SyncState *
