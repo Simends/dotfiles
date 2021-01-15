@@ -1,0 +1,38 @@
+#! /bin/sh
+# Shell-profile
+
+# Environment variables
+
+# Standard applications
+export EDITOR=nvim
+export VISUAL=nvim
+export BROWSER=surf
+export TERMINAL=st
+
+# NNN
+export NNN_BMS="d:~/Documents;D:~/Downloads;p:~/Multimedia/Pictures;m:~/Multimedia/Music;v:~/Multimedia/Videos;s:~/Programs/Scripts;c:~/.config;l:~/.locale"
+export NNN_ARCHIVE="\\.(7z|bz2|gz|tar|tgz|zip|rar|xz)$"
+export NNN_FCOLORS=''
+
+# Other variables
+export PATH=~/.config/emacs/bin:~/Programs/Scripts:$PATH
+
+# Home cleaning
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export OCTAVE_HISTFILE="$XDG_CACHE_HOME/octave_hist"
+export OCTAVE_SITE_INITFILE="$XDG_CONFIG_HOME/octave/octaverc"
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export DOOMDIR="$XDG_CONFIG_HOME/doom"
+
+# Functions
+
+# Startx on login
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+      exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+fi

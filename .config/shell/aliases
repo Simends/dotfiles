@@ -1,0 +1,35 @@
+#! /bin/sh
+
+# Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias cp='cp -i'
+alias rm='rm -i'
+alias mv='mv -i'
+alias ps='sudo pacman -S'
+alias pss='sudo pacman -Ss'
+alias pr='sudo pacman -Rns'
+alias pqet='pacman -Qet'
+alias pqdt='pacman -Qdt'
+alias ys='yay -S'
+alias yss='yay -Ss'
+alias yr='yay -Rns'
+alias vim='nvim'
+alias tshift='sudo timeshift-gtk'
+alias nna='nnn -dH'
+alias la='ls -lA'
+alias ll='ls -l'
+alias ..='cd ..'
+
+alias sv-enable='sudo s6-rc-bundle-update add default'
+alias sv-disable='sudo s6-rc-bundle-update delete default'
+alias sv-start='sudo s6-rc -u change'
+alias sv-stop='sudo s6-rc -d change'
+alias sv-ls-active='sudo s6-rc -a list'
+alias sv-ls-all='sudo s6-rc-db list all'
+
+alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
+
+alias sl-comp='sudo cp config.def.h config.h && sudo make clean install'
+
+alias arch='surf archlinux.org'
