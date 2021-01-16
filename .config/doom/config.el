@@ -89,6 +89,7 @@
       :n "u" #'elfeed-search-tag-all-unread
       :n "s" #'elfeed-search-live-filter
       :n "RET" #'elfeed-search-show-entry
+      :n "o" #'elfeed-search-show-entry
       :n "p" #'elfeed-show-pdf
       :n "+" #'elfeed-search-tag-all
       :n "-" #'elfeed-search-untag-all
