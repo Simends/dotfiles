@@ -14,6 +14,9 @@ rclone mount gldr:/ --daemon /home/simen/Cloud/GDrive/ &
 # Start the clipboard deamon
 clipmenud &
 
+# Start redshift
+redshift -c ~/.config/redshift/redshift.conf
+
 # Change Dwm status bar
 dte(){
 	dte="$(date +"%A, %B %d - %H:%M")"

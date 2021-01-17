@@ -19,6 +19,7 @@ Multimedia
 	Spotify	spotify
 	Pocket Casts	/home/simen/Programs/Appimages/pocket-casts-linux-1.2.1-x86_64.AppImage
 	Vlc	vlc
+	Stremio	stremio
 	Audacity	audacity
 	Darktable	darktable
 	Krita	krita
