@@ -78,6 +78,7 @@ static const char *explorer[] = { "nemo", NULL };
 static const char *lock[]     = { "/home/simen/Programs/Scripts/lock.sh", NULL };
 static const char *menu[]     = { "/home/simen/Programs/Sources/xmenu/xmenu.sh", NULL };
 static const char *clipboard[]= { "clipmenu", NULL };
+static const char *editor[]   = { "emacs", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -85,6 +86,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = explorer } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = editor } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = clipboard } },
@@ -117,8 +119,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_plus,   setgaps,        {.i = +1 } },
+	{ MODKEY,                       XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

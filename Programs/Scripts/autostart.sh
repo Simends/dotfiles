@@ -6,6 +6,9 @@ feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/* &
 # Start compositor
 picom --config ~/.config/picom.conf &
 
+# Start the polkit agent
+lxsession &
+
 # Mount the clouds
 rclone mount msod:/ --daemon /home/simen/Cloud/OneDrive/ &
 rclone mount drbo:/ --daemon /home/simen/Cloud/Dropbox/ &
