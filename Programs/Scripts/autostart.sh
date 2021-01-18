@@ -15,7 +15,7 @@ rclone mount gldr:/ --daemon /home/simen/Cloud/GDrive/ &
 clipmenud &
 
 # Start redshift
-redshift -c ~/.config/redshift/redshift.conf
+redshift -c ~/.config/redshift/redshift.conf &
 
 # Change Dwm status bar
 dte(){
