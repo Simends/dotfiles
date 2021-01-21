@@ -1,0 +1,10 @@
+Documents   d   /home/simen/Documents/
+Pictures    p   /home/simen/Multimedia/Pictures/
+Music   m   /home/simen/Multimedia/Music/
+Videos  v   /home/simen/Multimedia/Videos/
+Download    D   /home/simen/Downloads/
+Configs c   /home/simen/.config/
+Scripts s   /home/simen/Programs/Scripts/
+Home    h   /home/simen/
+Kernel  k   /home/simen/Programs/Sources/linux/linux-5.10.7/
+Suckless    S   /home/simen/Programs/Suckless/

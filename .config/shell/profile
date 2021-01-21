@@ -10,9 +10,13 @@ export BROWSER=surf
 export TERMINAL=st
 
 # NNN
-export NNN_BMS="d:~/Documents;D:~/Downloads;p:~/Multimedia/Pictures;m:~/Multimedia/Music;v:~/Multimedia/Videos;s:~/Programs/Scripts;c:~/.config;l:~/.locale"
-export NNN_ARCHIVE="\\.(7z|bz2|gz|tar|tgz|zip|rar|xz)$"
+export NNN_ARCHIVE="\.(7z|bz2|gz|tar|tgz|zip|rar|xz)$"
 export NNN_FCOLORS=''
+
+# FZF
+export FZF_DEFAULT_OPTS="--reverse --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1'"
+export FZF_DEFAULT_COMMAND='fd --type f -H'
+export FZF_COMPLETION_TRIGGER='--'
 
 # Other variables
 export PATH=~/.config/emacs/bin:~/Programs/Scripts:$PATH
@@ -32,8 +36,15 @@ export DOOMDIR="$XDG_CONFIG_HOME/doom"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 
 # Functions
-
 # Startx on login
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-      exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+    then exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
 fi
+
+function fbm {
+    bmpath=$(cat /home/simen/.config/shell/bookmarks.txt | fzf | awk '{print $3}')
+    cd $bmpath
+}
+
+# Generated
+export NNN_BMS='S:/home/simen/Programs/Suckless/;k:/home/simen/Programs/Sources/linux/linux-5.10.7/;h:/home/simen/;s:/home/simen/Programs/Scripts/;c:/home/simen/.config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'

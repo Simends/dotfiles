@@ -78,6 +78,29 @@
       :desc "Skriv om dagen idag"
       "r d" #'org-roam-dailies-find-today)
 
+;; Collect all .org from my Org directory and subdirs
+;(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'") ; default value
+;(defun load-org-agenda-files-recursively (dir) "Find all directories in DIR."
+;    (unless (file-directory-p dir) (error "Not a directory `%s'" dir))
+;    (unless (equal (directory-files dir nil org-agenda-file-regexp t) nil)
+;      (add-to-list 'org-agenda-files dir)
+;    )
+;    (dolist (file (directory-files dir nil nil t))
+;        (unless (member file '("." ".."))
+;            (let ((file (concat dir file "/")))
+;                (when (file-directory-p file)
+;                    (load-org-agenda-files-recursively file)
+;                )
+;            )
+;        )
+;    )
+;)
+;(load-org-agenda-files-recursively "~/Cloud/Dropbox/Org/" ) ; trailing slash required
+
+(load-library "find-lisp")
+(setq org-agenda-files
+   (find-lisp-find-files "~/Cloud/Dropbox/Org" "\.org$"))
+
 (map! :map elfeed-search-mode-map
       :after elfeed-search
       [remap kill-this-buffer] "q"

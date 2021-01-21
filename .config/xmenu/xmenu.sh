@@ -33,9 +33,11 @@ Utilities
 	Files	nemo
 	Terminal	st
 	Torrent	qbittorrent
+	Virtual Machine	virt-manager
+	Timeshift	timeshift-launcher
 
 
 Lock	/home/simen/Programs/Scripts/lock.sh
-Shutdown		poweroff
-Reboot			reboot
+Shutdown		loginctl poweroff
+Reboot			loginctl reboot
 EOF

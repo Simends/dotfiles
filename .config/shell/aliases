@@ -4,40 +4,66 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
+alias mv='mv -iv'
 alias cp='cp -iv'
 alias rm='rm -iv'
-alias mv='mv -iv'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
-alias mkdir='mkdir -pv'
+alias update='sudo pacman -Syyu'
 alias ps='sudo pacman -S'
 alias pss='sudo pacman -Ss'
 alias pr='sudo pacman -Rns'
 alias pqet='pacman -Qet'
 alias pqdt='pacman -Qdt'
-alias upgrade='sudo pacman -Syyu'
 alias ys='yay -S'
 alias yss='yay -Ss'
 alias yr='yay -Rns'
 alias upall='yay -Syu'
-alias vim='nvim'
 alias tshift='sudo timeshift-gtk'
 alias nna='nnn -dH'
-alias la='ls -lA'
-alias ll='ls -l'
+alias la='ls -lAh'
+alias ll='ls -lh'
+alias lr='ls -R'
+alias ldot='ls -lhd .*'
 alias ..='cd ..'
-alias myip='curl ipinfo.io/ip'
 alias untar='tar -zxvf'
-alias sha='shasum -a 256'
+alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
 
 alias sv-enable='sudo s6-rc-bundle-update add default'
 alias sv-disable='sudo s6-rc-bundle-update delete default'
-alias sv-start='sudo s6-rc -u change'
-alias sv-stop='sudo s6-rc -d change'
+alias sv-start='sudo s6-rc -u -v2 change'
+alias sv-stop='sudo s6-rc -d -v2 change'
+alias sv-ls-all='sudo s6-rc-db list services'
 alias sv-ls-active='sudo s6-rc -a list'
-alias sv-ls-all='sudo s6-rc-db list all'
+alias sv-ls-down='sudo s6-rc -da list'
+alias sv-ls-default="sudo s6-rc list default"
 
-alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
+alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
+alias fpr="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
+alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
+alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
+alias fsv-enable="sudo s6-rc-db list services | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update add default"
+alias fsv-disable="sudo s6-rc list default | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update delete default"
+alias fsv-start="sudo s6-rc -da list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -u change"
+alias fsv-stop="sudo s6-rc -a list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -d change"
 
-alias sl-comp='sudo cp config.def.h config.h && sudo make clean install'
+alias fls="ls -A | fzf | xargs -r ls -lAh --color=auto"
+
+alias wp='sxiv -bt ~/Multimedia/Pictures/Wallpapers/*'
+alias setwp='sxiv -obt ~/Multimedia/Pictures/Wallpapers/* | feh --bg-fill --no-fehbg'
+alias randwp='feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/*'
+alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
 
 alias arch='surf archlinux.org'
+
+
+# Generated
+alias d='cd /home/simen/Documents/'
+alias p='cd /home/simen/Multimedia/Pictures/'
+alias m='cd /home/simen/Multimedia/Music/'
+alias v='cd /home/simen/Multimedia/Videos/'
+alias D='cd /home/simen/Downloads/'
+alias c='cd /home/simen/.config/'
+alias s='cd /home/simen/Programs/Scripts/'
+alias h='cd /home/simen/'
+alias k='cd /home/simen/Programs/Sources/linux/linux-5.10.7/'
+alias S='cd /home/simen/Programs/Suckless/'
