@@ -7,7 +7,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
-static const int user_bh            = 35;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh            = 40;       /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const int vertpad            = 20;       /* vertical padding of bar */
 static const int sidepad            = 20;       /* horizontal padding of bar */
 static const char *fonts[]          = { "SourceCodePro-Regular:size=12" };
@@ -18,6 +18,7 @@ static const char col_cyan[]        = "#5e81ac";
 static const char col_yellow[]      = "#ebcb8b";
 static const char col_green[]       = "#a3be8c";
 static const char col_purple[]      = "#b48ead";
+static const char col_red[]         = "#bf616a";
 static const char *colors[][3]      = {
 	/*               fg          bg          border     */
 	[SchemeNorm] = { col_gray2,  col_gray1,  col_gray1  },
@@ -25,6 +26,7 @@ static const char *colors[][3]      = {
 	[SchemeUpd]  = { col_yellow, col_gray1,  col_gray1  },
 	[SchemeMem]  = { col_green,  col_gray1,  col_gray1  },
 	[SchemeDte]  = { col_purple, col_gray1,  col_gray1  },
+	[SchemeTmp]  = { col_red,    col_gray1,  col_gray1  },
 };
 
 /* tagging */
@@ -87,9 +89,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,      spawn,          {.v = browser } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = explorer } },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = editor } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = lock } },
+	{ MODKEY,                       XK_o,      spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      spawn,          {.v = clipboard } },
+	{ MODKEY,                       XK_p,      spawn,          SHCMD("/home/simen/Programs/Scripts/lpassmenu.sh") },
+	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("scrot -m -e 'mv $f /home/simen/Multimedia/Pictures/Screenshots/'") },
 	{ MODKEY,                       XK_Print,  spawn,          SHCMD("/home/simen/Programs/Scripts/screenshot.sh") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },

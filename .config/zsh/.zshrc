@@ -50,6 +50,7 @@ source /usr/share/fzf/completion.zsh
 source "$plugdir"/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source "$plugdir"/zsh-autosuggestions/zsh-autosuggestions.zsh
 source "$plugdir"/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+source "$plugdir"/bgnotify/bgnotify.plugin.zsh
 
 # Run at startup
 pfetch

@@ -18,15 +18,22 @@ alias ys='yay -S'
 alias yss='yay -Ss'
 alias yr='yay -Rns'
 alias upall='yay -Syu'
-alias tshift='sudo timeshift-gtk'
 alias nna='nnn -dH'
+alias n3-getplug='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
 alias la='ls -lAh'
 alias ll='ls -lh'
 alias lr='ls -R'
 alias ldot='ls -lhd .*'
 alias ..='cd ..'
+alias vim='nvim'
 alias untar='tar -zxvf'
+alias sl-comp='sudo cp -v config.def.h config.h && sudo make clean install'
 alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
+alias boot-conf='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias cpass='lpass show -c --password'
+alias fpass='lpass ls | awk "{print \$1}" | fzf | xargs -r lpass show -c --password'
+alias wttr='curl wttr.in/Trondheim'
+alias wttr-moon='curl wttr.in/moon'
 
 alias sv-enable='sudo s6-rc-bundle-update add default'
 alias sv-disable='sudo s6-rc-bundle-update delete default'
@@ -45,11 +52,10 @@ alias fsv-enable="sudo s6-rc-db list services | fzf --preview 'cat /etc/s6/sv/{1
 alias fsv-disable="sudo s6-rc list default | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update delete default"
 alias fsv-start="sudo s6-rc -da list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -u change"
 alias fsv-stop="sudo s6-rc -a list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -d change"
-
 alias fls="ls -A | fzf | xargs -r ls -lAh --color=auto"
 
 alias wp='sxiv -bt ~/Multimedia/Pictures/Wallpapers/*'
-alias setwp='sxiv -obt ~/Multimedia/Pictures/Wallpapers/* | feh --bg-fill --no-fehbg'
+alias setwp='sxiv -obt ~/Multimedia/Pictures/Wallpapers/* | xargs -ro feh --bg-fill --no-fehbg'
 alias randwp='feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/*'
 alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
 

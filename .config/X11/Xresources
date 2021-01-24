@@ -24,6 +24,15 @@
 *.cursorColor:      nord4
 *fading: 35
 *fadeColor: nord3
+
+xmenu.seperator: nord1
+xmenu.border: nord1
+xmenu.width: 170
+xmenu.height: 32
+xmenu.borderWidth: 1
+xmenu.seperatorWidth: 3
+xmenu.gap: 0
+xmenu.alignment: left
 xmenu.font: SourceCodePro-Regular
 
 *.color0: nord1

@@ -9,6 +9,9 @@ picom --config ~/.config/picom.conf &
 # Start the polkit agent
 lxsession &
 
+# Start the notification server
+dunst &
+
 # Mount the clouds
 rclone mount msod:/ --daemon /home/simen/Cloud/OneDrive/ &
 rclone mount drbo:/ --daemon /home/simen/Cloud/Dropbox/ &
@@ -36,7 +39,12 @@ mem(){
 	echo -e "\x04$mem\x01"
 }
 
+tmp(){
+	tmp=`sensors | awk '/^Core 0:/ {print $3}'`
+	echo -e "\x06$tmp\x01"
+}
+
 while true; do
-	xsetroot -name "$(upd) | $(mem) | $(dte)  "
+	xsetroot -name "$(tmp) | $(upd) | $(mem) | $(dte)  "
 	sleep 10s	# Update every 10s
 done &
