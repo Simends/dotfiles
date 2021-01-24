@@ -94,6 +94,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,      spawn,          {.v = clipboard } },
 	{ MODKEY,                       XK_p,      spawn,          SHCMD("/home/simen/Programs/Scripts/lpassmenu.sh") },
 	{ MODKEY,                       XK_x,      spawn,          SHCMD("xkill") },
+	{ MODKEY|ShiftMask,             XK_x,      spawn,          SHCMD("/home/simen/Programs/Scripts/powermenu.sh") },
 	{ 0,                            XK_Print,  spawn,          SHCMD("scrot -m -e 'mv $f /home/simen/Multimedia/Pictures/Screenshots/'") },
 	{ MODKEY,                       XK_Print,  spawn,          SHCMD("/home/simen/Programs/Scripts/screenshot.sh") },
 	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
