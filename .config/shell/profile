@@ -1,5 +1,11 @@
 #! /bin/sh
-# Shell-profile
+
+# ____  _          _ _       ____             __ _ _
+#/ ___|| |__   ___| | |     |  _ \ _ __ ___  / _(_) | ___
+#\___ \| '_ \ / _ \ | |_____| |_) | '__/ _ \| |_| | |/ _ \
+# ___) | | | |  __/ | |_____|  __/| | | (_) |  _| | |  __/
+#|____/|_| |_|\___|_|_|     |_|   |_|  \___/|_| |_|_|\___|
+#
 
 # Environment variables
 
@@ -22,7 +28,7 @@ export FZF_DEFAULT_COMMAND='fd --type f -H'
 export FZF_COMPLETION_TRIGGER='--'
 
 # Other variables
-export PATH=~/.config/emacs/bin:~/Programs/Scripts:$PATH
+export PATH=~/.config/emacs/bin:~/.local/bin/:$PATH
 eval "`dircolors -b ~/.config/shell/dir_colors/nord`"
 
 # Home cleaning
@@ -38,6 +44,7 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export DOOMDIR="$XDG_CONFIG_HOME/doom"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export LESSHISTFILE=-
 
 # Functions
 # Startx on login
@@ -51,4 +58,4 @@ function fbm {
 }
 
 # Generated
-export NNN_BMS='S:/home/simen/Programs/Suckless/;k:/home/simen/Programs/Sources/linux/linux-5.10.7/;h:/home/simen/;s:/home/simen/Programs/Scripts/;c:/home/simen/.config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'
+export NNN_BMS='S:/home/simen/.local/src/Suckless/;k:/home/simen/.local/src/linux/linux-5.10.7/;h:/home/simen/;s:/home/simen/.local/bin/;c:/home/simen/.config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'

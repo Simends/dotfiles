@@ -1,5 +1,12 @@
 #!/bin/sh
 
+#  __  ___       _ _
+#  \ \/ (_)_ __ (_) |_
+#   \  /| | '_ \| | __|
+#   /  \| | | | | | |_
+#  /_/\_\_|_| |_|_|\__|
+#
+
 userresources=$XDG_CONFIG_HOME/X11/Xresources
 usermodmap=$XDG_CONFIG_HOME/X11/Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -39,4 +46,5 @@ xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate no
 setxkbmap no &
 
 # Start window-manager
-exec dwm
+# exec dwm
+exec dbus-launch --autolaunch=$(cat /etc/machine-id) dwm

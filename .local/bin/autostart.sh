@@ -41,7 +41,7 @@ mem(){
 
 tmp(){
 	tmp=`sensors | awk '/^Core 0:/ {print $3}'`
-	echo -e "\x06$tmp\x01"
+	echo -e "\x06Cpu: $tmp\x01"
 }
 
 while true; do

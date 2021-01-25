@@ -1,6 +1,12 @@
 #! /bin/sh
 
-# Aliases
+#    _    _ _
+#   / \  | (_) __ _ ___  ___  ___
+#  / _ \ | | |/ _` / __|/ _ \/ __|
+# / ___ \| | | (_| \__ \  __/\__ \
+#/_/   \_\_|_|\__,_|___/\___||___/
+#
+
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
@@ -34,6 +40,8 @@ alias cpass='lpass show -c --password'
 alias fpass='lpass ls | awk "{print \$1}" | fzf | xargs -r lpass show -c --password'
 alias wttr='curl wttr.in/Trondheim'
 alias wttr-moon='curl wttr.in/moon'
+alias clock='tty-clock -cC 4'
+alias pomodoro='tty-clock-tomato -cC 4'
 
 alias sv-enable='sudo s6-rc-bundle-update add default'
 alias sv-disable='sudo s6-rc-bundle-update delete default'
@@ -69,7 +77,7 @@ alias m='cd /home/simen/Multimedia/Music/'
 alias v='cd /home/simen/Multimedia/Videos/'
 alias D='cd /home/simen/Downloads/'
 alias c='cd /home/simen/.config/'
-alias s='cd /home/simen/Programs/Scripts/'
+alias s='cd /home/simen/.local/bin/'
 alias h='cd /home/simen/'
-alias k='cd /home/simen/Programs/Sources/linux/linux-5.10.7/'
-alias S='cd /home/simen/Programs/Suckless/'
+alias k='cd /home/simen/.local/src/linux/linux-5.10.7/'
+alias S='cd /home/simen/.local/src/Suckless/'

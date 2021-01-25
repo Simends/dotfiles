@@ -1,10 +1,18 @@
 #!/bin/sh
 
+#  __  __
+#  \ \/ /_ __ ___   ___ _ __  _   _
+#   \  /| '_ ` _ \ / _ \ '_ \| | | |
+#   /  \| | | | | |  __/ | | | |_| |
+#  /_/\_\_| |_| |_|\___|_| |_|\__,_|
+#
+
 # SET NOEXPANDTAB!!!!
 
 cat <<EOF | xmenu | sh &
 Communication
 	Web browser	firefox
+	Surf	surf
 	Discord	discord
 	Slack	slack
 Productivity
@@ -17,7 +25,7 @@ Productivity
 	Gramps	gramps
 Multimedia
 	Spotify	spotify
-	Pocket Casts	/home/simen/Programs/Appimages/pocket-casts-linux-1.2.1-x86_64.AppImage
+	Pocket Casts	/home/simen/.local/bin/Appimages/pocket-casts-linux-1.2.1-x86_64.AppImage
 	Vlc	vlc
 	Stremio	stremio
 	Audacity	audacity
@@ -37,7 +45,7 @@ Utilities
 	Timeshift	timeshift-launcher
 
 
-Lock	/home/simen/Programs/Scripts/lock.sh
+Lock	/home/simen/.local/bin/lock.sh
 Shutdown		loginctl poweroff
 Reboot			loginctl reboot
 EOF

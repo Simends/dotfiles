@@ -4,7 +4,7 @@ Music   m   /home/simen/Multimedia/Music/
 Videos  v   /home/simen/Multimedia/Videos/
 Download    D   /home/simen/Downloads/
 Configs c   /home/simen/.config/
-Scripts s   /home/simen/Programs/Scripts/
+Scripts s   /home/simen/.local/bin/
 Home    h   /home/simen/
-Kernel  k   /home/simen/Programs/Sources/linux/linux-5.10.7/
-Suckless    S   /home/simen/Programs/Suckless/
+Kernel  k   /home/simen/.local/src/linux/linux-5.10.7/
+Suckless    S   /home/simen/.local/src/Suckless/
