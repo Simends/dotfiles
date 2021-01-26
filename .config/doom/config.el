@@ -53,8 +53,9 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+(require 'org-roam-protocol)
 (setq org-roam-directory "~/Cloud/Dropbox/Org/Roam/")
-(setq org-roam-graph-viewer "surf")
+(setq org-roam-graph-viewer "firefox")
 (setq org-roam-dailies-directory "~/Cloud/Dropbox/Org/Roam/Dailies")
 (setq org-roam-dailies-capture-templates
       '(("d" "default" entry

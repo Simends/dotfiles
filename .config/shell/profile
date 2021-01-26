@@ -12,7 +12,7 @@
 # Standard applications
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=surf
+export BROWSER=firefox
 export TERMINAL=st
 
 # NNN
