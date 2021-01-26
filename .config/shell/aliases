@@ -42,6 +42,8 @@ alias wttr='curl wttr.in/Trondheim'
 alias wttr-moon='curl wttr.in/moon'
 alias clock='tty-clock -cC 4'
 alias pomodoro='tty-clock-tomato -cC 4'
+alias ecron='crontab -e'
+alias secron="su -c $(printf "%q " "crontab -e")"
 
 alias sv-enable='sudo s6-rc-bundle-update add default'
 alias sv-disable='sudo s6-rc-bundle-update delete default'
