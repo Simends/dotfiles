@@ -72,6 +72,7 @@ playerctl
 pulsemixer
 python-fangfrisch
 qbittorrent
+qutebrowser
 redshift-minimal
 ripgrep
 scrot
@@ -80,7 +81,8 @@ spotify
 steam
 stremio
 sxiv
-syslog-ng-s6
+texlive-latexextra
+texlive-science
 timeshift
 tty-clock
 tty-clock-tomato

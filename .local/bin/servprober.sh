@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# A script to check for failed services with s6
 numsv=$(ls /run/service/ | wc -l)
 chk=0
 

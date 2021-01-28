@@ -29,7 +29,7 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Cloud/Dropbox/Org/")
+(setq org-directory "~/Documents/Org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -54,9 +54,9 @@
 ;; they are implemented.
 
 (require 'org-roam-protocol)
-(setq org-roam-directory "~/Cloud/Dropbox/Org/Roam/")
+(setq org-roam-directory "~/Documents/Org/Roam/")
 (setq org-roam-graph-viewer "firefox")
-(setq org-roam-dailies-directory "~/Cloud/Dropbox/Org/Roam/Dailies")
+(setq org-roam-dailies-directory "~/Documents/Org/Roam/Dailies")
 (setq org-roam-dailies-capture-templates
       '(("d" "default" entry
          #'org-roam-capture--get-point
@@ -71,7 +71,7 @@
       "r f" #'org-roam-find-file
       :leader
       :desc "Graph org roam"
-      "r g" #'org-roam-graph
+      "r g" #'org-roam-server-mode
       :leader
       :desc "Start org roam buffer"
       "r b" #'org-roam-buffer-toggle-display
@@ -100,7 +100,7 @@
 
 (load-library "find-lisp")
 (setq org-agenda-files
-   (find-lisp-find-files "~/Cloud/Dropbox/Org" "\.org$"))
+   (find-lisp-find-files "~/Documents/Org" "\.org$"))
 
 (map! :map elfeed-search-mode-map
       :after elfeed-search

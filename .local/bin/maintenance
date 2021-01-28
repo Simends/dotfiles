@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 
-# Dette programmet skal gi en meny med fzf der man kan:
-#   DONE oppdatere systemet,
-#   DONE oppdatere aur-pakker,
-#   DONE rense mellomlageret i pacman,
-#   DONE rense mellomlageret i hjem-mappen,
-#   DONE slette foreldreløse pakker,
-#   DONE liste alle tjenester som er nede,
-#   DONE reinstallere nøkkelringer
 #   TODO oppdatere speil,
-#   DONE tømme søppelkassen (slette filer i .local/share/trash)
-#   DONE gjøre det lett å lese nyheter hos arch og artix og å lese forumene
-# Se også arch-wiki siden for mer info
 
 read_news() {
     case "$(printf "Arch news\\nArtix news\\nArch forum\\nArtix forum\\nArch bugtracker\\nArtix troubleshooting-guide" | fzf --header "System news")" in
@@ -24,15 +13,16 @@ read_news() {
     esac
 }
 
-case "$(printf "Check system updates\\nUpdate system\\nUpdate AUR-packages\\nCheck for failed services\\nClean pacman-cache\\nClean .cache\\nRemove orphaned packages\\nList all inactive services\\nReinstall keyrings\\nThrow away trash\\nRead the logs\\nRead the news" | fzf --header "System maintenance")" in
+case "$(printf "Check system updates\\nUpdate system\\nUpdate AUR-packages\\nPackage stats\\nCheck for failed services\\nService status\\nClean pacman-cache\\nClean .cache\\nRemove orphaned packages\\nReinstall keyrings\\nThrow away trash\\nRead the logs\\nRead the news" | fzf --header "System maintenance")" in
     "Check system updates") checkupdates ;;
     "Update system") sudo pacman -Syyu ;;
     "Update AUR-packages") yay -Syu ;;
+    "Package stats") yay -P -s ;;
     "Check for failed services") /home/simen/.local/bin/servprober.sh ;;
+    "Service status") /home/simen/.local/bin/ssm.sh ;;
     "Clean pacman-cache") paccache -rk1 -ruk0 ;;
     "Clean .cache") rm -vrf /home/simen/.cache/* && echo "Cache has been cleaned!" ;;
     "Remove orphaned packages") pacman -Qdt | awk '{print $1}' | xargs -ro sudo pacman -Rns ;;
-    "List all inactive services") echo "Currently inactive services:" && sudo s6-rc -da list ;;
     "Reinstall keyrings") echo "Installing new keyrings..." && pacman -Sy archlinux-keyring artix-keyring && echo "Removing old keyrings..." && rm -r /etc/pacman.d/gnupg && echo "Initializing new keyrings..." && pacman-key --init && echo "Updating the system..." && pacman -Scc && pacman -Syyu && echo "Finished" ;;
     "Throw away trash") rm -vrf /home/simen/.local/share/Trash/* && echo "Trash has been dealt with!" ;;
     "Read the logs") nnn /var/log/ ;;
