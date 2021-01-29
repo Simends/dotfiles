@@ -17,10 +17,10 @@ export TERMINAL=st
 
 # NNN
 export NNN_ARCHIVE="\.(7z|bz2|gz|tar|tgz|zip|rar|xz)$"
-export NNN_FCOLORS='0b0b0c24002424091f111109'
+export NNN_FCOLORS='0b0b0c24002424f61f111109'
 export NNN_COLORS='4231'
 export NNN_FIFO='/tmp/nnn.fifo'
-export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;i:imgview;c:chksum;I:imgthumb'
+export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;i:imgview;c:chksum;I:imgthumb;d:dragdrop;x:togglex'
 
 # FZF
 export FZF_DEFAULT_OPTS="--reverse --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"

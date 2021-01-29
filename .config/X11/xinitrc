@@ -45,6 +45,38 @@ xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate no
 # Set keymap
 setxkbmap no &
 
-# Start window-manager
+#---Start applications/daemons---
+
+# Start redshift
+redshift -c ~/.config/redshift/redshift.conf &
+
+# Set wallpaper
+feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/* &
+
+# Start compositor
+picom --config ~/.config/picom.conf &
+
+# Mount the clouds
+rclone mount msod:/ --daemon /home/simen/Cloud/OneDrive/ &
+rclone mount drbo:/ --daemon /home/simen/Cloud/Dropbox/ &
+rclone mount gldr:/ --daemon /home/simen/Cloud/GDrive/ &
+
+# Start the polkit agent
+lxsession &
+
+# Start the notification server
+dunst &
+
+# Start the clipboard deamon
+clipmenud &
+
+#---Start the window-manager---
+
+# Start alone
 # exec dwm
-exec dbus-launch --autolaunch=$(cat /etc/machine-id) dwm
+
+# Start in dbus session (needed for spotify to work with MPRIS)
+# exec dbus-launch --autolaunch=$(cat /etc/machine-id) dwm
+
+# Start in dbus session with a script (allow resetting dwm without killing X)
+exec dbus-launch --autolaunch=$(cat /etc/machine-id) startdwm.sh

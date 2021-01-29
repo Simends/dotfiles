@@ -28,7 +28,6 @@ Multimedia
 	Pocket Casts	/home/simen/.local/bin/Appimages/pocket-casts-linux-1.2.1-x86_64.AppImage
 	Vlc	vlc
 	Stremio	stremio
-	Audacity	audacity
 	Darktable	darktable
 	Krita	krita
 Games
@@ -46,6 +45,7 @@ Utilities
 
 
 Lock	/home/simen/.local/bin/lock.sh
+Log out	killall xinit
 Shutdown		loginctl poweroff
 Reboot			loginctl reboot
 EOF

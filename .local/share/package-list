@@ -6,6 +6,7 @@ autoconf
 automake
 base
 bashtop
+bat
 bison
 calibre
 clamav-s6
@@ -22,6 +23,7 @@ dunst
 edk2-ovmf
 entr
 evince
+exa
 farbfeld
 fd
 feh

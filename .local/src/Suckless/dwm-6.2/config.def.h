@@ -21,8 +21,7 @@ static const int topbar             = 0;        /* 0 means bottom bar */
 static const int user_bh            = 40;        /* 0 means dwm will calculate bar height */
 static const int vertpad            = 20;       /* vertical padding of bar */
 static const int sidepad            = 20;       /* horizontal padding of bar */
-static const char *fonts[]          = { "SourceCodePro-Regular:size=12" };
-static const char dmenufont[]       = "monospace:size=12";
+static const char *fonts[]          = {"SourceCodePro-Regular:size=12", "fontawesome:size=11" };
 static const char col_gray1[]       = "#3b4252";
 static const char col_gray2[]       = "#d8dee9";
 static const char col_cyan[]        = "#5e81ac";
@@ -44,20 +43,22 @@ static const char *colors[][3]      = {
 /* staticstatus */
 static const int statmonval = 0;
 
-/* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+/* tagging, icons: https://fontawesome.com/v4.7.0/cheatsheet/ */
+/*static const char *tags[] = { "", "", "", "", "", "", "", "", "" };*/
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class         instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",        NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox",     NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "St",          NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "lxsession",   NULL,     NULL,           0,         1,          0,           -1,       -1 },
+	{ NULL,          NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -104,7 +105,7 @@ static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]      = { "st", NULL };
 static const char *browser[]      = { "firefox", NULL };
 static const char *explorer[]     = { "nemo", NULL };
-static const char *lock[]         = { "/home/simen/.local/bin/lock.sh", NULL };
+static const char *lock[]         = { "lock.sh", NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 #include <X11/XF86keysym.h>
@@ -116,17 +117,17 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_e,               spawn,          SHCMD("emacs") },
 	{ MODKEY,                       XK_o,               spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,             XK_Return,          spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,               spawn,          SHCMD("clipmenu") },
-    { MODKEY,                       XK_p,               spawn,          SHCMD("/home/simen/.local/bin/lpassmenu.sh") },
+	{ MODKEY,                       XK_c,               spawn,          SHCMD("clipmenu") },
+    { MODKEY,                       XK_p,               spawn,          SHCMD("lpassmenu.sh") },
 	{ MODKEY,                       XK_x,               spawn,          SHCMD("xkill") },
-	{ MODKEY,                       XK_z,               spawn,          SHCMD("/home/simen/.local/bin/powermenu.sh") },
+	{ MODKEY,                       XK_z,               spawn,          SHCMD("powermenu.sh") },
 	{ 0,                            XK_Print,           spawn,          SHCMD("scrot -m -e 'mv $f /home/simen/Multimedia/Pictures/Screenshots/'") },
-	{ MODKEY,                       XK_Print,           spawn,          SHCMD("/home/simen/.local/bin/screenshot.sh") },
+	{ MODKEY,                       XK_Print,           spawn,          SHCMD("screenshot.sh") },
 	{ 0,                            XF86XK_AudioPlay,   spawn,          SHCMD("playerctl play-pause") },
 	{ 0,                            XF86XK_AudioStop,   spawn,          SHCMD("playerctl stop") },
 	{ 0,                            XF86XK_AudioPrev,   spawn,          SHCMD("playerctl previous") },
 	{ 0,                            XF86XK_AudioNext,   spawn,          SHCMD("playerctl next") },
-	{ MODKEY|ShiftMask,             XK_b,               togglebar,      {0} },
+	{ MODKEY,                       XK_b,               togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,               rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,               rotatestack,    {.i = -1 } },
 	{ MODKEY,                       XK_j,               focusstack,     {.i = +1 } },
@@ -153,8 +154,8 @@ static Key keys[] = {
 	{ MODKEY|Mod1Mask,              XK_t,               incrohgaps,     {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_i,               incrovgaps,     {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_t,               incrovgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,               togglegaps,     {0} },
-	{ MODKEY|Mod1Mask,              XK_0,               defaultgaps,    {0} },
+	{ MODKEY,                       XK_m,               togglegaps,     {0} },
+	{ MODKEY,                       XK_n,               defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,             view,           {0} },
 	{ MODKEY,                       XK_q,               killclient,     {0} },
 	{ MODKEY,                       XK_t,               setlayout,      {.v = &layouts[0]} },
@@ -169,7 +170,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_period,          cyclelayout,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,           tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,          tagmon,         {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_plus,            spawn,          SHCMD("zathura /home/simen/.local/src/keybindings/keybindings.pdf") },
+	{ MODKEY,                       XK_a,               togglealttag,   {0} },
+    { MODKEY|ShiftMask,             XK_plus,            spawn,          SHCMD("zathura -P 1 /home/simen/.local/src/keybindings/keybindings.pdf") },
 	TAGKEYS(                        XK_1,                               0)
 	TAGKEYS(                        XK_2,                               1)
 	TAGKEYS(                        XK_3,                               2)
@@ -189,8 +191,9 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-    { ClkRootWin,           0,              Button3,        spawn,          SHCMD("/home/simen/.local/src/xmenu/xmenu.sh") },
+	{ ClkStatusText,        0,              Button1,        spawn,          SHCMD("statuscmd.sh") },
+	{ ClkStatusText,        0,              Button3,        spawn,          SHCMD("statusmenu.sh") },
+    { ClkRootWin,           0,              Button3,        spawn,          SHCMD("xmenu.sh") },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
