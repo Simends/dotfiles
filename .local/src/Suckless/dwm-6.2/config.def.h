@@ -29,6 +29,7 @@ static const char col_yellow[]      = "#ebcb8b";
 static const char col_green[]       = "#a3be8c";
 static const char col_purple[]      = "#b48ead";
 static const char col_red[]         = "#bf616a";
+static const char col_orange[]      = "#d08770";
 static const char *colors[][3]      = {
 	/*               fg          bg          border     */
 	[SchemeNorm] = { col_gray2,  col_gray1,  col_gray1  },
@@ -37,6 +38,7 @@ static const char *colors[][3]      = {
 	[SchemeMem]  = { col_green,  col_gray1,  col_gray1  },
 	[SchemeDte]  = { col_purple, col_gray1,  col_gray1  },
 	[SchemeTmp]  = { col_red,    col_gray1,  col_gray1  },
+	[SchemeCna]  = { col_orange,    col_gray1,  col_gray1  },
 };
 
 
@@ -45,7 +47,7 @@ static const int statmonval = 0;
 
 /* tagging, icons: https://fontawesome.com/v4.7.0/cheatsheet/ */
 /*static const char *tags[] = { "", "", "", "", "", "", "", "", "" };*/
-static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 static const char *tagsalt[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
@@ -57,6 +59,7 @@ static const Rule rules[] = {
 	{ "Gimp",        NULL,     NULL,           0,         1,          0,           0,        -1 },
 	{ "Firefox",     NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
 	{ "St",          NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "kitty",       NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ "lxsession",   NULL,     NULL,           0,         1,          0,           -1,       -1 },
 	{ NULL,          NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
@@ -102,7 +105,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]      = { "st", NULL };
+static const char *termcmd[]      = { "kitty", NULL };
 static const char *browser[]      = { "firefox", NULL };
 static const char *explorer[]     = { "nemo", NULL };
 static const char *lock[]         = { "lock.sh", NULL };
@@ -114,7 +117,7 @@ static Key keys[] = {
     { MODKEY,                       XK_r,               spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_w,               spawn,          {.v = browser } },
 	{ MODKEY,                       XK_e,               spawn,          {.v = explorer } },
-	{ MODKEY|ShiftMask,             XK_e,               spawn,          SHCMD("emacs") },
+	{ MODKEY|ShiftMask,             XK_e,               spawn,          SHCMD("emacsclient -c") },
 	{ MODKEY,                       XK_o,               spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,             XK_Return,          spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_c,               spawn,          SHCMD("clipmenu") },
@@ -123,10 +126,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_z,               spawn,          SHCMD("powermenu.sh") },
 	{ 0,                            XK_Print,           spawn,          SHCMD("scrot -m -e 'mv $f /home/simen/Multimedia/Pictures/Screenshots/'") },
 	{ MODKEY,                       XK_Print,           spawn,          SHCMD("screenshot.sh") },
-	{ 0,                            XF86XK_AudioPlay,   spawn,          SHCMD("playerctl play-pause") },
-	{ 0,                            XF86XK_AudioStop,   spawn,          SHCMD("playerctl stop") },
-	{ 0,                            XF86XK_AudioPrev,   spawn,          SHCMD("playerctl previous") },
-	{ 0,                            XF86XK_AudioNext,   spawn,          SHCMD("playerctl next") },
+	{ 0,                            XF86XK_AudioPlay,   spawn,          SHCMD("playerctl play-pause || mocp -O MOCDir=/home/simen/.config/moc --toggle-pause") },
+	{ 0,                            XF86XK_AudioStop,   spawn,          SHCMD("playerctl stop || mocp -O MOCDir=/home/simen/.config/moc -x") },
+	{ 0,                            XF86XK_AudioPrev,   spawn,          SHCMD("playerctl previous || mocp -O MOCDir=/home/simen/.config/moc --previous") },
+	{ 0,                            XF86XK_AudioNext,   spawn,          SHCMD("playerctl next || mocp -O MOCDir=/home/simen/.config/moc --next") },
+	{ 0,                            XF86XK_AudioMute,   spawn,          SHCMD("pulsemixer --toggle-mute") },
 	{ MODKEY,                       XK_b,               togglebar,      {0} },
 	{ MODKEY|ShiftMask,             XK_j,               rotatestack,    {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_k,               rotatestack,    {.i = -1 } },
@@ -140,20 +144,20 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,               setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,             XK_o,               setcfact,       {.f =  0.00} },
 	{ MODKEY,                       XK_Return,          zoom,           {0} },
-	{ MODKEY,                       XK_y,               incrgaps,       {.i = +1 } },
-	{ MODKEY,                       XK_u,               incrgaps,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_y,               incrigaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_u,               incrigaps,      {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_i,               incrogaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_t,               incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_y,               incrihgaps,     {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_u,               incrihgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_y,               incrivgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_u,               incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod1Mask,              XK_i,               incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod1Mask,              XK_t,               incrohgaps,     {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_i,               incrovgaps,     {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_t,               incrovgaps,     {.i = -1 } },
+	{ MODKEY,                       XK_y,               incrgaps,       {.i = +5 } },
+	{ MODKEY,                       XK_u,               incrgaps,       {.i = -5 } },
+	{ MODKEY|ShiftMask,             XK_y,               incrigaps,      {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_u,               incrigaps,      {.i = -5 } },
+	{ MODKEY|ShiftMask,             XK_i,               incrogaps,      {.i = +5 } },
+	{ MODKEY|ShiftMask,             XK_t,               incrogaps,      {.i = -5 } },
+	{ MODKEY|Mod1Mask,              XK_y,               incrihgaps,     {.i = +5 } },
+	{ MODKEY|Mod1Mask,              XK_u,               incrihgaps,     {.i = -5 } },
+	{ MODKEY|ControlMask,           XK_y,               incrivgaps,     {.i = +5 } },
+	{ MODKEY|ControlMask,           XK_u,               incrivgaps,     {.i = -5 } },
+	{ MODKEY|Mod1Mask,              XK_i,               incrohgaps,     {.i = +5 } },
+	{ MODKEY|Mod1Mask,              XK_t,               incrohgaps,     {.i = -5 } },
+	{ MODKEY|ControlMask,           XK_i,               incrovgaps,     {.i = +5 } },
+	{ MODKEY|ControlMask,           XK_t,               incrovgaps,     {.i = -5 } },
 	{ MODKEY,                       XK_m,               togglegaps,     {0} },
 	{ MODKEY,                       XK_n,               defaultgaps,    {0} },
 	{ MODKEY,                       XK_Tab,             view,           {0} },

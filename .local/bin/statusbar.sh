@@ -25,7 +25,19 @@ tmp(){
 	echo -e "\x06 Cpu: $tmp\x01"
 }
 
+#cna(){
+#	# Show latest coronainfo in Trondheim
+#	cna=`cat /home/simen/.local/bin/Coronatracker/latestcoronanum.txt`
+#	echo -e "\x07 $cna New\x01"
+#}
+
+gme(){
+	# Show latest price of GME
+	gme=`cat /home/simen/.local/bin/Stocktracker/lastgmeprice.txt`
+	echo -e "\x06 GME: $gme\x01"
+}
+
 while true; do
-	xsetroot -name "$(upd) | $(tmp) | $(mem) | $(dte)  "
+	xsetroot -name "$(gme) | $(upd) | $(mem) | $(tmp) | $(dte)  "
 	sleep 10s	# Update every 10s
 done &

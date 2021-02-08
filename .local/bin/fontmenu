@@ -1,0 +1,6 @@
+#!/bin/bash
+# A script to list all fonts in a menu and display the selected one
+
+fntnme=$(fc-list | awk '{$1=""; print $0}' | fzf -i --header="Fonts:")
+fntpth=$(fc-list | grep "$fntnme" | sed '1!d' | awk '{print $1}' | sed 's/://g')
+display "$fntpth"

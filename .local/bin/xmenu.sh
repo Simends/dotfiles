@@ -12,13 +12,15 @@
 cat <<EOF | xmenu | sh &
 Communication
 	Web browser	firefox
-	Surf	surf
+	Qutebrowser	qutebrowser
 	Discord	discord
 	Slack	slack
+	Microsoft Teams	teams
+	Zoom	zoom
 Productivity
 	Office	onlyoffice-desktopeditors
 	PDF Viewer	evince
-	Emacs	emacs
+	Emacs	emacsclient -c
 	Calibre	calibre
 	Anki	anki
 	GNU Octave	octave --gui
@@ -38,10 +40,11 @@ Games
 	Godot Engine	godot
 Utilities
 	Files	nemo
-	Terminal	st
+	Terminal	kitty
 	Torrent	qbittorrent
 	Virtual Machine	virt-manager
 	Timeshift	timeshift-launcher
+	Wine	playonlinux
 
 
 Lock	/home/simen/.local/bin/lock.sh

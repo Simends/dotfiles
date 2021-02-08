@@ -8,3 +8,4 @@ Scripts s   /home/simen/.local/bin/
 Home    h   /home/simen/
 Kernel  k   /home/simen/.local/src/linux/linux-5.10.7/
 Suckless    S   /home/simen/.local/src/Suckless/
+Trash   t   /home/simen/.local/share/Trash/files/
