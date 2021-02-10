@@ -16,21 +16,8 @@ alias rm='rm -iv'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias mocp='mocp -O MOCDir="$XDG_CONFIG_HOME"/moc'
 
-alias update='sudo pacman -Syyu'
-alias sps='sudo pacman -S'
-alias spss='sudo pacman -Ss'
-alias spr='sudo pacman -Rns'
-alias pqet='pacman -Qet'
-alias pqdt='pacman -Qdt'
-alias ys='yay -S'
-alias yss='yay -Ss'
-alias yr='yay -Rns'
-alias upall='yay -Syu'
 alias nna='nnn -daoH -P p'
-alias nnn-getplug='curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh'
-# alias la='ls -lAh'
 alias la='echo " " && exa -bhal --icons'
-#alias ll='ls -lh'
 alias ll='echo " " && exa -bhl --icons'
 alias lgit='echo " " && exa -bhal --git'
 alias lgr='echo " " && exa -bhalG'
@@ -41,42 +28,19 @@ alias vim='nvim'
 alias untar='tar -zxvf'
 alias sl-comp='sudo cp -v config.def.h config.h && sudo make clean install'
 alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
-alias boot-conf='sudo grub-mkconfig -o /boot/grub/grub.cfg'
-alias cpass='lpass show -c --password'
-alias fpass='lpass ls | awk "{print \$1}" | fzf | xargs -r lpass show -c --password'
 alias wttr='curl wttr.in/Trondheim'
 alias wttr-moon='curl wttr.in/moon'
 alias clock='tty-clock -cC 4'
-alias pomodoro='tty-clock-tomato -cC 4'
 alias ecron='crontab -e'
 alias secron="su -c $(printf "%q " "crontab -e")"
 alias keyb-comp='pdflatex ~/.local/src/keybindings/keybindings.tex'
-
-alias sv-enable='sudo s6-rc-bundle-update add default'
-alias sv-disable='sudo s6-rc-bundle-update delete default'
-alias sv-start='sudo s6-rc -u -v2 change'
-alias sv-stop='sudo s6-rc -d -v2 change'
-alias sv-ls-all='sudo s6-rc-db list services'
-alias sv-ls-active='sudo s6-rc -a list'
-alias sv-ls-down='sudo s6-rc -da list'
-alias sv-ls-default="sudo s6-rc list default"
-
-alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
-alias fpr="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
-alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
-alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
-alias fsv-enable="sudo s6-rc-db list services | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update add default"
-alias fsv-disable="sudo s6-rc list default | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update delete default"
-alias fsv-start="sudo s6-rc -da list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -u change"
-alias fsv-stop="sudo s6-rc -a list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -d change"
-alias fls="ls -A | fzf | xargs -r ls -lAh --color=auto"
-
-alias wp='sxiv -bt ~/Multimedia/Pictures/Wallpapers/*'
-alias setwp='sxiv -obt ~/Multimedia/Pictures/Wallpapers/* | xargs -ro feh --bg-fill --no-fehbg'
-alias randwp='feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/*'
 alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
 
-alias arch='surf archlinux.org'
+# Pacman aliases
+alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
+alias fpr="pacman -Qet | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
+alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
+alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
 
 
 # Generated
