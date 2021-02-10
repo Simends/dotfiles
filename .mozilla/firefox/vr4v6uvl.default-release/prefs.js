@@ -149,7 +149,7 @@ user_pref("privacy.clearOnShutdown.siteSettings", true);
 user_pref("privacy.donottrackheader.enabled", true);
 user_pref("privacy.purge_trackers.date_in_cookie_database", "0");
 user_pref("privacy.purge_trackers.last_purge", "1612889043623");
-user_pref("privacy.sanitize.pending", "[{\"id\":\"newtab-container\",\"itemsToClear\":[],\"options\":{}}]");
+user_pref("privacy.sanitize.pending", "[]");
 user_pref("privacy.userContext.enabled", true);
 user_pref("privacy.userContext.extension", "treestyletab@piro.sakura.ne.jp");
 user_pref("privacy.userContext.ui.enabled", true);

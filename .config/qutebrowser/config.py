@@ -15,6 +15,8 @@ c.colors.statusbar.normal.bg = xresources['*.background']
 
 c.auto_save.session = True
 c.tabs.position = "bottom"
+c.tabs.show = "switching"
+c.statusbar.show = "in-mode"
 c.scrolling.smooth = True
 
 c.fonts.statusbar = "SourceCodePro-Regular"

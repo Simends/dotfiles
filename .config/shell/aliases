@@ -16,7 +16,7 @@ alias rm='rm -iv'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias mocp='mocp -O MOCDir="$XDG_CONFIG_HOME"/moc'
 
-alias nna='nnn -daoH -P p'
+alias nna='nnn -daoQH -P p'
 alias la='echo " " && exa -bhal --icons'
 alias ll='echo " " && exa -bhl --icons'
 alias lgit='echo " " && exa -bhal --git'

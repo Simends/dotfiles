@@ -26,7 +26,7 @@ export NNN_FCOLORS='0b0b0c24002424f61f111109'
 export NNN_COLORS='4231'
 export NNN_FIFO='/tmp/nnn.fifo'
 export NNN_TRASH=2
-export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;c:chksum;d:dragdrop;x:togglex;m:mocplay;t:_trash-restore $nnn'
+export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;c:chksum;d:dragdrop;x:togglex;m:mocplay;t:_trash -f $nnn;T:_trash -c;w:_setwp -f $nnn'
 
 # FZF
 export FZF_DEFAULT_OPTS="--reverse --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"

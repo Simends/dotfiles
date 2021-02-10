@@ -15,15 +15,15 @@ cat <<EOF | xmenu | sh &
  Communication
 	IMG:/usr/share/icons/hicolor/48x48/apps/firefox.png	Web browser	firefox
 	IMG:/usr/share/icons/hicolor/48x48/apps/qutebrowser.png	Qutebrowser	qutebrowser
-	Discord	discord
-	Slack	slack
-	Microsoft Teams	teams
-	Zoom	zoom
+	IMG:/home/simen/.local/share/icons/Papirus/discord.png	Discord	discord
+	IMG:/home/simen/.local/share/icons/Papirus/slack.png	Slack	slack
+	IMG:/home/simen/.local/share/icons/Papirus/teams.png	Microsoft Teams	teams
+	IMG:/home/simen/.local/share/icons/Papirus/zoom.png	Zoom	zoom
  Productivity
 	IMG:/usr/share/icons/hicolor/48x48/apps/onlyoffice-desktopeditors.png	Office	onlyoffice-desktopeditors
 	IMG:/usr/share/icons/hicolor/48x48/apps/emacs.png	Emacs	emacsclient -c
 	IMG:/usr/share/icons/hicolor/48x48/apps/calibre-gui.png	Calibre	calibre
-	Anki	anki
+	IMG:/home/simen/.local/share/icons/Papirus/anki.png	Anki	anki
 	IMG:/usr/share/icons/hicolor/48x48/apps/octave.png	GNU Octave	octave --gui
  Multimedia
 	IMG:/usr/share/icons/hicolor/48x48/apps/spotify.png	Spotify	spotify
@@ -35,15 +35,15 @@ cat <<EOF | xmenu | sh &
 	IMG:/usr/share/icons/hicolor/48x48/apps/steam.png	Steam	steam
 	IMG:/usr/share/icons/hicolor/48x48/apps/lutris.png	Lutris	lutris
 	IMG:/usr/share/icons/hicolor/48x48/apps/itch.png	Itch.io	itch
-	Minecraft	multimc
-	Godot Engine	godot
+	IMG:/home/simen/.local/share/icons/Papirus/minecraft.png	Minecraft	multimc
+	IMG:/home/simen/.local/share/icons/Papirus/godot.png	Godot Engine	godot
  Utilities
-	Files	nemo
-	Terminal	kitty
+	IMG:/home/simen/.local/share/icons/Papirus/files.png	Files	kitty nnn -daoQH -P p
+	IMG:/home/simen/.local/share/icons/Papirus/terminal.png	Terminal	kitty
 	IMG:/usr/share/icons/hicolor/48x48/apps/qbittorrent.png	Torrent	qbittorrent
 	IMG:/usr/share/icons/hicolor/48x48/apps/virt-manager.png	Virtual Machine	virt-manager
 	IMG:/usr/share/icons/hicolor/48x48/apps/timeshift.png	Timeshift	timeshift-launcher
-	CoreCtrl	corectrl
+	IMG:/home/simen/.local/share/icons/Papirus/corectrl.png	CoreCtrl	corectrl
 
 
 

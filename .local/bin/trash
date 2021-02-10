@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Script to help with trash management
+trashdir=~/.local/share/Trash
+restore-menu() {
+    sel=$(ls $trashdir/files | fzf --multi --preview 'cat ~/.local/share/Trash/info/{}.trashinfo')
+    if [ -n "$sel" ]; then
+        trfile="$trashdir/info/$sel.trashinfo"
+        pth=$(cat $trfile | sed -n 2p | sed 's/Path=//')
+        mv $trashdir/files/$sel $pth && rm $trfile && echo "Restored $sel"
+    else
+        echo "Trash is empty"
+    fi
+}
+
+restore-file() {
+    trfile="$trashdir/info/$1.trashinfo"
+    pth=$(cat $trfile | sed -n 2p | sed 's/Path=//')
+    echo "$1"
+    echo "$pth"
+    mv $trashdir/files/$1 $pth && rm $trfile && notify-send "Restored" "$1 has been restored"
+}
+
+clear-trash() {
+    rm -rf "$trashdir/files"/* && rm -rf "$trashdir/info"/* && notify-send "Cleared" "Trash has been cleared"
+}
+
+case "$1" in
+    "-m") restore-menu ;;
+    "-f") restore-file $2 ;;
+    "-c") clear-trash ;;
+    "-h") echo "-m for menu, -f FILE to restore specific file, -c to clear trash" ;;
+esac

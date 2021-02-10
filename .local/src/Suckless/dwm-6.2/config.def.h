@@ -107,7 +107,6 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[]     = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]      = { "kitty", NULL };
 static const char *browser[]      = { "firefox", NULL };
-static const char *explorer[]     = { "nemo", NULL };
 static const char *lock[]         = { "lock.sh", NULL };
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
@@ -116,7 +115,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
     { MODKEY,                       XK_r,               spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_w,               spawn,          {.v = browser } },
-	{ MODKEY,                       XK_e,               spawn,          {.v = explorer } },
+	{ MODKEY,                       XK_e,               spawn,          SHCMD("kitty nnn -daoQH -P p") },
 	{ MODKEY|ShiftMask,             XK_e,               spawn,          SHCMD("emacsclient -c") },
 	{ MODKEY,                       XK_o,               spawn,          {.v = lock } },
 	{ MODKEY|ShiftMask,             XK_Return,          spawn,          {.v = termcmd } },

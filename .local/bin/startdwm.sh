@@ -13,7 +13,7 @@ setxkbmap no &
 redshift -c ~/.config/redshift/redshift.conf &
 
 # Set wallpaper
-feh --bg-fill --no-fehbg --randomize ~/Multimedia/Pictures/Wallpapers/* &
+setwp -r &
 
 # Start compositor
 picom --config ~/.config/picom.conf &
