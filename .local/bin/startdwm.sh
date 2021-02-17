@@ -1,12 +1,6 @@
 #!/bin/sh
 # Script to start dwm. Used by xinitrc
 
-# Set screen resolution
-xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right
-
-# Set norwegian keymap
-setxkbmap no &
-
 #---Start applications/daemons---
 
 # Start redshift

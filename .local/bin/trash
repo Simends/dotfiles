@@ -16,8 +16,6 @@ restore-menu() {
 restore-file() {
     trfile="$trashdir/info/$1.trashinfo"
     pth=$(cat $trfile | sed -n 2p | sed 's/Path=//')
-    echo "$1"
-    echo "$pth"
     mv $trashdir/files/$1 $pth && rm $trfile && notify-send "Restored" "$1 has been restored"
 }
 

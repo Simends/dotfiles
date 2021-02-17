@@ -53,8 +53,13 @@ export LESSHISTFILE=-
 
 # Functions
 # Startx on login
+#if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+#    then exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+#fi
+
+# Start Owndm on login
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
-    then exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+    then exec owndm.sh
 fi
 
 function fbm {

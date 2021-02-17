@@ -23,6 +23,7 @@ alias lgit='echo " " && exa -bhal --git'
 alias lgr='echo " " && exa -bhalG'
 alias lr='ls -R'
 alias ldot='ls -lhd .*'
+alias lm='ls -lA | less'
 alias ..='cd ..'
 alias vim='nvim'
 alias untar='tar -zxvf'
@@ -33,7 +34,7 @@ alias wttr-moon='curl wttr.in/moon'
 alias clock='tty-clock -cC 4'
 alias ecron='crontab -e'
 alias secron="su -c $(printf "%q " "crontab -e")"
-alias keyb-comp='pdflatex ~/.local/src/keybindings/keybindings.tex'
+alias keycomp='pdflatex ~/.local/src/keybindings/keybindings.tex'
 alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
 
 # Pacman aliases
@@ -41,6 +42,7 @@ alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo
 alias fpr="pacman -Qet | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
 alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
 alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
+alias sp='sudo pacman'
 
 
 # Generated

@@ -51,3 +51,4 @@
 
 (package! org-roam)
 (package! org-roam-server)
+(package! exwm)
