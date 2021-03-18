@@ -2,63 +2,7 @@
 
 # A helper script for s6 and s6-rc
 
-list-sv() {
-    case "$1" in
-        "all") sudo s6-rc-db list services ;;
-        "active") sudo s6-rc -a list ;;
-        "down") sudo s6-rc -da list ;;
-        "default") sudo s6-rc list default ;;
-        "") echo "hmm" ;;
-    esac
-}
-
-status-sv() {
-    RED='\033[0;31m'
-    GREEN='\033[0;32m'
-    PURPLE='\033[0;35m'
-    CYAN='\033[0;36m'
-    GRAY='\033[1;30m'
-    NC='\033[0m'
-    BOLD='\033[1m'
-
-    svnum=$(ls /run/service/ | wc -l)
-    svtotnum=$(sudo s6-rc list default | wc -l)
-    li=" : : : : \nService:Status:Uptime:PID:Exit code\n-------:------:------:---:---------"
-
-    for ((i=1; i<=$svnum; i++))
-    do
-        sv=$(ls /run/service/ | sed -n "$i"p)
-        svstatus=$(sudo s6-svstat /run/service/$sv | awk '{print $1}')
-        svtime=$(sudo s6-svstat -t /run/service/$sv)
-        svtime=$((svtime/60))
-        svtime="${CYAN}$svtime min${NC}"
-
-        if [ $svstatus = "up" ];
-        then
-            svid=$(sudo s6-svstat -p /run/service/$sv)
-            svid="${PURPLE}$svid${NC}"
-            ecode="${GRAY}-${NC}"
-            sv="${GREEN}${BOLD}$sv${NC}"
-            svstatus="${GREEN}$svstatus${NC}"
-        else
-            svid="${GRAY}-${NC}"
-            ecode=$(sudo s6-svstat -e /run/service/$sv)
-            if [ $((ecode)) != 0 ];
-            then
-                ecode="${RED}$ecode${NC}"
-            else
-                ecode="${GRAY}$ecode${NC}"
-            fi
-            sv="${RED}${BOLD}$sv${NC}"
-            svstatus="${RED}$svstatus${NC}"
-        fi
-
-        li="$li\n$sv:$svstatus:$svtime:$svid:$ecode"
-    done
-
-    printf "$li\n : : : : " | column -t -s ":"
-    echo "$svnum longruns and $svtotnum services in total"
-}
+scriptdir="/home/simen/.local/bin/s6-helper"
 
 help-sv() {
     echo ""
@@ -68,55 +12,27 @@ help-sv() {
     echo "sv start SVNAME: Start service"
     echo "sv stop SVNAME: Stop service"
     echo "sv enable-now SVNAME: Enable and start service"
+    echo "sv status SVNAME: Print status and information of given service"
+    echo "sv log SVNAME: Read the current log of service"
     echo "sv update: Update the compiled service database"
-    echo "sv status: Check for failed services"
+    echo "sv doctor: Check for failed services"
     echo "sv list all: List all installed services"
     echo "sv list active: List all services that are currently running"
     echo "sv list down: List all services thar are currently not running"
     echo "sv list default: List all services in the default bundle"
 }
 
-failed-sv() {
-    numsv=$(ls /run/service/ | wc -l)
-    chk=0
-
-    for ((i=1; i<=$numsv; i++))
-    do
-        sv=$(ls /run/service/ | sed -n "$i"p)
-        ecode=$(echo "/run/service/$sv" | xargs sudo s6-svstat -e)
-        if [ $((ecode)) != -1 ] && [ $((ecode)) != 0 ];
-        then
-            echo "$sv encountered an error and exited with exit code: $ecode"
-            chk=1
-        fi
-    done
-
-    if [ $((chk)) == 0 ];
-    then
-        echo "No errors to report"
-    fi
-}
-
-menu-sv(){
-    case "$(echo '"Status"\n"Update"\n"Enable"\n"Disable"\n"Start"\n"Stop"' | smenu -l -n 6 -N -M -d -m "Service Settings")" in
-        "Status") status-sv ;;
-        "Update") sudo s6-rc-update -v 2 /etc/s6/rc/compiled ;;
-        "Enable") sudo s6-rc-db list services | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update add default ;;
-        "Disable") sudo s6-rc list default | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc-bundle-update delete default ;;
-        "Start") sudo s6-rc -da list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -u change ;;
-        "Stop") sudo s6-rc -a list | fzf --preview 'cat /etc/s6/sv/{1}/type && (cat /etc/s6/sv/{1}/run || cat /etc/s6/sv/{1}/up)' | xargs -ro sudo s6-rc -d change ;;
-    esac
-}
-
 case "$1" in
     "enable") sudo s6-rc-bundle-update add default $2 && echo "Service $2 has been added to the default bundle";;
     "disable") sudo s6-rc-bundle-update delete default $2 && echo "Service $2 has been removed from the default bundle" ;;
-    "start") sudo s6-rc -u change $2 && echo "Service $2 is now running" ;;
-    "stop") sudo s6-rc -d change $2 && echo "Service $2 has now been stopped" ;;
+    "start") echo "Starting $2..." && sudo s6-rc -u change $2 && "$scriptdir"/sv-status.sh $2 ;;
+    "stop") echo "Stopping $2..." && sudo s6-rc -d change $2 && "$scriptdir"/sv-status.sh $2 ;;
     "enable-now") sudo s6-rc-bundle-update add default $2 && sudo s6-rc -u -v2 change $2 ;;
-    "update") sudo s6-rc-update -v 2 /etc/s6/rc/compiled ;;
-    "list") list-sv $2 ;;
-    "status") failed-sv ;;
+    "update") echo "Updating s6-rc database..." && sudo /usr/share/libalpm/scripts/s6-rc-db-update-hook;;
+    "list") "$scriptdir"/list-sv.sh $2 ;;
+    "doctor") "$scriptdir"/sv-failed.sh ;;
+    "status") "$scriptdir"/sv-status.sh $2 $3 ;;
+    "log") "$scriptdir"/sv-log.sh $2 ;;
     "help") help-sv ;;
-    "") menu-sv ;;
+    "") "$scriptdir"/sv-menu.sh ;;
 esac

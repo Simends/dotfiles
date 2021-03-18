@@ -37,20 +37,26 @@ cat <<EOF | xmenu | sh &
 	IMG:/usr/share/icons/hicolor/48x48/apps/itch.png	Itch.io	itch
 	IMG:/home/simen/.local/share/icons/Papirus/minecraft.png	Minecraft	multimc
 	IMG:/home/simen/.local/share/icons/Papirus/godot.png	Godot Engine	godot
- Utilities
-	IMG:/home/simen/.local/share/icons/Papirus/files.png	Files	kitty nnn -daoQH -P p
-	IMG:/home/simen/.local/share/icons/Papirus/terminal.png	Terminal	kitty
+Utilities
+	IMG:/home/simen/.local/share/icons/Papirus/files.png	Files	nautilus
+	IMG:/home/simen/.local/share/icons/Papirus/terminal.png	Terminal	st
 	IMG:/usr/share/icons/hicolor/48x48/apps/qbittorrent.png	Torrent	qbittorrent
 	IMG:/usr/share/icons/hicolor/48x48/apps/virt-manager.png	Virtual Machine	virt-manager
+ Settings
+	Display	arandr
+	Network	connman-gtk
+	Disk	gparted
+	Appearance	lxappearance
 	IMG:/usr/share/icons/hicolor/48x48/apps/timeshift.png	Timeshift	timeshift-launcher
 	IMG:/home/simen/.local/share/icons/Papirus/corectrl.png	CoreCtrl	corectrl
 
 
 
 Lock	/home/simen/.local/bin/lock.sh
-Log out	killall xinit
+Log out	loginctl kill-user simen
 Shutdown		loginctl poweroff
 Reboot			loginctl reboot
+Suspend	loginctl suspend
 
 
 EOF

@@ -49,6 +49,15 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! anki-editor)
 (package! org-roam)
 (package! org-roam-server)
-(package! exwm)
+(package! org-bullets)
+(package! org-fancy-priorities)
+;;(package! exwm)
+(package! pequod-dark
+  :recipe (:local-repo "modules/pequod-theme"))
+(package! fzf)
+(package! avy)
+
+;; (package! elfeed-dashboard)

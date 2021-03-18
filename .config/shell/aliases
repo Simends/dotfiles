@@ -15,8 +15,14 @@ alias cp='cp -iv'
 alias rm='rm -iv'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias mocp='mocp -O MOCDir="$XDG_CONFIG_HOME"/moc'
+alias dd='dd bs=1024 status=progress'
+alias cat='bat -pp'
 
-alias nna='nnn -daoQH -P p'
+alias bm="$(printf "cat ~/.config/shell/bookmarks.txt" | column -t -s "  ")"
+# alias bm='printf "$(cat ~/.config/shell/bookmarks.txt)" | column -t -s " "'
+alias bm='cat ~/.config/shell/bookmarks.txt'
+alias plz='sudo $(fc -ln -1)'
+alias nna='nnn -FdaoQH -P p'
 alias la='echo " " && exa -bhal --icons'
 alias ll='echo " " && exa -bhl --icons'
 alias lgit='echo " " && exa -bhal --git'
@@ -28,7 +34,7 @@ alias ..='cd ..'
 alias vim='nvim'
 alias untar='tar -zxvf'
 alias sl-comp='sudo cp -v config.def.h config.h && sudo make clean install'
-alias config='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.config/dotfiles/ --work-tree=$HOME'
 alias wttr='curl wttr.in/Trondheim'
 alias wttr-moon='curl wttr.in/moon'
 alias clock='tty-clock -cC 4'
@@ -36,10 +42,12 @@ alias ecron='crontab -e'
 alias secron="su -c $(printf "%q " "crontab -e")"
 alias keycomp='pdflatex ~/.local/src/keybindings/keybindings.tex'
 alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
+alias blconf='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias pth="echo $PATH | sed 's/:/\n/g'"
 
 # Pacman aliases
 alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
-alias fpr="pacman -Qet | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
+alias fpr="pacman -Qetq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
 alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
 alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
 alias sp='sudo pacman'

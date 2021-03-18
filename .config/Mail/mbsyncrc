@@ -5,7 +5,8 @@ IMAPAccount gmail
 Host imap.gmail.com
 User smndagersneve@gmail.com
 #PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/Mail/gmail.gpg"
-PassCmd "lpass show --password Google"
+# PassCmd "lpass show --password Google"
+PassCmd "pass Email/Google | sed 1q"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
@@ -30,7 +31,8 @@ Host outlook.office365.com
 Port 993
 User simends@hotmail.no
 #PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/Mail/hotmail.gpg"
-PassCmd "lpass show --password microsoft.com"
+# PassCmd "lpass show --password microsoft.com"
+PassCmd "pass Email/microsoft.com | sed 1q"
 SSLType IMAPS
 SSLVersions TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -60,7 +62,8 @@ Host outlook.office365.com
 Port 993
 User simends@ntnu.no
 #PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/Mail/studmail.gpg"
-PassCmd "lpass show --password ntnu"
+# PassCmd "lpass show --password ntnu"
+PassCmd "pass Studenttida/ntnu | sed 1q"
 SSLType IMAPS
 SSLVersions TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt

@@ -4,37 +4,58 @@ Xcursor.size: 32
 
 *fading: 35
 
+! Xmenu settings
 xmenu.width: 170
 xmenu.height: 32
-xmenu.borderWidth: 1
+xmenu.borderWidth: 4
 xmenu.seperatorWidth: 3
 xmenu.gap: 0
 xmenu.alignment: left
 xmenu.font: SourceCodePro-Regular
 
-! Nord Theme
-*.color0: #3B4252
-*.color1: #BF616A
-*.color2: #A3BE8C
-*.color3: #EBCB8B
-*.color4: #81A1C1
-*.color5: #B48EAD
-*.color6: #88C0D0
-*.color7: #E5E9F0
-*.color8: #4C566A
-*.color9: #BF616A
-*.color10: #A3BE8C
-*.color11: #EBCB8B
-*.color12: #81A1C1
-*.color13: #B48EAD
-*.color14: #8FBCBB
-*.color15: #ECEFF4
-*.foreground:       #D8DEE9
-*.background:       #3B4252
-*.selforeground:    #5E81AC
-*.selbackground:    #3B4252
-*.cursorColor:      #D8DEE9
-*fadeColor: #4C566A
+xmenu.seperator: #a8dadc
+xmenu.border: #a8dadc
 
-xmenu.seperator: #3B4252
-xmenu.border: #3B4252
+! DWM Settings
+dwm.borderpx: 4
+dwm.snap: 16
+dwm.showbar: 1
+dwm.topbar: 0
+dwm.nmaster: 1
+dwm.resizehints: 1
+dwm.mfact: 0.6
+
+! st.font: SauceCodePro Nerd-Regular:pixelsize=16:antialiasing=true:autohint=true
+st.font: SourceCodePro-Regular:size=16
+st.borderpx: 60
+st.cursorColor: #BB80B3
+st.blinktimeout: 800
+! Colors
+*background: #292D3E
+*foreground: #BFC7D5
+*selbackground: #292D3E
+*selforeground: #80CBC4
+! black
+*color0: #1C1F2B
+*color8: #232635
+! red
+*color1: #ff5370
+*color9: #F78C6C
+! green
+*color2: #C3E88D
+*color10: #44B9B1
+! yellow
+*color3: #FFCB6B
+*color11: #FFCB6B
+! blue
+*color4: #82AAFF
+*color12: #7986E7
+! magenta
+*color5: #BB80B3
+*color13: #C792EA
+! cyan
+*color6: #80CBC4
+*color14: #89DDFF
+! white
+*color7: #BFC7D5
+*color15: #EEFFFF

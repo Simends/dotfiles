@@ -8,7 +8,10 @@ Barpadding
 Vanitygaps-combo with cfacts
 Cyclelayout
 Layoutmenu
+Moveresize
+Pertag
 Rotatestack
 Staticstatus
 Statuscolors
 Swallow
+Xresources

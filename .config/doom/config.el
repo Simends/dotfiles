@@ -19,21 +19,21 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "SourceCodePro" :size 15 :weight 'Regular)
+(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16 :weight 'Regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-nord)
+(setq doom-theme 'doom-palenight)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/Org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+;; numbers are disabled. For relative line numbers, set this to `relative'. Absolute is `t'
+(setq display-line-numbers-type `relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -52,6 +52,34 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(map! :leader
+      :desc "Read News"
+      "o n" #'elfeed
+      :leader
+      :desc "Fetch a password"
+      "o w" #'ivy-pass
+      :leader
+      :desc "Calendar"
+      "o c" #'cfw:open-org-calendar
+      :leader
+      :desc "Browse the web"
+      "o W" #'eww
+      :leader
+      :desc "Calculator"
+      "o C" #'calc
+      :leader
+      :desc "Chat on IRC"
+      "o i" #'circe)
+
+(map! :leader
+      :desc "Run make task"
+      "e m" #'evil-make
+      :leader
+      :desc "Chmod"
+      "e c" #'chmod)
+
+(setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
 
 (require 'org-roam-protocol)
 (setq org-roam-directory "~/Documents/Org/Roam/")
@@ -78,6 +106,13 @@
       :leader
       :desc "Skriv om dagen idag"
       "r d" #'org-roam-dailies-find-today)
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(map! :leader
+      :desc "Open ranger"
+      "f x" #'ranger)
 
 ;; Collect all .org from my Org directory and subdirs
 ;(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'") ; default value
@@ -194,16 +229,16 @@
 ;;   smtpmail-smtp-server "smtp.gmail.com"
 ;;   smtpmail-smtp-service 587)
 
-(require 'exwm)
-(require 'exwm-config)
-(exwm-config-default)
-(require 'exwm-randr)
-(setq exwm-randr-workspace-output-plist '(0 "DisplayPort-0" 1 "HDMI-A-0"))
-(add-hook 'exwm-randr-screen-change-hook
-          (lambda ()
-            (start-process-shell-command
-             "xrandr" nil "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right
-")))
-(exwm-randr-enable)
-(require 'exwm-systemtray)
-(exwm-systemtray-enable)
+;;(require 'exwm)
+;;(require 'exwm-config)
+;;(exwm-config-default)
+;;(require 'exwm-randr)
+;;(setq exwm-randr-workspace-output-plist '(0 "DisplayPort-0" 1 "HDMI-A-0"))
+;;(add-hook 'exwm-randr-screen-change-hook
+;;          (lambda ()
+;;            (start-process-shell-command
+;;             "xrandr" nil "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right
+;;")))
+;;(exwm-randr-enable)
+;;(require 'exwm-systemtray)
+;;(exwm-systemtray-enable)
