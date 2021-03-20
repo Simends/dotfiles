@@ -54,6 +54,7 @@
 (package! org-roam-server)
 (package! org-bullets)
 (package! org-fancy-priorities)
+(package! org-timeline)
 ;;(package! exwm)
 (package! pequod-dark
   :recipe (:local-repo "modules/pequod-theme"))

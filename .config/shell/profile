@@ -79,4 +79,4 @@ function fbm {
 }
 
 # Generated
-export NNN_BMS='t:/home/simen/.local/share/Trash/files/;S:/home/simen/.local/src/Suckless/;k:/home/simen/.local/src/linux/linux-5.10.7/;h:/home/simen/;s:/home/simen/.local/bin/;c:/home/simen/.config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'
+export NNN_BMS='P:/home/simen/Documents/Projects/;t:/home/simen/.local/share/Trash/files/;S:/home/simen/.local/src/Suckless/;k:/home/simen/.local/src/linux/linux-5.10.7/;h:/home/simen/;s:/home/simen/.local/bin/;c:/home/simen/.config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'

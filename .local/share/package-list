@@ -1,5 +1,6 @@
 amfora
 anki
+arandr
 arduino
 artix-docs
 artixnews
@@ -16,6 +17,7 @@ bison
 calibre
 clamav-s6
 clipnotify
+connman-gtk
 connman-s6
 corectrl
 cowsay
@@ -40,6 +42,7 @@ gamemode
 genius-spicetify-git
 gnome-calculator
 godot
+gparted
 grub
 gruvbox-dark-gtk
 htop
@@ -58,6 +61,7 @@ libvirt-s6
 linux-zen
 lolcat
 lutris
+lxappearance-gtk3
 lxsession
 make
 man-db
@@ -65,7 +69,6 @@ menu-qalc
 moc-pulse
 mu
 multimc5
-nano
 nautilus
 ncdu
 neovim
@@ -87,6 +90,7 @@ pam-gnupg
 papirus-folders-nordic
 pass-import
 patch
+pavucontrol
 pkgconf
 playerctl
 powerline-fonts-git

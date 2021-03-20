@@ -38,6 +38,6 @@ gme(){
 }
 
 while true; do
-	xsetroot -name "$(gme)$(upd)$(mem)$(tmp)$(dte)"
+	xsetroot -name "$(gme)~$(upd)~$(mem)~$(tmp)~$(dte) "
 	sleep 10s	# Update every 10s
 done &

@@ -7,7 +7,7 @@ Xcursor.size: 32
 ! Xmenu settings
 xmenu.width: 170
 xmenu.height: 32
-xmenu.borderWidth: 4
+xmenu.borderWidth: 2
 xmenu.seperatorWidth: 3
 xmenu.gap: 0
 xmenu.alignment: left
