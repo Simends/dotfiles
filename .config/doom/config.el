@@ -20,7 +20,8 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16 :weight 'Regular)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+      doom-variable-pitch-font (font-spec :family "sans" :size 13)
+      +doom-dashboard-banner-file (expand-file-name "banner.png" doom-private-dir))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -81,57 +82,37 @@
 
 (setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
 
-(require 'org-roam-protocol)
-(setq org-roam-directory "~/Documents/Org/Roam/")
-(setq org-roam-graph-viewer "firefox")
-(setq org-roam-dailies-directory "~/Documents/Org/Roam/Dailies")
-(setq org-roam-dailies-capture-templates
-      '(("d" "default" entry
-         #'org-roam-capture--get-point
-         "* %?"
-         :file-name "daily/%<%Y-%m-%d>"
-         :head "#+title: %<%Y-%m-%d>\n\n")))
-(map! :leader
-      :desc "Insert new roam file"
-      "r i" #'org-roam-insert
-      :leader
-      :desc "Find roam file"
-      "r f" #'org-roam-find-file
-      :leader
-      :desc "Graph org roam"
-      "r g" #'org-roam-server-mode
-      :leader
-      :desc "Start org roam buffer"
-      "r b" #'org-roam-buffer-toggle-display
-      :leader
-      :desc "Skriv om dagen idag"
-      "r d" #'org-roam-dailies-find-today)
 
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+  (require 'org-roam-protocol)
+  (setq org-roam-directory "~/Documents/Org/Roam/")
+  (setq org-roam-graph-viewer "firefox")
+  (setq org-roam-dailies-directory "~/Documents/Org/Roam/Dailies")
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry
+           #'org-roam-capture--get-point
+           "* %?"
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "#+title: %<%Y-%m-%d>\n\n")))
+  (map! :leader
+        :desc "Insert new roam file"
+        "r i" #'org-roam-insert
+        :leader
+        :desc "Find roam file"
+        "r f" #'org-roam-find-file
+        :leader
+        :desc "Graph org roam"
+        "r g" #'org-roam-server-mode
+        :leader
+        :desc "Start org roam buffer"
+        "r b" #'org-roam-buffer-toggle-display
+        :leader
+        :desc "Skriv om dagen idag"
+        "r d" #'org-roam-dailies-find-today)
 
 (map! :leader
       :desc "Open ranger"
       "f x" #'ranger)
-
-;; Collect all .org from my Org directory and subdirs
-;(setq org-agenda-file-regexp "\\`[^.].*\\.org\\'") ; default value
-;(defun load-org-agenda-files-recursively (dir) "Find all directories in DIR."
-;    (unless (file-directory-p dir) (error "Not a directory `%s'" dir))
-;    (unless (equal (directory-files dir nil org-agenda-file-regexp t) nil)
-;      (add-to-list 'org-agenda-files dir)
-;    )
-;    (dolist (file (directory-files dir nil nil t))
-;        (unless (member file '("." ".."))
-;            (let ((file (concat dir file "/")))
-;                (when (file-directory-p file)
-;                    (load-org-agenda-files-recursively file)
-;                )
-;            )
-;        )
-;    )
-;)
-;(load-org-agenda-files-recursively "~/Cloud/Dropbox/Org/" ) ; trailing slash required
 
 (load-library "find-lisp")
 (setq org-agenda-files
@@ -229,16 +210,16 @@
 ;;   smtpmail-smtp-server "smtp.gmail.com"
 ;;   smtpmail-smtp-service 587)
 
-;;(require 'exwm)
-;;(require 'exwm-config)
-;;(exwm-config-default)
-;;(require 'exwm-randr)
-;;(setq exwm-randr-workspace-output-plist '(0 "DisplayPort-0" 1 "HDMI-A-0"))
-;;(add-hook 'exwm-randr-screen-change-hook
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-default)
+;; (require 'exwm-randr)
+;; (setq exwm-randr-workspace-output-plist '(0 "DisplayPort-0" 1 "HDMI-A-0"))
+;; (add-hook 'exwm-randr-screen-change-hook
 ;;          (lambda ()
 ;;            (start-process-shell-command
 ;;             "xrandr" nil "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --pos 0x240 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 2560x0 --rotate right
-;;")))
-;;(exwm-randr-enable)
-;;(require 'exwm-systemtray)
-;;(exwm-systemtray-enable)
+;; ")))
+;; (exwm-randr-enable)
+;; (require 'exwm-systemtray)
+;; (exwm-systemtray-enable)

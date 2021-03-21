@@ -7,7 +7,7 @@
 redshift -c ~/.config/redshift/redshift.conf &
 
 # Set wallpaper
-setwp -d ~/.config/Rice/Pequod/Wallpaper/mg_whale.png &
+setwp -d ~/.config/Rice/Palenight/wallpaper/lightsym.jpg &
 
 # Start compositor
 picom --config ~/.config/picom.conf &

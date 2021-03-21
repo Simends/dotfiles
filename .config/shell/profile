@@ -12,8 +12,8 @@
 # Standard applications
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=firefox
-export TERMINAL=kitty
+export BROWSER=links
+export TERMINAL=st
 #export MANPAGER=less
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
@@ -34,12 +34,6 @@ export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;c:chksum;d:dragdrop;x:togglex;m:m
 export FZF_DEFAULT_OPTS="--reverse --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"
 export FZF_DEFAULT_COMMAND='fd --type f -H'
 export FZF_COMPLETION_TRIGGER='--'
-
-# Pfetch
-# Mulige: ascii title os host kernel shell editor wm de uptime pkgs memory palette
-export PF_INFO="ascii title os kernel shell wm uptime pkgs"
-export PF_SEP=":"
-export PF_COLOR=1
 
 # Other variables
 eval "`dircolors -b ~/.config/shell/dir_colors/nord`"
@@ -64,14 +58,14 @@ export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 
 # Functions
 # Startx on login
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
-    then exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
-fi
+# if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+#     then exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
+# fi
 
 # Start Owndm on login
-#if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
-#    then exec owndm.sh
-#fi
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+   then exec owndm.sh
+fi
 
 function fbm {
     bmpath=$(cat /home/simen/.config/shell/bookmarks.txt | fzf | awk '{print $3}')
