@@ -1,58 +1,17 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Simen Dager Sneve"
       user-mail-address "smndagersneve@gmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16 :weight 'Regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13)
-      +doom-dashboard-banner-file (expand-file-name "banner.png" doom-private-dir))
+      doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 24 :weight 'Regular'))
 
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-palenight)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/Org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'. Absolute is `t'
 (setq display-line-numbers-type `relative)
 
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
+(setq doom-theme 'doom-palenight
+      +doom-dashboard-banner-file (expand-file-name "banner.png" doom-private-dir)
+      doom-modeline-icon (display-graphic-p)
+      doom-modeline-major-mode-icon t
+      doom-modeline-major-mode-color-icon t)
 
 (map! :leader
       :desc "Read News"
@@ -79,44 +38,47 @@
       :leader
       :desc "Chmod"
       "e c" #'chmod)
-
-(setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
-
-
-
-  (require 'org-roam-protocol)
-  (setq org-roam-directory "~/Documents/Org/Roam/")
-  (setq org-roam-graph-viewer "firefox")
-  (setq org-roam-dailies-directory "~/Documents/Org/Roam/Dailies")
-  (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry
-           #'org-roam-capture--get-point
-           "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n\n")))
-  (map! :leader
-        :desc "Insert new roam file"
-        "r i" #'org-roam-insert
-        :leader
-        :desc "Find roam file"
-        "r f" #'org-roam-find-file
-        :leader
-        :desc "Graph org roam"
-        "r g" #'org-roam-server-mode
-        :leader
-        :desc "Start org roam buffer"
-        "r b" #'org-roam-buffer-toggle-display
-        :leader
-        :desc "Skriv om dagen idag"
-        "r d" #'org-roam-dailies-find-today)
-
 (map! :leader
       :desc "Open ranger"
       "f x" #'ranger)
 
+(setq org-directory "~/Documents/Org/")
+
 (load-library "find-lisp")
 (setq org-agenda-files
    (find-lisp-find-files "~/Documents/Org" "\.org$"))
+
+(add-hook 'org-agenda-finalize-hook 'org-timeline-insert-timeline :append)
+
+(require 'org-roam-protocol)
+(setq org-roam-directory "~/Documents/Org/Roam/")
+(setq org-roam-graph-viewer "firefox")
+
+(setq org-roam-dailies-directory "~/Documents/Org/Roam/Dailies")
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry
+        #'org-roam-capture--get-point
+        "* %?"
+        :file-name "daily/%<%Y-%m-%d>"
+        :head "#+title: %<%Y-%m-%d>\n\n")))
+
+(map! :leader
+      :desc "Insert new roam file"
+      "r i" #'org-roam-insert
+      :leader
+      :desc "Find roam file"
+      "r f" #'org-roam-find-file
+      :leader
+      :desc "Graph org roam"
+      "r g" #'org-roam-server-mode
+      :leader
+      :desc "Start org roam buffer"
+      "r b" #'org-roam-buffer-toggle-display
+      :leader
+      :desc "Skriv om dagen idag"
+      "r d" #'org-roam-dailies-find-today)
+
+(setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
 
 (map! :map elfeed-search-mode-map
       :after elfeed-search
@@ -199,6 +161,22 @@
           ("/Gmail/[Gmail]/Trash"     . ?t)
           ("/Gmail/[Gmail]/Drafts"    . ?d)
           ("/Gmail/[Gmail]/All Mail"  . ?a))))
+
+(emms-all)
+(emms-default-players)
+(emms-mode-line 1)
+(emms-playing-time 1)
+(setq emms-source-file-default-directory "~/Multimedia/Music"
+      emms-playlist-buffer-name "*Music*"
+      emms-info-asynchronously t
+      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+(map! :leader
+      (:prefix ("a" . "EMMS audio player")
+       :desc "Go to emms playlist" "a" #'emms-playlist-mode-go
+       :desc "Emms pause track" "x" #'emms-pause
+       :desc "Emms stop track" "s" #'emms-stop
+       :desc "Emms play previous track" "p" #'emms-previous
+       :desc "Emms play next track" "n" #'emms-next))
 
 ;;(require 'smtpmail)
 ;;(setq message-send-mail-function 'smtpmail-send-it

@@ -68,14 +68,18 @@ make
 man-db
 menu-qalc
 moc-pulse
+mpc
+mpd-s6
 mu
 multimc5
 nautilus
 ncdu
+ncmpcpp
 neovim
 nerd-fonts-mononoki
 nerd-fonts-roboto-mono
 nerd-fonts-source-code-pro
+nnn-icons
 nordic-polar-theme-git
 nordic-theme-git
 nordvpn-s6
@@ -104,7 +108,6 @@ qbittorrent
 qt5-styleplugins
 qutebrowser
 ranger
-rclone
 redshift-minimal
 ripgrep
 s6-man-pages-git
@@ -112,7 +115,6 @@ scrot
 slack-desktop
 smenu
 spicetify-themes-git
-sshfs
 steamos-compositor-plus
 sxiv
 syncthing-s6
