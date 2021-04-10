@@ -15,3 +15,6 @@
 
 ;; Jump in text: https://github.com/abo-abo/avy
 (package! avy)
+
+;; Major mode for skarnets execline-scripts
+(package! execline)

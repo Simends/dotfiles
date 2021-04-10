@@ -26,7 +26,7 @@ emacs --daemon &
 
 # ---Mount the clouds---
 # Onedrive
-rclone mount msod:/ --daemon /home/simen/Cloud/OneDrive/ &
+# rclone mount msod:/ --daemon /home/simen/Cloud/OneDrive/ &
 # Dropbox
 #rclone mount drbo:/ --daemon /home/simen/Cloud/Dropbox/ &
 # Google Drive

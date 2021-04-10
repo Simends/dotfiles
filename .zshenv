@@ -1,0 +1,1 @@
+/home/simen/.config/shell/profile

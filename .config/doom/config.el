@@ -2,15 +2,15 @@
       user-mail-address "smndagersneve@gmail.com")
 
 (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16 :weight 'Regular)
-      doom-variable-pitch-font (font-spec :family "sans" :size 13)
-      doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 24 :weight 'Regular'))
+      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+      ;; doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 24 :weight 'Regular'))
 
 (setq display-line-numbers-type `relative)
 
 (setq doom-theme 'doom-palenight
       +doom-dashboard-banner-file (expand-file-name "banner.png" doom-private-dir)
-      doom-modeline-icon (display-graphic-p)
-      doom-modeline-major-mode-icon t
+      ;;doom-modeline-icon (display-graphic-p)
+      ;;doom-modeline-major-mode-icon t
       doom-modeline-major-mode-color-icon t)
 
 (map! :leader
@@ -63,20 +63,12 @@
         :head "#+title: %<%Y-%m-%d>\n\n")))
 
 (map! :leader
-      :desc "Insert new roam file"
-      "r i" #'org-roam-insert
-      :leader
-      :desc "Find roam file"
-      "r f" #'org-roam-find-file
-      :leader
-      :desc "Graph org roam"
-      "r g" #'org-roam-server-mode
-      :leader
-      :desc "Start org roam buffer"
-      "r b" #'org-roam-buffer-toggle-display
-      :leader
-      :desc "Skriv om dagen idag"
-      "r d" #'org-roam-dailies-find-today)
+      (:prefix ("r" . "Org Roam")
+      :desc "Insert new roam file" "i" #'org-roam-insert
+      :desc "Find roam file" "f" #'org-roam-find-file
+      :desc "Graph org roam" "g" #'org-roam-server-mode
+      :desc "Start org roam buffer" "b" #'org-roam-buffer-toggle-display
+      :desc "Write about today" "d" #'org-roam-dailies-find-today))
 
 (setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
 

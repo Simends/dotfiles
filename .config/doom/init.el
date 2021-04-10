@@ -65,7 +65,7 @@
 
 (doom! :checkers
        syntax                           ; tasing you for every semicolon you forget
-       spell                            ; tasing you for misspelling mispelling
+       (spell +aspell)                  ; tasing you for misspelling mispelling
        grammar)                         ; tasing grammar mistake every you make
 
 (doom! :tools
@@ -136,7 +136,7 @@
        ;;ocaml                          ; an objective camel
        (org
         +dragndrop
-        +journal
+        ;; +journal
         +jupyter
         +noter
         +pretty)                        ; organize your plain life in plain text

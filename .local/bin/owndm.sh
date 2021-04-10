@@ -17,5 +17,5 @@ echo "$isx"
 if [ -n "$isx" ]; then
    exec startx "$sessionsel"
 else
-   exec $sessionsel
+   ./$sessionsel
 fi

@@ -4,6 +4,15 @@ Xcursor.size: 32
 
 *fading: 35
 
+! Xft settings -- !
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.autohint: 0
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+Xft.dpi: 100
+
 ! Xmenu settings
 xmenu.width: 170
 xmenu.height: 32
@@ -26,11 +35,13 @@ dwm.resizehints: 1
 dwm.mfact: 0.6
 
 ! st.font: SauceCodePro Nerd-Regular:pixelsize=16:antialiasing=true:autohint=true
-st.font: SourceCodePro-Regular:size=16
+st.font: SourceCodePro-Regular:size=14
 st.borderpx: 60
 st.cursorColor: #BB80B3
 st.blinktimeout: 800
-! Colors
+
+! Colors:
+! Palenight scheme
 *background: #292D3E
 *foreground: #BFC7D5
 *selbackground: #292D3E

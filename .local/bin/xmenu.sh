@@ -14,8 +14,8 @@ cat <<EOF | xmenu "$1" | sh &
 
  Communication
 	IMG:/usr/share/icons/hicolor/48x48/apps/firefox.png	Web browser	firefox
-	IMG:/usr/share/icons/hicolor/48x48/apps/qutebrowser.png	Qutebrowser	qutebrowser
-	IMG:/home/simen/.local/share/icons/Papirus/discord.png	Discord	discord
+	IMG:/usr/share/icons/hicolor/48x48/apps/qutebrowser.png	Qutebrowser	firejail --env=LD_PRELOAD='/usr/lib/libhardened_malloc.so' /usr/bin/qutebrowser
+	IMG:/home/simen/.local/share/icons/Papirus/discord.png	Discord	firejail discord
 	IMG:/home/simen/.local/share/icons/Papirus/slack.png	Slack	slack
 	IMG:/home/simen/.local/share/icons/Papirus/teams.png	Microsoft Teams	teams
 	IMG:/home/simen/.local/share/icons/Papirus/zoom.png	Zoom	zoom
@@ -29,8 +29,8 @@ cat <<EOF | xmenu "$1" | sh &
 	IMG:/home/simen/.local/share/icons/Papirus/arduino.png	Arduino	arduino
 	IMG:/home/simen/.local/share/icons/Papirus/kicad.png	KiCAD	kicad
  Multimedia
-	IMG:/usr/share/icons/hicolor/48x48/apps/spotify.png	Spotify	spotify
-	IMG:/home/simen/.local/share/icons/hicolor/48x48/apps/appimagekit-pocket-casts-linux.png	Pocket Casts	/home/simen/.local/bin/Appimages/pocket-casts.AppImage
+	IMG:/usr/share/icons/hicolor/48x48/apps/spotify.png	Spotify	firejail spotify
+	IMG:/home/simen/.local/share/icons/hicolor/48x48/apps/appimagekit-pocket-casts-linux.png	Pocket Casts	firejail --appimage /home/simen/.local/bin/Appimages/pocket-casts.AppImage
 	IMG:/usr/share/icons/hicolor/48x48/apps/vlc.png	Vlc	vlc
 	IMG:/home/simen/.local/share/icons/Papirus/sxiv.png	Sxiv	sxiv -rt ~/Multimedia/Pictures
 	IMG:/usr/share/icons/hicolor/48x48/apps/darktable.png	Darktable	darktable
