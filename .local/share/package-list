@@ -14,6 +14,7 @@ bashtop
 bat
 bemenu-git
 bison
+bluez-s6
 calibre
 clamav-s6
 clipman
@@ -48,7 +49,6 @@ ghex
 gnome-calculator
 godot
 gparted
-grub
 gruvbox-dark-gtk
 hardened_malloc
 htop
@@ -75,9 +75,11 @@ lolcat
 lutris
 lxappearance-gtk3
 lxsession
+ly
 make
 man-db
 menu-qalc
+metalog-s6
 mpc
 mpd-s6
 mu

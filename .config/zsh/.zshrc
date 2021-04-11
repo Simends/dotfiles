@@ -87,7 +87,7 @@ plugins=(
   zsh-interactive-cd
   bgnotify
   fzf
-  autojump
+  z
   vi-mode
   pass
 )
