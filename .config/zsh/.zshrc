@@ -89,7 +89,6 @@ plugins=(
   fzf
   z
   vi-mode
-  pass
 )
 
 

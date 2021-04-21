@@ -22,7 +22,7 @@ dunst &
 clipmenud &
 
 # Start emacs daemon
-emacs --daemon &
+# emacs --daemon &
 
 # ---Mount the clouds---
 # Onedrive

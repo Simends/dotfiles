@@ -11,7 +11,7 @@ Xft.autohint: 0
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
-Xft.dpi: 100
+Xft.dpi: 108
 
 ! Xmenu settings
 xmenu.width: 170
@@ -26,7 +26,7 @@ xmenu.seperator: #a8dadc
 xmenu.border: #a8dadc
 
 ! DWM Settings
-dwm.borderpx: 4
+dwm.borderpx: 2
 dwm.snap: 16
 dwm.showbar: 1
 dwm.topbar: 0
@@ -36,7 +36,7 @@ dwm.mfact: 0.6
 
 ! st.font: SauceCodePro Nerd-Regular:pixelsize=16:antialiasing=true:autohint=true
 st.font: SourceCodePro-Regular:size=14
-st.borderpx: 60
+st.borderpx: 10
 st.cursorColor: #BB80B3
 st.blinktimeout: 800
 
@@ -46,27 +46,71 @@ st.blinktimeout: 800
 *foreground: #BFC7D5
 *selbackground: #292D3E
 *selforeground: #80CBC4
-! black
 *color0: #1C1F2B
 *color8: #232635
-! red
 *color1: #ff5370
 *color9: #F78C6C
-! green
 *color2: #C3E88D
 *color10: #44B9B1
-! yellow
 *color3: #FFCB6B
 *color11: #FFCB6B
-! blue
 *color4: #82AAFF
 *color12: #7986E7
-! magenta
 *color5: #BB80B3
 *color13: #C792EA
-! cyan
 *color6: #80CBC4
 *color14: #89DDFF
-! white
 *color7: #BFC7D5
 *color15: #EEFFFF
+
+! Fairy-floss
+! *background: #323031
+! *foreground: #dfdfdf
+! *selbackground: #323031
+! *selforeground: #55b3cc
+! *color0: #979797
+! *color1: #ff857f
+! *color2: #716799
+! *color3: #e6c000
+! *color4: #167be2
+! *color5: #ae81ff
+! *color6: #55b3cc
+! *color7: #dfdfdf
+! *color8: #b5b2bd
+! *color9: #f92672
+! *color10: #8077a8
+! *color11: #96cbfe
+! *color12: #fff352
+! *color13: #c5a3ff
+! *color14: #c2ffdf
+! *color15: #f8f8f8
+
+! Palenight scheme
+! *background: #323031
+! *foreground: #F5F5F5
+! *selbackground: #323031
+! *selforeground: #62D7E4
+! black
+! *color0: #323031
+! *color8: #323031
+! red
+! *color1: #DB3A34
+! *color9: #DB3A34
+! green
+! *color2: #177E89
+! *color10: #177E89
+! yellow
+! *color3: #FFC857
+! *color11: #FFC857
+! blue
+! *color4: #084C61
+! *color12: #084C61
+! magenta
+! *color5: #084C61
+! *color13: #084C61
+! cyan
+! *color6: #62D7E4
+! *color14: #62D7E4
+! white
+! *color7: #F5F5F5
+! *color15: #F5F5F5

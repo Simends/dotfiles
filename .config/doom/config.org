@@ -68,16 +68,16 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;;hydra
        ;;indent-guides                  ; highlighted indent columns
        ;;ligatures                      ; ligatures and symbols to make your code pretty again
-       minimap                          ; show a map of the code on the side
+       ;; minimap                          ; show a map of the code on the side
        modeline                         ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash                      ; blink cursor line after big motions
        ;;neotree                        ; a project drawer, like NERDTree for vim
        ophints                          ; highlight the region an operation acts on
        (popup +defaults)                ; tame sudden yet inevitable temporary windows
        ;;tabs                           ; a tab bar for Emacs
-       treemacs                         ; a project drawer, like neotree but cooler
+       ;; treemacs                         ; a project drawer, like neotree but cooler
        unicode                          ; extended unicode support for various languages
-       vc-gutter                        ; vcs diff in the fringe
+       ;; vc-gutter                        ; vcs diff in the fringe
        vi-tilde-fringe                  ; fringe tildes to mark beyond EOB
        ;;window-select                  ; visually switch windows
        workspaces                       ; tab emulation, persistence & separate workspaces
@@ -87,34 +87,35 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :editor
        (evil +everywhere)               ; come to the dark side, we have cookies
-       file-templates                   ; auto-snippets for empty files
+       ;; file-templates                   ; auto-snippets for empty files
        fold                             ; (nigh) universal code folding
-       (format) ;;+onsave)              ; automated prettiness
+       ;; (format) ;;+onsave)              ; automated prettiness
        ;;god                            ; run Emacs commands without modifier keys
        ;;lispy                          ; vim for lisp, for people who don't like vim
-       multiple-cursors                 ; editing in many places at once
+       ;; multiple-cursors                 ; editing in many places at once
        ;;objed                          ; text object editing for the innocent
        ;;parinfer                       ; turn lisp into python, sort of
        ;;rotate-text                    ; cycle region at point between text candidates
-       snippets                         ; my elves. They type so I don't have to
+       ;; snippets                         ; my elves. They type so I don't have to
        word-wrap)                       ; soft wrapping with language-aware indent
 #+END_SRC
 ** Emacs
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :emacs
-       (dired +ranger +icons)           ; making dired pretty [functional]
+       ;; (dired +ranger +icons)           ; making dired pretty [functional]
        electric                         ; smarter, keyword-based electric-indent
-       ibuffer                          ; interactive buffer management
+       ;; ibuffer                          ; interactive buffer management
        undo ;;+tree)                    ; persistent, smarter undo for your inevitable mistakes
        vc)                              ; version-control and Emacs, sitting in a tree
 #+END_SRC
 ** Term
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :term
-       eshell                           ; the elisp shell that works everywhere
+       ;; eshell                           ; the elisp shell that works everywhere
        ;;shell                          ; simple shell REPL for Emacs
        ;;term                           ; basic terminal emulator for Emacs
-       vterm)                           ; the best terminal emulation in Emacs
+       ;; vterm)                           ; the best terminal emulation in Emacs
+       )
 #+END_SRC
 ** Checkers
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
@@ -127,21 +128,21 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :tools
        ;;ansible
-       debugger                         ; FIXME stepping through code, to help you add bugs
+       ;; debugger                         ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
        ;;editorconfig                   ; let someone else argue about tabs vs spaces
        ;;ein                            ; tame Jupyter notebooks with emacs
-       (eval +overlay)                  ; run code, run (also, repls)
+       ;; (eval +overlay)                  ; run code, run (also, repls)
        ;;gist                           ; interacting with github gists
-       lookup                           ; navigate your code and its documentation
+       ;; lookup                           ; navigate your code and its documentation
        ;;lsp
-       magit                            ; a git porcelain for Emacs
-       make                             ; run make tasks from Emacs
-       pass                             ; password manager for nerds
+       ;; magit                            ; a git porcelain for Emacs
+       ;; make                             ; run make tasks from Emacs
+       ;; pass                             ; password manager for nerds
        pdf                              ; pdf enhancements
        ;;prodigy                        ; FIXME managing external services & code builders
-       rgb                              ; creating color strings
+       ;; rgb                              ; creating color strings
        ;;taskrunner                     ; taskrunner for all your projects
        ;;terraform                      ; infrastructure as code
        ;;tmux                           ; an API for interacting with tmux
@@ -152,21 +153,21 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :os
        ;;(:if IS-MAC macos)             ; improve compatibility with macOS
-       tty                              ; improve the terminal Emacs experience
+       ;; tty                              ; improve the terminal Emacs experience
        )
 #+END_SRC
 ** Lang
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :lang
        ;;agda                           ; types of types of types of types...
-       assembly                         ; assembly for fun or debugging
-       cc                               ; C/C++/Obj-C madness
+       ;; assembly                         ; assembly for fun or debugging
+       ;; cc                               ; C/C++/Obj-C madness
        ;;clojure                        ; java with a lisp
        ;;common-lisp                    ; if you've seen one lisp, you've seen them all
        ;;coq                            ; proofs-as-programs
        ;;crystal                        ; ruby at the speed of c
        ;;csharp                         ; unity, .NET, and mono shenanigans
-       data                             ; config/data formats
+       ;; data                             ; config/data formats
        ;;(dart +flutter)                ; paint ui and not much else
        ;;elixir                         ; erlang done right
        ;;elm                            ; care for a cup of TEA?
@@ -181,9 +182,9 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;;(haskell +dante)               ; a language that's lazier than I am
        ;;hy                             ; readability of scheme w/ speed of python
        ;;idris                          ; a language you can depend on
-       json                             ; At least it ain't XML
+       ;; json                             ; At least it ain't XML
        ;;(java +meghanada)              ; the poster child for carpal tunnel syndrome
-       javascript                       ; all(hope(abandon(ye(who(enter(here))))))
+       ;; javascript                       ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                          ; a better, faster MATLAB
        ;;kotlin                         ; a better, slicker Java(Script)
        latex                            ; writing papers in Emacs has never been so fun
@@ -204,7 +205,7 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;;php                            ; perl's insecure younger brother
        ;;plantuml                       ; diagrams for confusing people more
        ;;purescript                     ; javascript, but functional
-       python                           ; beautiful is better than ugly
+       ;; python                           ; beautiful is better than ugly
        ;;qt                             ; the 'cutest' gui framework ever
        ;;racket                         ; a DSL for DSLs
        ;;raku                           ; the artist formerly known as perl6
@@ -214,19 +215,19 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;;rust                           ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala                          ; java, but good
        ;;scheme                         ; a fully conniving family of lisps
-       sh                               ; she sells {ba,z,fi}sh shells on the C xor
+       ;; sh                               ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity                       ; do you need a blockchain? No.
        ;;swift                          ; who asked for emoji variables?
        ;;terra                          ; Earth and Moon in alignment for performance.
-       web                              ; the tubes
-       yaml                             ; JSON, but readable
+       ;; web                              ; the tubes
+       ;; yaml                             ; JSON, but readable
        )
 #+END_SRC
 ** Email
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :email
-       (mu4e +gmail)
+       ;; (mu4e +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
        )
@@ -235,9 +236,9 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :app
        calendar
-       irc                              ; how neckbeards socialize
-       (rss +org)                       ; emacs as an RSS reader
-       emms
+       ;; irc                              ; how neckbeards socialize
+       ;; (rss +org)                       ; emacs as an RSS reader
+       ;; emms
        ;;twitter                        ; twitter client https://twitter.com/vnought
        )
 #+END_SRC
@@ -265,14 +266,23 @@ Doom install packages from doom, (m)elpa, or emacsmirror. But it can install pac
 ;; A graphical view for the agenda: https://github.com/Fuco1/org-timeline
 (package! org-timeline)
 
+;; A better agenda
+(package! org-super-agenda)
+
 ;; Manage your desktop with Emacs: https://github.com/ch11ng/exwm
 ;; (package! exwm)
 
 ;; Jump in text: https://github.com/abo-abo/avy
-(package! avy)
+;; (package! avy)
 
 ;; Major mode for skarnets execline-scripts
-(package! execline)
+;; (package! execline)
+
+;; Change emacs theme to match Xrdb
+;; (package! xresources-theme)
+
+;; Change Xrdb to match emacs theme
+;; (package! theme-magic)
 #+END_SRC
 
 * Interface
@@ -295,38 +305,45 @@ Lastly we set the theme and banner file and other minor ui tweaks.
       ;;doom-modeline-icon (display-graphic-p)
       ;;doom-modeline-major-mode-icon t
       doom-modeline-major-mode-color-icon t)
+(after! doom-modeline
+  (setq doom-modeline-icon (display-graphic-p)
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t))
+;; (display-time-24hr-format t)
+;; (display-time-day-and-date t)
+(display-time-mode 1)
 #+END_SRC
 * Keybindings
 Here we change some keybindings
 #+BEGIN_SRC emacs-lisp
-(map! :leader
-      :desc "Read News"
-      "o n" #'elfeed
-      :leader
-      :desc "Fetch a password"
-      "o w" #'ivy-pass
-      :leader
-      :desc "Calendar"
-      "o c" #'cfw:open-org-calendar
-      :leader
-      :desc "Browse the web"
-      "o W" #'eww
-      :leader
-      :desc "Calculator"
-      "o C" #'calc
-      :leader
-      :desc "Chat on IRC"
-      "o i" #'circe)
+;; (map! :leader
+;;       :desc "Read News"
+;;       "o n" #'elfeed
+;;       :leader
+;;       :desc "Fetch a password"
+;;       "o w" #'ivy-pass
+;;       :leader
+;;       :desc "Calendar"
+;;       "o c" #'cfw:open-org-calendar
+;;       :leader
+;;       :desc "Browse the web"
+;;       "o W" #'eww
+;;       :leader
+;;       :desc "Calculator"
+;;       "o C" #'calc
+;;       :leader
+;;       :desc "Chat on IRC"
+;;       "o i" #'circe)
 
-(map! :leader
-      :desc "Run make task"
-      "e m" #'evil-make
-      :leader
-      :desc "Chmod"
-      "e c" #'chmod)
-(map! :leader
-      :desc "Open ranger"
-      "f x" #'ranger)
+;; (map! :leader
+;;       :desc "Run make task"
+;;       "e m" #'evil-make
+;;       :leader
+;;       :desc "Chmod"
+;;       "e c" #'chmod)
+;; (map! :leader
+;;       :desc "Open ranger"
+;;       "f x" #'ranger)
 #+END_SRC
 * Org
 ** General
@@ -386,110 +403,110 @@ Only thing we change for projectile is it's search path
 ** Elfeed
 Here we just change the keybindings for the RSS-reader for emacs
 #+BEGIN_SRC emacs-lisp
-(map! :map elfeed-search-mode-map
-      :after elfeed-search
-      [remap kill-this-buffer] "q"
-      [remap kill-buffer] "q"
-      :n doom-leader-key nil
-      :n "q" #'+rss/quit
-      :n "e" #'elfeed-update
-      :n "r" #'elfeed-search-untag-all-unread
-      :n "u" #'elfeed-search-tag-all-unread
-      :n "s" #'elfeed-search-live-filter
-      :n "RET" #'elfeed-search-show-entry
-      :n "o" #'elfeed-search-show-entry
-      :n "p" #'elfeed-show-pdf
-      :n "+" #'elfeed-search-tag-all
-      :n "-" #'elfeed-search-untag-all
-      :n "S" #'elfeed-search-set-filter
-      :n "b" #'elfeed-search-browse-url
-      :n "y" #'elfeed-search-yank)
+;; (map! :map elfeed-search-mode-map
+;;       :after elfeed-search
+;;       [remap kill-this-buffer] "q"
+;;       [remap kill-buffer] "q"
+;;       :n doom-leader-key nil
+;;       :n "q" #'+rss/quit
+;;       :n "e" #'elfeed-update
+;;       :n "r" #'elfeed-search-untag-all-unread
+;;       :n "u" #'elfeed-search-tag-all-unread
+;;       :n "s" #'elfeed-search-live-filter
+;;       :n "RET" #'elfeed-search-show-entry
+;;       :n "o" #'elfeed-search-show-entry
+;;       :n "p" #'elfeed-show-pdf
+;;       :n "+" #'elfeed-search-tag-all
+;;       :n "-" #'elfeed-search-untag-all
+;;       :n "S" #'elfeed-search-set-filter
+;;       :n "b" #'elfeed-search-browse-url
+      ;; :n "y" #'elfeed-search-yank)
 #+END_SRC
 ** Mu4e
 Here we configure my preferred mail reader for emacs
 #+BEGIN_SRC emacs-lisp
-(use-package mu4e
-  :ensure nil
-  :load-path "/usr/share/emacs/site-lisp/mu4e/"
-  ;; :defer 20 ; Wait until 20 seconds after startup
-  :config
+;; (use-package mu4e
+;;   :ensure nil
+;;   :load-path "/usr/share/emacs/site-lisp/mu4e/"
+;;   ;; :defer 20 ; Wait until 20 seconds after startup
+;;   :config
 
-  ;; This is set to 't' to avoid mail syncing issues when using mbsync
-  (setq mu4e-change-filenames-when-moving t)
+;;   ;; This is set to 't' to avoid mail syncing issues when using mbsync
+;;   (setq mu4e-change-filenames-when-moving t)
 
-  ;; Refresh mail using isync every 10 minutes
-  (setq mu4e-update-interval (* 10 60))
-  (setq mu4e-sent-messages-behavior 'delete)
-  (setq mu4e-get-mail-command "mbsync -c ~/.config/Mail/mbsyncrc -a")
-  (setq mu4e-root-maildir "~/Documents/Mail")
-  (setq mu4e-contexts
-        (list
-         ;; Gmail
-         (make-mu4e-context
-          :name "Gmail"
-          :match-func
-            (lambda (msg)
-              (when msg
-                (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
-          :vars '((user-mail-address . "smndagersneve@gmail.com")
-                  (user-full-name    . "Simens Gmail")
-                  (mu4e-drafts-folder  . "/Gmail/[Gmail]/Drafts")
-                  (mu4e-sent-folder  . "/Gmail/[Gmail]/Sent Mail")
-                  (mu4e-refile-folder  . "/Gmail/[Gmail]/All Mail")
-                  (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))
-       ;; Hotmail
-       (make-mu4e-context
-        :name "Hotmail"
-        :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/Hotmail" (mu4e-message-field msg :maildir))))
-        :vars '((user-mail-address . "simends@hotmail.no")
-                (user-full-name    . "Simens Hotmail")
-                (mu4e-drafts-folder  . "/Hotmail/Drafts")
-                (mu4e-sent-folder  . "/Hotmail/Sent")
-                (mu4e-refile-folder  . "/Hotmail/Archive")
-                (mu4e-trash-folder  . "/Hotmail/Trash")))
-       ;; Studmail
-       (make-mu4e-context
-        :name "Studmail"
-        :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/Studmail" (mu4e-message-field msg :maildir))))
-        :vars '((user-mail-address . "simends@stud.ntnu.no")
-                (user-full-name    . "Simens Studmail")
-                (mu4e-drafts-folder  . "/Studmail/Drafts")
-                (mu4e-sent-folder  . "/Studmail/Sent")
-                (mu4e-refile-folder  . "/Studmail/Archive")
-                (mu4e-trash-folder  . "/Studmail/Trash")))))
+;;   ;; Refresh mail using isync every 10 minutes
+;;   (setq mu4e-update-interval (* 10 60))
+;;   (setq mu4e-sent-messages-behavior 'delete)
+;;   (setq mu4e-get-mail-command "mbsync -c ~/.config/Mail/mbsyncrc -a")
+;;   (setq mu4e-root-maildir "~/Documents/Mail")
+;;   (setq mu4e-contexts
+;;         (list
+;;          ;; Gmail
+;;          (make-mu4e-context
+;;           :name "Gmail"
+;;           :match-func
+;;             (lambda (msg)
+;;               (when msg
+;;                 (string-prefix-p "/Gmail" (mu4e-message-field msg :maildir))))
+;;           :vars '((user-mail-address . "smndagersneve@gmail.com")
+;;                   (user-full-name    . "Simens Gmail")
+;;                   (mu4e-drafts-folder  . "/Gmail/[Gmail]/Drafts")
+;;                   (mu4e-sent-folder  . "/Gmail/[Gmail]/Sent Mail")
+;;                   (mu4e-refile-folder  . "/Gmail/[Gmail]/All Mail")
+;;                   (mu4e-trash-folder  . "/Gmail/[Gmail]/Trash")))
+;;        ;; Hotmail
+;;        (make-mu4e-context
+;;         :name "Hotmail"
+;;         :match-func
+;;           (lambda (msg)
+;;             (when msg
+;;               (string-prefix-p "/Hotmail" (mu4e-message-field msg :maildir))))
+;;         :vars '((user-mail-address . "simends@hotmail.no")
+;;                 (user-full-name    . "Simens Hotmail")
+;;                 (mu4e-drafts-folder  . "/Hotmail/Drafts")
+;;                 (mu4e-sent-folder  . "/Hotmail/Sent")
+;;                 (mu4e-refile-folder  . "/Hotmail/Archive")
+;;                 (mu4e-trash-folder  . "/Hotmail/Trash")))
+;;        ;; Studmail
+;;        (make-mu4e-context
+;;         :name "Studmail"
+;;         :match-func
+;;           (lambda (msg)
+;;             (when msg
+;;               (string-prefix-p "/Studmail" (mu4e-message-field msg :maildir))))
+;;         :vars '((user-mail-address . "simends@stud.ntnu.no")
+;;                 (user-full-name    . "Simens Studmail")
+;;                 (mu4e-drafts-folder  . "/Studmail/Drafts")
+;;                 (mu4e-sent-folder  . "/Studmail/Sent")
+;;                 (mu4e-refile-folder  . "/Studmail/Archive")
+;;                 (mu4e-trash-folder  . "/Studmail/Trash")))))
 
-  (setq mu4e-maildir-shortcuts
-        '(("/Gmail/Inbox"             . ?i)
-          ("/Gmail/[Gmail]/Sent Mail" . ?s)
-          ("/Gmail/[Gmail]/Trash"     . ?t)
-          ("/Gmail/[Gmail]/Drafts"    . ?d)
-          ("/Gmail/[Gmail]/All Mail"  . ?a))))
+;;   (setq mu4e-maildir-shortcuts
+;;         '(("/Gmail/Inbox"             . ?i)
+;;           ("/Gmail/[Gmail]/Sent Mail" . ?s)
+;;           ("/Gmail/[Gmail]/Trash"     . ?t)
+          ;; ("/Gmail/[Gmail]/Drafts"    . ?d)
+          ;; ("/Gmail/[Gmail]/All Mail"  . ?a))))
 #+END_SRC
 ** EMMS
 Here we do some quick configurations of EMMS
 
 #+BEGIN_SRC emacs-lisp
-(emms-all)
-(emms-default-players)
-(emms-mode-line 1)
-(emms-playing-time 1)
-(setq emms-source-file-default-directory "~/Multimedia/Music"
-      emms-playlist-buffer-name "*Music*"
-      emms-info-asynchronously t
-      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
-(map! :leader
-      (:prefix ("a" . "EMMS audio player")
-       :desc "Go to emms playlist" "a" #'emms-playlist-mode-go
-       :desc "Emms pause track" "x" #'emms-pause
-       :desc "Emms stop track" "s" #'emms-stop
-       :desc "Emms play previous track" "p" #'emms-previous
-       :desc "Emms play next track" "n" #'emms-next))
+;; (emms-all)
+;; (emms-default-players)
+;; (emms-mode-line 1)
+;; (emms-playing-time 1)
+;; (setq emms-source-file-default-directory "~/Multimedia/Music"
+;;       emms-playlist-buffer-name "*Music*"
+;;       emms-info-asynchronously t
+;;       emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+;; (map! :leader
+;;       (:prefix ("a" . "EMMS audio player")
+;;        :desc "Go to emms playlist" "a" #'emms-playlist-mode-go
+;;        :desc "Emms pause track" "x" #'emms-pause
+;;        :desc "Emms stop track" "s" #'emms-stop
+;;        :desc "Emms play previous track" "p" #'emms-previous
+;;        :desc "Emms play next track" "n" #'emms-next))
 
 #+END_SRC
 

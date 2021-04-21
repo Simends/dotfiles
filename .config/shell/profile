@@ -8,6 +8,8 @@
 #
 
 # Environment variables
+export LANG="en_US.UTF-8"
+export LC_COLLATE="C"
 
 # Standard applications
 export EDITOR=nvim
@@ -31,7 +33,7 @@ export NNN_TRASH=2
 export NNN_PLUG='p:preview-tui;s:suedit;f:fzcd;c:chksum;d:dragdrop;x:togglex;m:mocplay;t:_trash -f $nnn;T:_trash -c;w:_setwp -f $nnn;W:_setwp -d $nnn'
 
 # FZF
-export FZF_DEFAULT_OPTS="--reverse --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"
+export FZF_DEFAULT_OPTS="--layout=default --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"
 export FZF_DEFAULT_COMMAND='fd --type f -H'
 export FZF_COMPLETION_TRIGGER='--'
 
@@ -55,6 +57,8 @@ export DOOMDIR="$XDG_CONFIG_HOME/doom"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export LESSHISTFILE=-
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+export _Z_DATA="$XDG_DATA_HOME/z"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 
 # Functions
 # Startx on login

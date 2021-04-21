@@ -45,6 +45,7 @@ alias pics='sxiv -abrt ~/Multimedia/Pictures/*'
 alias blconf='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias pth="echo $PATH | sed 's/:/\n/g'"
 alias nvmestat='sudo nvme smart-log /dev/nvme0n1'
+alias nna='tmux new -n NNN nnn -HdP p'
 
 # Pacman aliases
 alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
