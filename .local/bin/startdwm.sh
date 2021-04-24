@@ -7,7 +7,7 @@
 redshift -c ~/.config/redshift/redshift.conf &
 
 # Set wallpaper
-setwp -d ~/.config/Rice/Palenight/wallpaper/lightsym.jpg &
+# setwp -d ~/.config/Rice/Palenight/wallpaper/lightsym.jpg &
 
 # Start compositor
 picom --config ~/.config/picom.conf &
@@ -20,6 +20,9 @@ dunst &
 
 # Start the clipboard deamon
 clipmenud &
+
+# Start the light-locker daemon
+light-locker &
 
 # Start emacs daemon
 # emacs --daemon &

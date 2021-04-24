@@ -38,6 +38,8 @@ discord
 docker-s6
 dunst
 edk2-ovmf
+entr
+evince
 exa
 execline-man-pages-git
 extra-cmake-modules
@@ -48,7 +50,6 @@ firejail
 flex
 fnott
 fortune-mod
-fwupd
 fzf
 gamemode
 gammastep
@@ -56,6 +57,7 @@ gedit
 genius-spicetify-git
 ghex
 gnome-calculator
+gnome-software-packagekit-plugin
 godot
 gparted
 gruvbox-dark-gtk
@@ -115,6 +117,7 @@ oh-my-zsh-git
 onlyoffice-bin
 orchis-theme-git
 pacman-contrib
+palemoon-bin
 palenight-gtk-theme
 pam-gnupg
 papirus-folders-nordic
@@ -147,7 +150,9 @@ sxiv
 syncthing-s6
 teams
 texlive-science
+the_silver_searcher
 timeshift
+timetrap
 ttf-font-awesome-4
 tty-clock
 ufw-s6

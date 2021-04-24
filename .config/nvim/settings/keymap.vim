@@ -32,6 +32,10 @@ nnoremap <leader>hpu <cmd>PlugUpdate<cr>
 nnoremap <leader>hd <cmd>help<cr>
 vnoremap K :m '<-2<CR>gv=gv
 
+" Toggle autocompiler [a]
+nnoremap <leader>aw :!setsid autocomp web &<cr>
+nnoremap <leader>am :!setsid autocomp make &<cr>
+
 " Debugger [d]
 nnoremap <leader>dd :call vimspector#Launch()<CR>
 nnoremap <leader>dc :call GotoWindow(g:vimspector_session_windows.code)<CR>
@@ -75,9 +79,9 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Example: `<leader>cap` for current paragraph
+xmap <leader>c  <Plug>(coc-codeaction-selected)
+nmap <leader>c  <Plug>(coc-codeaction-selected)
 
 " Remappings
 nnoremap <leader>w <C-w>
