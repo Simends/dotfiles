@@ -17,6 +17,8 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fc :lua require('configTelescope').search_configfiles()<CR>
+nnoremap <leader>fp :lua require('configTelescope').search_projects()<CR>
 
 " Git commands [g]
 nnoremap <leader>gs <cmd>Git status<cr>
@@ -29,7 +31,9 @@ nnoremap <leader>gp <cmd>Git push<cr>
 nnoremap <leader>hpi <cmd>PlugInstall<cr>
 nnoremap <leader>hpc <cmd>PlugClean<cr>
 nnoremap <leader>hpu <cmd>PlugUpdate<cr>
-nnoremap <leader>hd <cmd>help<cr>
+nnoremap <leader>hdh <cmd>help<cr>
+nnoremap <leader>hdt :lua require('telescope.builtin').colorscheme()<cr>
+nnoremap <leader>hdk :lua require('telescope.builtin').keymaps()<cr>
 vnoremap K :m '<-2<CR>gv=gv
 
 " Toggle autocompiler [a]

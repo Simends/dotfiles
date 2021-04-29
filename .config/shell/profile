@@ -67,9 +67,9 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 # fi
 
 # Start Owndm on login
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
-   then exec owndm.sh
-fi
+# if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+   # then exec owndm.sh
+# fi
 
 function fbm {
     bmpath=$(cat /home/simen/.config/shell/bookmarks.txt | fzf | awk '{print $3}')

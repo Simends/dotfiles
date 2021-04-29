@@ -42,7 +42,6 @@ entr
 evince
 exa
 execline-man-pages-git
-extra-cmake-modules
 fd
 figlet
 firefox
@@ -76,6 +75,9 @@ kscreenlocker
 lib32-gamemode
 lib32-wavpack
 libvirt-s6
+light-locker
+lightdm-s6
+lightdm-webkit-theme-aether
 links
 linux-zen
 lolcat
@@ -88,6 +90,7 @@ man-db
 memtest86+
 menu-qalc
 metalog-s6
+mop-git
 mpc
 mpd-s6
 mu
@@ -124,7 +127,6 @@ papirus-folders-nordic
 pass
 patch
 pavucontrol
-pkgconf
 playerctl
 polkit-kde-agent
 powerline-fonts-git
@@ -141,7 +143,6 @@ ripgrep
 s6-man-pages-git
 scrot
 slack-desktop
-smartmontools
 smenu
 spicetify-themes-git
 steamos-compositor-plus
@@ -169,7 +170,6 @@ xdg-user-dirs
 xf86-video-amdgpu
 xlayoutdisplay
 xorg-server
-xorg-server-xephyr
 xorg-xinit
 xorg-xkill
 xorg-xsetroot
