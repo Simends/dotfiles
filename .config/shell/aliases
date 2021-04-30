@@ -18,11 +18,8 @@ alias mocp='mocp -O MOCDir="$XDG_CONFIG_HOME"/moc'
 alias dd='dd bs=1024 status=progress'
 alias cat='bat -pp'
 
-alias bm="$(printf "cat ~/.config/shell/bookmarks.txt" | column -t -s "  ")"
-# alias bm='printf "$(cat ~/.config/shell/bookmarks.txt)" | column -t -s " "'
 alias bm='cat ~/.config/shell/bookmarks.txt'
 alias plz='sudo $(fc -ln -1)'
-alias nna='nnn -FdaoQH -P p'
 alias la='echo " " && exa -bhal --icons'
 alias ll='echo " " && exa -bhl --icons'
 alias lgit='echo " " && exa -bhal --git'
@@ -47,14 +44,6 @@ alias pth="echo $PATH | sed 's/:/\n/g'"
 alias nvmestat='sudo nvme smart-log /dev/nvme0n1'
 alias nna='tmux new -n NNN nnn -HdP p'
 alias nnn='nnn -H'
-
-# Pacman aliases
-alias fps="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S"
-alias fpr="pacman -Qetq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
-alias fys="yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S"
-alias fyr="yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns"
-alias sp='sudo pacman'
-
 
 # Generated
 alias d='cd /home/simen/Documents/'

@@ -12,7 +12,6 @@ automake
 avrdude
 base
 bashtop
-bat
 bemenu-git
 bison
 blueberry
@@ -42,6 +41,7 @@ entr
 evince
 exa
 execline-man-pages-git
+extra-cmake-modules
 fd
 figlet
 firefox
@@ -84,7 +84,6 @@ lolcat
 lutris
 lxappearance-gtk3
 lxsession
-ly
 make
 man-db
 memtest86+
@@ -120,13 +119,14 @@ oh-my-zsh-git
 onlyoffice-bin
 orchis-theme-git
 pacman-contrib
-palemoon-bin
 palenight-gtk-theme
 pam-gnupg
 papirus-folders-nordic
+paru-bin
 pass
 patch
 pavucontrol
+pkgconf
 playerctl
 polkit-kde-agent
 powerline-fonts-git
