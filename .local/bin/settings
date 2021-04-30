@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+#   TODO oppdatere speil,
+
+clear
+echo -e "\n\n\n\n\n\n\n"
+read_news() {
+    case "$(echo '"Arch news"\n"Artix news"\n"Arch forum"\n"Artix forum"\n"Arch bugtracker"\n"Artix troubleshooting-guide"' | smenu -l -n 6 -N -M -d -m "System news")" in
+        "Arch news") surf https://archlinux.org/news/ ;;
+        "Artix news") surf https://artixlinux.org/news.php ;;
+        "Arch forum") surf https://bbs.archlinux.org/ ;;
+        "Artix forum") surf https://forum.artixlinux.org/ ;;
+        "Arch bugtracker") surf https://bugs.archlinux.org/ ;;
+        "Artix troubleshooting-guide") surf https://wiki.artixlinux.org/Main/Troubleshooting ;;
+    esac
+}
+
+package_settings() {
+    case "$(echo '"List System Updates"\n"Update System"\n"Update AUR-Packages"\n"Package Stats"\n"Clean Package Cache"\n"Delete Orphaned Packages"\n"Update Keyrings"' | smenu -l -n 7 -N -M -d -m "Package Settings")" in
+        "List System Updates") checkupdates ;;
+        "Update System") sudo pacman -Syu ;;
+        "Update AUR-packages") yay -Syu ;;
+        "Package Stats") yay -P -s ;;
+        "Clean Package Cache") paccache -rk2 -ruk0 ;;
+        "Delete Orphaned Packages") pacman -Qdt | awk '{print $1}' | xargs -ro sudo pacman -Rns ;;
+        "Update Keyrings") echo "Installing new keyrings..." && sudo pacman -Sy archlinux-keyring artix-keyring && echo "Removing old keyrings..." && sudo rm -r /etc/pacman.d/gnupg && echo "Initializing new keyrings..." && sudo pacman-key --init && echo "Updating the system..." && sudo pacman -Scc && sudo pacman -Syyu && echo "Finished" ;;
+    esac
+}
+
+set_wp() {
+    case "$(echo '"Manually"\n"Random"' | smenu -l -N -M -d -m "Set Wallpaper")" in
+        "Manually") setwp -m ;;
+        "Random") setwp -r ;;
+    esac
+}
+
+case "$(echo '"Package Settings" "Service Settings" "Clean .cache" "List Disks" "Disk Usage" "Disk Partitioning" "Task Manager" "Empty Trash" "Set Wallpaper" "Refresh Bootloader" "Timeshift Status" "Read Logs" "Read News"' | smenu -t 4 -d -n 8 -M -N -m "System Settings")" in
+    "Package Settings") package_settings ;;
+    "Service Settings") /home/simen/.local/bin/sv ;;
+    "Clean .cache") rm -vri /home/simen/.cache && echo "Cache has been cleaned!" ;;
+    "List Disks") lsblk ;;
+    "Disk Usage") ncdu -x --exclude-kernfs --exclude Cloud / ;;
+    "Disk Partitioning") sudo cfdisk /dev/nvme0n1 ;;
+    "Task Manager") bashtop ;;
+    "Empty Trash") trash -c ;;
+    "Set Wallpaper") set_wp ;;
+    "Refresh Bootloader") sudo grub-mkconfig -o /boot/grub/grub.cfg ;;
+    "Timeshift Status") echo "Use sudo timeshift --restore NUM to restore backup" && sudo timeshift --list ;;
+    "Read Logs") nnn /var/log/ ;;
+    "Read News") read_news ;;
+esac

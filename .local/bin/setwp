@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# A small script utilizing xwallpaper and sxiv to set desktop wallpaper
+wpdir=~/Multimedia/Pictures/Wallpapers
+
+case "$1" in
+    "-m") find $wpdir -type f | shuf | xargs -ro sxiv -obt | xargs -ro xwallpaper --no-randr --zoom ;;
+    "-r") find $wpdir -type f | shuf -n 1 | xargs -ro xwallpaper --no-randr --zoom ;;
+    "-f") xwallpaper --no-randr --zoom $2 ;;
+    "-d") xwallpaper --zoom $2 ;;
+    "-s") find $wpdir -type f | shuf | xargs -ro sxiv -obt | xargs -ro xwallpaper --zoom ;;
+    "-h") echo -e "-m Lets you pick wallpaper\n-r Picks a random wallpaper\n-f FILE, will set file as wallpaper\n-d FILE, Set file as wallpaper, but respect randr\n-s Lets you pick wallpaper, but respect randr" ;;
+esac
