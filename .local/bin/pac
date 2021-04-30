@@ -9,10 +9,10 @@ update() {
 
     echo -e "\nOther upgrades"
     echo "--> Doom Emacs"
-    doom upgrade -y >$ 4
+    doom -y upgrade >& 4
 
     echo "--> Vim-plug"
-    nvim -es -u init.vim -i NONE -c "PlugUpgrade" -c "qa" >$ 4
+    nvim -es -u init.vim -i NONE -c "PlugUpgrade" -c "qa" >& 4
 
     echo -e "Upgrade finished!\n"
 }
@@ -24,17 +24,17 @@ clean() {
     echo "--> Unneeded cached packages"
     yay -Yc
     yay -Sc
-    paccache -rk2 -ruk0 <& 4
+    paccache -rk2 -ruk0 >& 4
 
     echo -e "\n--> Orphaned packages"
     yay -Qdt | awk '{print $1}' | xargs -ro yay -Rns
 
     echo -e "\n--> Doom Emacs"
-    doom purge -y >& 4
-    doom clean -y >& 4
+    doom -y purge >& 4
+    doom -y clean >& 4
 
     echo -e "\n--> Vim-plug"
-    nvim -es -u init.vim -i NONE -c "PlugClean!" -c "qa" >$ 4
+    nvim -es -u init.vim -i NONE -c "PlugClean!" -c "qa" >& 4
 
     echo -e "\nPackage cleaning finished!"
 }
