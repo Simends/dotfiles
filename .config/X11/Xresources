@@ -36,7 +36,7 @@ dwm.mfact: 0.6
 
 ! st.font: SauceCodePro Nerd-Regular:pixelsize=16:antialiasing=true:autohint=true
 st.font: SourceCodePro-Regular:size=14
-st.borderpx: 10
+st.borderpx: 0
 st.cursorColor: #BB80B3
 st.blinktimeout: 800
 

@@ -13,50 +13,50 @@ cat <<EOF | xmenu "$1" | sh &
 
 
  Communication
-	IMG:/usr/share/icons/hicolor/48x48/apps/firefox.png	Web browser	firefox
-	IMG:/usr/share/icons/hicolor/48x48/apps/qutebrowser.png	Qutebrowser	firejail --env=LD_PRELOAD='/usr/lib/libhardened_malloc.so' /usr/bin/qutebrowser
-	IMG:/home/simen/.local/share/icons/Papirus/discord.png	Discord	firejail discord
-	IMG:/home/simen/.local/share/icons/Papirus/slack.png	Slack	slack
-	IMG:/home/simen/.local/share/icons/Papirus/teams.png	Microsoft Teams	teams
-	IMG:/home/simen/.local/share/icons/Papirus/zoom.png	Zoom	zoom
+	Web browser	firefox
+	Qutebrowser	firejail --env=LD_PRELOAD='/usr/lib/libhardened_malloc.so' /usr/bin/qutebrowser
+	Discord	firejail discord
+	Slack	slack
+	Microsoft Teams	teams
+	Zoom	zoom
  Productivity
-	IMG:/usr/share/icons/hicolor/48x48/apps/onlyoffice-desktopeditors.png	Office	onlyoffice-desktopeditors
-	IMG:/usr/share/icons/hicolor/48x48/apps/emacs.png	Emacs	emacsclient -c
-	IMG:/home/simen/.local/share/icons/Papirus/evince.png	Pdf reader	evince
-	IMG:/usr/share/icons/hicolor/48x48/apps/calibre-gui.png	Calibre	calibre
-	IMG:/home/simen/.local/share/icons/Papirus/anki.png	Anki	anki
-	IMG:/usr/share/icons/hicolor/48x48/apps/octave.png	GNU Octave	octave --gui
-	IMG:/home/simen/.local/share/icons/Papirus/arduino.png	Arduino	arduino
-	IMG:/home/simen/.local/share/icons/Papirus/kicad.png	KiCAD	kicad
+	Office	onlyoffice-desktopeditors
+	Emacs	emacsclient -c
+	Pdf reader	evince
+	Calibre	calibre
+	Anki	anki
+	GNU Octave	octave --gui
+	Arduino	arduino
+	KiCAD	kicad
  Multimedia
-	IMG:/usr/share/icons/hicolor/48x48/apps/spotify.png	Spotify	firejail spotify
-	IMG:/home/simen/.local/share/icons/hicolor/48x48/apps/appimagekit-pocket-casts-linux.png	Pocket Casts	firejail --appimage /home/simen/.local/bin/Appimages/pocket-casts.AppImage
-	IMG:/usr/share/icons/hicolor/48x48/apps/vlc.png	Vlc	vlc
-	IMG:/home/simen/.local/share/icons/Papirus/sxiv.png	Sxiv	sxiv -rt ~/Multimedia/Pictures
-	IMG:/usr/share/icons/hicolor/48x48/apps/darktable.png	Darktable	darktable
-	IMG:/usr/share/icons/hicolor/48x48/apps/krita.png	Krita	krita
-	IMG:/home/simen/.local/share/icons/Papirus/inkscape.png	Inkscape	inkscape
-	IMG:/home/simen/.local/share/icons/Papirus/kdenlive.png	Kdenlive	kdenlive
+	Spotify	firejail spotify
+	Pocket Casts	firejail --appimage /home/simen/.local/bin/Appimages/pocket-casts.AppImage
+	Vlc	vlc
+	Sxiv	sxiv -rt ~/Multimedia/Pictures
+	Darktable	darktable
+	Krita	krita
+	Inkscape	inkscape
+	Kdenlive	kdenlive
  Games
-	IMG:/usr/share/icons/hicolor/48x48/apps/steam.png	Steam	steam
-	IMG:/usr/share/icons/hicolor/48x48/apps/lutris.png	Lutris	lutris
-	IMG:/usr/share/icons/hicolor/48x48/apps/itch.png	Itch.io	itch
-	IMG:/home/simen/.local/share/icons/Papirus/minecraft.png	Minecraft	multimc
-	IMG:/home/simen/.local/share/icons/Papirus/godot.png	Godot Engine	godot
+	Steam	steam
+	Lutris	lutris
+	Itch.io	itch
+	multimc
+	Godot Engine	godot
  Utilities
-	IMG:/home/simen/.local/share/icons/Papirus/files.png	Files	nautilus
-	IMG:/home/simen/.local/share/icons/Papirus/terminal.png	Terminal	st
-	IMG:/home/simen/.local/share/icons/Papirus/accessories-calculator.png	Calculator	gnome-calculator
-	IMG:/usr/share/icons/hicolor/48x48/apps/qbittorrent.png	Torrent	qbittorrent
-	IMG:/usr/share/icons/hicolor/48x48/apps/virt-manager.png	Virtual Machine	virt-manager
+	Files	nautilus
+	Terminal	st
+	Calculator	gnome-calculator
+	Torrent	qbittorrent
+	Virtual Machine	virt-manager
  Settings
-	IMG:/home/simen/.local/share/icons/Papirus/display.png	Display	arandr
-	IMG:/home/simen/.local/share/icons/Papirus/network-wired.png	Network	connman-gtk
-	IMG:/home/simen/.local/share/icons/Papirus/drive-harddisk.png	Disk	gparted
-	IMG:/home/simen/.local/share/icons/Papirus/audio-speaker-left-side-testing.png	Sound	pavucontrol
-	IMG:/home/simen/.local/share/icons/Papirus/colors.png	Appearance	lxappearance
-	IMG:/usr/share/icons/hicolor/48x48/apps/timeshift.png	Timeshift	timeshift-launcher
-	IMG:/home/simen/.local/share/icons/Papirus/corectrl.png	CoreCtrl	corectrl
+	Display	arandr
+	Network	connman-gtk
+	Disk	gparted
+	Sound	pavucontrol
+	Appearance	lxappearance
+	Timeshift	timeshift-launcher
+	CoreCtrl	corectrl
 
 
 

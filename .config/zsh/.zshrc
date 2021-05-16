@@ -87,6 +87,7 @@ plugins=(
   zsh-interactive-cd
   bgnotify
   fzf
+  systemadmin
   z
   vi-mode
 )

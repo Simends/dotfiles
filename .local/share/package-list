@@ -46,6 +46,7 @@ fd
 figlet
 firefox
 firejail
+flameshot
 flex
 fnott
 fortune-mod
@@ -72,6 +73,7 @@ kicad
 kitty
 krita
 kscreenlocker
+lbreakout2
 lib32-gamemode
 lib32-wavpack
 libvirt-s6
@@ -140,6 +142,7 @@ qutebrowser
 ranger
 redshift-minimal
 ripgrep
+s6-linux-utils
 s6-man-pages-git
 scrot
 slack-desktop

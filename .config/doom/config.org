@@ -25,7 +25,6 @@
   - [[#org-roam][Org-Roam]]
 - [[#configuring-packages][Configuring Packages]]
   - [[#projectile][Projectile]]
-  - [[#elfeed][Elfeed]]
   - [[#mu4e][Mu4e]]
   - [[#emms][EMMS]]
   - [[#exwm][EXWM]]
@@ -50,7 +49,7 @@ Here we initialize the doom modules. For documentation on the different modules 
 ** Completion
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :completion
-       company                          ; the ultimate code completion backend
+       (company +childframe)            ; the ultimate code completion backend
        ;; helm                             ; the *other* search engine for love and life
        ;; ido                              ; the other *other* search engine...
        (ivy +fuzzy +icons))             ; a search engine for love and life
@@ -68,9 +67,9 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;; hydra
        ;; indent-guides                  ; highlighted indent columns
        ;; ligatures                      ; ligatures and symbols to make your code pretty again
-       ;; minimap                          ; show a map of the code on the side
+       minimap                          ; show a map of the code on the side
        modeline                         ; snazzy, Atom-inspired modeline, plus API
-       ;; nav-flash                        ; blink cursor line after big motions
+       nav-flash                        ; blink cursor line after big motions
        ;; neotree                          ; a project drawer, like NERDTree for vim
        ophints                          ; highlight the region an operation acts on
        (popup +defaults)                ; tame sudden yet inevitable temporary windows
@@ -130,7 +129,7 @@ Here we initialize the doom modules. For documentation on the different modules 
        ;; ansible
        (debugger +lsp)                  ; FIXME stepping through code, to help you add bugs
        ;; direnv
-       ;; (docker +lsp)
+       (docker +lsp)
        ;; editorconfig                     ; let someone else argue about tabs vs spaces
        ;; ein                              ; tame Jupyter notebooks with emacs
        (eval +overlay)                  ; run code, run (also, repls)
@@ -140,7 +139,7 @@ Here we initialize the doom modules. For documentation on the different modules 
        magit                            ; a git porcelain for Emacs
        make                             ; run make tasks from Emacs
        ;; pass                             ; password manager for nerds
-       pdf                              ; pdf enhancements
+       ;; pdf                              ; pdf enhancements
        ;; prodigy                          ; FIXME managing external services & code builders
        rgb                              ; creating color strings
        ;; taskrunner                       ; taskrunner for all your projects
@@ -153,7 +152,7 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :os
        ;;(:if IS-MAC macos)                ; improve compatibility with macOS
-       tty                              ; improve the terminal Emacs experience
+       ;; tty                              ; improve the terminal Emacs experience
        )
 #+END_SRC
 ** Lang
@@ -241,7 +240,7 @@ Here we initialize the doom modules. For documentation on the different modules 
 #+BEGIN_SRC emacs-lisp :tangle ./init.el
 (doom! :app
        calendar
-       ;; irc                              ; how neckbeards socialize
+       irc                              ; how neckbeards socialize
        ;; (rss +org)                       ; emacs as an RSS reader
        ;; emms
        ;;twitter                        ; twitter client https://twitter.com/vnought
@@ -290,7 +289,7 @@ Doom install packages from doom, (m)elpa, or emacsmirror. But it can install pac
 * Interface
 We start by setting the font:
 #+BEGIN_SRC emacs-lisp
-(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 16 :weight 'Regular)
+(setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 18 :weight 'Regular)
       doom-variable-pitch-font (font-spec :family "sans" :size 13))
       ;; doom-big-font (font-spec :family "SauceCodePro Nerd Font" :size 24 :weight 'Regular'))
 #+END_SRC
@@ -303,7 +302,6 @@ Line numbers is nice, I prefer relative, but absolute ('t) and none ('nil) is al
 Lastly we set the theme and banner file and other minor ui tweaks.
 #+BEGIN_SRC emacs-lisp
 (setq doom-theme 'doom-palenight
-      +doom-dashboard-banner-file (expand-file-name "banner.png" doom-private-dir)
       doom-modeline-major-mode-color-icon t)
 (after! doom-modeline
   (setq doom-modeline-icon (display-graphic-p)
@@ -312,17 +310,12 @@ Lastly we set the theme and banner file and other minor ui tweaks.
 ;; (display-time-24hr-format t)
 ;; (display-time-day-and-date t)
 (display-time-mode 1)
+(setq scroll-margin 15)
 #+END_SRC
 * Keybindings
 Here we change some keybindings
 #+BEGIN_SRC emacs-lisp
 (map! :leader
-      :desc "Read News"
-      "o n" #'elfeed
-      :leader
-      :desc "Fetch a password"
-      "o w" #'ivy-pass
-      :leader
       :desc "Calendar"
       "o c" #'cfw:open-org-calendar
       :leader
@@ -330,10 +323,7 @@ Here we change some keybindings
       "o W" #'eww
       :leader
       :desc "Calculator"
-      "o C" #'calc
-      :leader
-      :desc "Chat on IRC"
-      "o i" #'circe)
+      "o C" #'calc)
 
 (map! :leader
       :desc "Run make task"
@@ -396,28 +386,6 @@ And lastly we configure the keybindings and associate SPC-r with Roam
 Only thing we change for projectile is it's search path
 #+BEGIN_SRC emacs-lisp
 (setq projectile-project-search-path '("~/Documents/Projects" "~/.local/src"))
-#+END_SRC
-** Elfeed
-Here we just change the keybindings for the RSS-reader for emacs
-#+BEGIN_SRC emacs-lisp
-;; (map! :map elfeed-search-mode-map
-;;       :after elfeed-search
-;;       [remap kill-this-buffer] "q"
-;;       [remap kill-buffer] "q"
-;;       :n doom-leader-key nil
-;;       :n "q" #'+rss/quit
-;;       :n "e" #'elfeed-update
-;;       :n "r" #'elfeed-search-untag-all-unread
-;;       :n "u" #'elfeed-search-tag-all-unread
-;;       :n "s" #'elfeed-search-live-filter
-;;       :n "RET" #'elfeed-search-show-entry
-;;       :n "o" #'elfeed-search-show-entry
-;;       :n "p" #'elfeed-show-pdf
-;;       :n "+" #'elfeed-search-tag-all
-;;       :n "-" #'elfeed-search-untag-all
-;;       :n "S" #'elfeed-search-set-filter
-;;       :n "b" #'elfeed-search-browse-url
-      ;; :n "y" #'elfeed-search-yank)
 #+END_SRC
 ** Mu4e
 Here we configure my preferred mail reader for emacs

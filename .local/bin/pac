@@ -61,5 +61,6 @@ case "$1" in
     "clean") clean ;;
     "search") yay -Ss "${@:2}" ;;
     "query") yay -Qs "${@:2}" ;;
-    "help") echo "$help" ;;
+    "help") echo -e "$help\n" ;;
+    *) sudo pacman "${@:1}" ;;
 esac
