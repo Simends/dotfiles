@@ -1,0 +1,10 @@
+vim-plug
+
+neovim-git
+ripgrep
+nodejs
+npm
+ctags
+yarn
+bat
+code-minimap

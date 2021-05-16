@@ -12,6 +12,3 @@ source $HOME/.config/nvim/settings/plugins.vim
 
 " Set colorscheme
 colorscheme fairyfloss
-
-" Other stuff
-hi Normal guibg=NONE ctermbg=NONE

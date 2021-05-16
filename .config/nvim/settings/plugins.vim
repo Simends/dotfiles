@@ -46,13 +46,8 @@ Plug 'wfxr/minimap.vim', { 'on': ['Minimap', 'MinimapToggle'] }
 " TODO Debug in vim
 Plug 'puremourning/vimspector', { 'on': ['<Plug>vimspector#Launch()', 'VimspectorInstall', 'VimspectorUpdate'] }
 
-" Completion and more
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Snippets in vim
 Plug 'SirVer/ultisnips'
-
-" Snippetengine for vim
 Plug 'honza/vim-snippets'
 
 " Tag list
@@ -64,13 +59,30 @@ Plug 'hoob3rt/lualine.nvim'
 " Maximize window
 Plug 'szw/vim-maximizer'
 
-" Search with two characters
-Plug 'justinmk/vim-sneak'
-
 " Better notetaking
 Plug 'vimwiki/vimwiki'
+Plug 'tools-life/taskwiki'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'godlygeek/tabular'|
+            \ Plug 'plasticboy/vim-markdown'
+
+" Zen-mode in vim
+Plug 'junegunn/goyo.vim'
+
+" TODO Show list of available keybindings
+" Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
+" Coc
+" Extensions written in TS need to be installed with yarn
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}      " Adding snippets for vim
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}      " Autoformating
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}      " Server for JS and TS
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}          " Server for JSON
+Plug 'clangd/coc-clangd', {'do': 'yarn install --frozen-lockfile'}          " Server for C, C++, C#
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}    " Server for python3
+Plug 'josa42/coc-sh', {'do': 'yarn install --frozen-lockfile'}              " Server for bash, zsh, posix sh, etc.
+Plug 'iamcco/coc-diagnostic', {'do': 'yarn install --frozen-lockfile'}      " Server for diagnostic
 
 call plug#end()
-
-" Coc plugins
-let g:coc_global_extensions = [ 'coc-json', 'coc-python', 'coc-tsserver', 'coc-snippets', 'coc-clangd', 'coc-sh', 'coc-diagnostic']

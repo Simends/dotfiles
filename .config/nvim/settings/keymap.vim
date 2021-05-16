@@ -4,12 +4,32 @@
 " Define leader
 let mapleader = " "
 
-" Open stuff [o]
-nnoremap <leader>ou <cmd>UndotreeToggle<cr>
-nnoremap <leader>op <cmd>NERDTreeToggle<cr>
-nnoremap <leader>ot <cmd>vnew term://zsh<cr>
-nnoremap <leader>om <cmd>MinimapToggle<cr>
-nnoremap <leader>oc <cmd>TagbarToggle<cr>
+" Short stuff
+nnoremap <leader>n <cmd>bn<cr>      " Next buffer
+nnoremap <leader>2n <cmd>2bn<cr>
+nnoremap <leader>3n <cmd>3bn<cr>
+nnoremap <leader>4n <cmd>4bn<cr>
+nnoremap <leader>5n <cmd>5bn<cr>
+nnoremap <leader>p <cmd>bp<cr>      " Previous buffer
+nnoremap <leader>2p <cmd>2bp<cr>
+nnoremap <leader>3p <cmd>3bp<cr>
+nnoremap <leader>4p <cmd>4bp<cr>
+nnoremap <leader>5p <cmd>5bp<cr>
+nnoremap <leader>w <C-w>
+nnoremap <leader>m :MaximizerToggle!<CR>
+nnoremap Q !!sh<cr>
+
+" Visual mode
+vmap <leader>f  <Plug>(coc-format-selected)
+vnoremap J :m '>+1<CR>gv=gv         " Move selection with shift and movement keys
+
+" Toggle stuff [t]
+nnoremap <leader>tu <cmd>UndotreeToggle<cr>
+nnoremap <leader>tp <cmd>NERDTreeToggle<cr>
+nnoremap <leader>tt <cmd>vnew term://zsh<cr>
+nnoremap <leader>tm <cmd>MinimapToggle<cr>
+nnoremap <leader>tc <cmd>TagbarToggle<cr>
+nnoremap <leader>tz <cmd>Goyo<cr>
 
 " Find files [f]
 nnoremap <leader><leader> <cmd>Telescope find_files<cr>
@@ -19,6 +39,22 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fc :lua require('configTelescope').search_configfiles()<CR>
 nnoremap <leader>fp :lua require('configTelescope').search_projects()<CR>
+
+" Notes and wiki [v]
+nmap <leader>vv <Plug>VimwikiIndex
+nmap <leader>vt <Plug>VimwikiTabIndex
+nmap <leader>vs <Plug>VimwikiUISelect
+nmap <leader>vn <Plug>VimwikiGoto
+nmap <leader>vd <Plug>VimwikiDeleteFile
+nmap <leader>vr <Plug>VimwikiRenameFile
+nmap <leader>vh <Plug>Vimwiki2HTML
+nmap <leader>vhh <Plug>Vimwiki2HTMLBrowse
+nmap <leader>vi <Plug>VimwikiDiaryIndex
+nmap <leader>v<leader>v <Plug>VimwikiMakeDiaryNote
+nmap <leader>v<leader>t <Plug>VimwikiTabMakeDiaryNote
+nmap <leader>v<leader>y <Plug>VimwikiMakeYesterdayDiaryNote
+nmap <leader>v<leader>m <Plug>VimwikiMakeTomorrowDiaryNote
+nmap <leader>v<leader>i <Plug>VimwikiDiaryGenerateLinks
 
 " Git commands [g]
 nnoremap <leader>gs <cmd>Git status<cr>
@@ -34,6 +70,10 @@ nnoremap <leader>hpu <cmd>PlugUpdate<cr>
 nnoremap <leader>hdh <cmd>help<cr>
 nnoremap <leader>hdt :lua require('telescope.builtin').colorscheme()<cr>
 nnoremap <leader>hdk :lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>hc <cmd>edit ~/.config/nvim/init.vim<cr>
+nnoremap <leader>hck <cmd>edit ~/.config/nvim/settings/keymap.vim<cr>
+nnoremap <leader>hcp <cmd>edit ~/.config/nvim/settings/plugins.vim<cr>
+nnoremap <leader>hcs <cmd>edit ~/.config/nvim/settings/sets.vim<cr>
 vnoremap K :m '<-2<CR>gv=gv
 
 " Toggle autocompiler [a]
@@ -86,10 +126,5 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " Example: `<leader>cap` for current paragraph
 xmap <leader>c  <Plug>(coc-codeaction-selected)
 nmap <leader>c  <Plug>(coc-codeaction-selected)
-
-" Remappings
-nnoremap <leader>w <C-w>
-vnoremap J :m '>+1<CR>gv=gv
-nnoremap <leader>m :MaximizerToggle!<CR>
 
 imap <C-l> <Plug>(coc-snippets-expand)

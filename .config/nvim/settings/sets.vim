@@ -29,6 +29,9 @@ set shiftwidth=4	" Number of spaces to use for autoindent
 set expandtab		" Expand tabs to spaces
 set smartindent
 
+" Wildmenu
+set wildchar=<Tab> wildmenu wildmode=full
+
 set linebreak
 set nowrap
 set scrolloff=15
@@ -41,3 +44,5 @@ set cmdheight=2
 set shortmess+=c
 set mouse=a
 set background=dark
+
+command! -nargs=0 Format :CocCommand prettier.formatFile
