@@ -14,7 +14,7 @@ export LC_COLLATE="C"
 # Standard applications
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=links
+export BROWSER=firefox
 export TERMINAL=st
 #export MANPAGER=less
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -38,7 +38,7 @@ export FZF_DEFAULT_COMMAND='fd --type f -H'
 export FZF_COMPLETION_TRIGGER='--'
 
 # Other variables
-eval "`dircolors -b ~/.config/shell/dir_colors/nord`"
+# eval "`dircolors -b ~/.config/shell/dir_colors/nord`"
 export QT_STYLE_OVERRIDE="gtk2"
 
 # Home cleaning

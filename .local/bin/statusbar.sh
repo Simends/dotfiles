@@ -38,6 +38,6 @@ fnc(){
 }
 
 while true; do
-	xsetroot -name "$(fnc)~$(upd)~$(mem)~$(tmp)~$(dte) "
+	xsetroot -name "$(fnc)~$(upd)~$(mem)~$(tmp)~$(dte)"
 	sleep 10s	# Update every 10s
 done &

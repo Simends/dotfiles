@@ -44,5 +44,6 @@ set cmdheight=2
 set shortmess+=c
 set mouse=a
 set background=dark
+set path+=**
 
 command! -nargs=0 Format :CocCommand prettier.formatFile

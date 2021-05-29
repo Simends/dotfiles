@@ -4,25 +4,28 @@
 #---Start applications/daemons---
 
 # Start redshift
-redshift -c ~/.config/redshift/redshift.conf &
+# redshift -c ~/.config/redshift/redshift.conf &
 
 # Set wallpaper
 # setwp -d ~/.config/Rice/Palenight/wallpaper/lightsym.jpg &
 
 # Start compositor
-picom --config ~/.config/picom.conf &
+# picom --config ~/.config/picom.conf &
 
 # Start the polkit agent
-lxsession &
+# lxsession &
 
 # Start the notification server
-dunst &
+# dunst &
 
 # Start the clipboard deamon
-clipmenud &
+# clipmenud &
 
 # Start the light-locker daemon
-light-locker &
+# light-locker &
+
+# statusbar.sh &
+# dwmblocks &
 
 # Start emacs daemon
 # emacs --daemon &

@@ -11,4 +11,4 @@ source $HOME/.config/nvim/settings/keymap.vim
 source $HOME/.config/nvim/settings/plugins.vim
 
 " Set colorscheme
-colorscheme fairyfloss
+colorscheme palenight

@@ -26,13 +26,15 @@ xmenu.seperator: #a8dadc
 xmenu.border: #a8dadc
 
 ! DWM Settings
-dwm.borderpx: 2
+dwm.borderpx: 3
 dwm.snap: 16
 dwm.showbar: 1
 dwm.topbar: 0
 dwm.nmaster: 1
 dwm.resizehints: 1
 dwm.mfact: 0.6
+dwm.normbordercolor: #BFC7D5
+dwm.selbordercolor: #80CBC4
 
 ! st.font: SauceCodePro Nerd-Regular:pixelsize=16:antialiasing=true:autohint=true
 st.font: SourceCodePro-Regular:size=14

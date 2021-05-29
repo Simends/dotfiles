@@ -32,13 +32,13 @@ nnoremap <leader>tc <cmd>TagbarToggle<cr>
 nnoremap <leader>tz <cmd>Goyo<cr>
 
 " Find files [f]
-nnoremap <leader><leader> <cmd>Telescope find_files<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader><leader> :find 
+nnoremap <leader>ff :find 
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fc :lua require('configTelescope').search_configfiles()<CR>
-nnoremap <leader>fp :lua require('configTelescope').search_projects()<CR>
+nnoremap <leader>fb :buffers<cr>
+nnoremap <leader>fh :help 
+" nnoremap <leader>fc :lua require('configTelescope').search_configfiles()<CR>
+" nnoremap <leader>fp :lua require('configTelescope').search_projects()<CR>
 
 " Notes and wiki [v]
 nmap <leader>vv <Plug>VimwikiIndex
@@ -68,8 +68,8 @@ nnoremap <leader>hpi <cmd>PlugInstall<cr>
 nnoremap <leader>hpc <cmd>PlugClean<cr>
 nnoremap <leader>hpu <cmd>PlugUpdate<cr>
 nnoremap <leader>hdh <cmd>help<cr>
-nnoremap <leader>hdt :lua require('telescope.builtin').colorscheme()<cr>
-nnoremap <leader>hdk :lua require('telescope.builtin').keymaps()<cr>
+nnoremap <leader>hdt :colorscheme 
+" nnoremap <leader>hdk :lua require('telescope.builtin').keymaps()<cr>
 nnoremap <leader>hc <cmd>edit ~/.config/nvim/init.vim<cr>
 nnoremap <leader>hck <cmd>edit ~/.config/nvim/settings/keymap.vim<cr>
 nnoremap <leader>hcp <cmd>edit ~/.config/nvim/settings/plugins.vim<cr>

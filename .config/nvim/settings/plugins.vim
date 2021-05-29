@@ -14,10 +14,12 @@ Plug 'drewtempelmeyer/palenight.vim'
 " Emacs-style undotree
 Plug 'mbbill/undotree'
 
+" Plug 'skanehira/docker.vim'
+
 " Telescope fuzzy-finder
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 
 " Easily comment lines
 Plug 'preservim/nerdcommenter'
@@ -27,6 +29,9 @@ Plug 'tommcdo/vim-lion'
 
 " Change sorrounding characters
 Plug 'tpope/vim-surround'
+
+" Easy search
+Plug 'justinmk/vim-sneak'
 
 " Icons
 Plug 'ryanoasis/vim-devicons'
