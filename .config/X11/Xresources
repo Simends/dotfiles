@@ -29,7 +29,7 @@ xmenu.border: #a8dadc
 dwm.borderpx: 3
 dwm.snap: 16
 dwm.showbar: 1
-dwm.topbar: 0
+dwm.topbar: 1
 dwm.nmaster: 1
 dwm.resizehints: 1
 dwm.mfact: 0.6

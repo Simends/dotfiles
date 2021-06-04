@@ -55,7 +55,7 @@ case "$1" in
     "in") yay -S "${@:2}" ;;
     "rm") yay -Rns "${@:2}" ;;
     "fin") yay -Slq | fzf --multi --preview 'yay -Si {1}' | xargs -ro yay -S ;;
-    "frm") yay -Qq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns ;;
+    "frm") yay -Qetq | fzf --multi --preview 'yay -Qi {1}' | xargs -ro yay -Rns ;;
     "up") update ;;
     "stat") yay -Ps ;;
     "clean") clean ;;
