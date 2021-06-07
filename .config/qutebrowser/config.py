@@ -10,14 +10,14 @@ def read_xresources(prefix):
         props[prop] = value
     return props
 
-xresources = read_xresources('*')
-c.colors.statusbar.normal.bg = xresources['*.background']
+#  xresources = read_xresources('*')
+#  c.colors.statusbar.normal.bg = xresources['*.background']
 
 c.auto_save.session = True
 c.tabs.position = "bottom"
 c.tabs.show = "switching"
 c.statusbar.show = "in-mode"
-c.scrolling.smooth = True
+c.scrolling.smooth = False
 
 c.fonts.statusbar = "SourceCodePro-Regular"
 c.fonts.default_family = "SourceCodePro"
