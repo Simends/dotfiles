@@ -1,6 +1,6 @@
 # My dotfiles repo
 
-this uses the "dots" script to manage my dotfiles
+This is a repo for all my shell-scripts and configurations. It uses the "dots" script to manage my dotfiles
 
 ## Usage:
 
