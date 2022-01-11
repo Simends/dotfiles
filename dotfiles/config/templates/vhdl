@@ -1,0 +1,18 @@
+-- Libraries --
+
+library ieee
+use ieee.std_logic_1164.all;
+
+-- Entities --
+
+entity NAME is
+    port (
+         );
+end entity;
+
+-- Architectures --
+
+architecture CIRCUIT of NAME is
+begin
+
+end architecture;

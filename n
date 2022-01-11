@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+wikipath="$HOME/Documents/Wiki"
+templatepath="$wikipath/.templates"
+journalpath="$wikipath/journal"
+task_pattern="TODO"
+
+help="
+j - Will open a specified journal file in EDITOR, if no date specified it will open todays
+t - Will recurively search for tasks and present the results in fzf
+s - Will find all tasks due today
+"
+
+journal() {
+    template="$templatepath/daily.md"
+    
+    day="$2"
+    if [[ -z "$2" ]]; then
+        day="today"
+    fi
+    
+    name=$(date --date="$day" +%d-%m-%Y".md")
+    file="$journalpath/$name"
+    
+    if [ ! -f "$file" ]; then
+        cp "$template" "$file"
+    fi
+
+    $EDITOR "$file"
+}
+
+tasks() {
+    sel=$(grep -nr --exclude-dir='.?*' "$task_pattern" "$wikipath" | fzf --height=30% --reverse) 
+    echo "$sel" | cut -d : -f 1,2 | sed 's/:/ -c /' | xargs -ro "$EDITOR"
+}
+
+schedule() {
+    day="$2"
+    if [[ -z "$2" ]]; then
+        day="today"
+    fi
+    file_date=$(date --date="$day" +%d-%m-%Y".md")
+    file_weekly=$(date --date="$day" +%A".md")
+    result_date=$(grep -s -E "DEADLINE|$task_pattern" "$journalpath/$file_date")
+    result_weekly=$(cat "$wikipath/$file_weekly")
+    echo -e "\n$result_weekly\n$result_date\n"
+    # sel=$(echo -e "$result_date\n$result_weekly" | fzf --height=30% --reverse)
+    # echo "$sel" | cut -d : -f 1,2 | sed 's/:/ -c /' | xargs -ro "$EDITOR"
+}
+
+case "$1" in
+    "j")
+        journal "$@"
+        ;;
+    "t")
+        tasks "$@"
+        ;;
+    "s")
+        schedule "$@"
+        ;;
+    "h")
+        echo -e "$help"
+        ;;
+    "i")
+        "$EDITOR" "$wikipath/index.md"
+        ;;
+    *)
+        cd "$wikipath"
+        ;;
+esac

@@ -1,0 +1,104 @@
+#! /bin/sh
+
+#  ____  _          _ _       ____             __ _ _
+# / ___|| |__   ___| | |     |  _ \ _ __ ___  / _(_) | ___
+# \___ \| '_ \ / _ \ | |_____| |_) | '__/ _ \| |_| | |/ _ \
+#  ___) | | | |  __/ | |_____|  __/| | | (_) |  _| | |  __/
+# |____/|_| |_|\___|_|_|     |_|   |_|  \___/|_| |_|_|\___|
+#
+
+# Standard applications
+export EDITOR='nvim'
+export VISUAL='nvim'
+export BROWSER=firefox
+export MANPAGER="less -R --use-color -Dd+c -Du+b"
+export MANWIDTH=80
+# export XKB_DEFAULT_LAYOUT="no(nodeadkeys)"
+export XKB_DEFAULT_LAYOUT="no"
+export LANG="en_US.UTF-8"
+export LC_COLLATE="en_US.UTF-8"
+
+# Colors
+ColorBlack='393552'
+ColorBg='232136'
+ColorFg='e0def4'
+ColorHl='eb6f92'
+
+# Path
+export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/.local/share/npm-global/bin
+export PATH=$PATH:~/.local/bin/Appimages
+export PATH=$PATH:/opt/intelFPGA/20.1/quartus/bin/
+# export PATH=$PATH:/usr/lib/rustlib/x86_64-unknown-linux-gnu/bin
+
+# NNN
+export NNN_ARCHIVE="\.(7z|bz2|gz|tar|tgz|zip|rar|xz)$"
+export NNN_FCOLORS='0b0b0c24002424f61f111109'
+export NNN_COLORS='4231'
+export NNN_FIFO='/tmp/nnn.fifo'
+export NNN_TRASH=2
+export NNN_PLUG='a:autojump;b:bulknew;s:suedit;S:splitjoin;c:chksum;x:togglex;p:preview;i:imgview'
+export NNN_BMS='P:/home/simen/Documents/Projects/;t:/home/simen/.local/share/Trash/files/;s:/home/simen/.local/bin/;c:/home/simen/.local/config/;D:/home/simen/Downloads/;v:/home/simen/Multimedia/Videos/;m:/home/simen/Multimedia/Music/;p:/home/simen/Multimedia/Pictures/;d:/home/simen/Documents/;'
+
+# FZF
+# export FZF_DEFAULT_OPTS="--layout=default --info=inline --cycle -1 -0 --color='bg:-1,bg+:-1,pointer:9,info:10'"
+export FZF_DEFAULT_OPTS="--layout=default --info=inline --cycle -1 -0 --color='fg:#ebdbb2,bg:-1,hl:#fabd2f,fg+:#ebdbb2,bg+:-1,hl+:#fabd2f,info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'"
+# export FZF_DEFAULT_COMMAND='fd --type f -H'
+# export FZF_COMPLETION_TRIGGER=''
+# export FZF_ALT_C_OPTS="--reverse --preview 'tree -C {} | head -200'"
+# export FZF_CTRL_T_OPTS="--reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+
+# Bemenu
+export BEMENU_OPTS="--fn SourceCodePro-Regular,10 --nb #${ColorBlack} --nf #${ColorFg} --hb #${ColorHl} --hf #${ColorBg} --tb #${ColorBg} --tf #${ColorHl} --fb #${ColorBg} --ff #${ColorHl}"
+
+# Other variables
+# export QT_STYLE_OVERRIDE="qt5ct"
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_QPA_PLATFORM=wayland
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_DBUS_REMOTE=1
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+# export ABDUCO_CMD="zsh"
+export GPG_TTY=$(tty)
+export NIX_PATH="$HOME/.nix-defexpr/channels/"
+
+# Home cleaning
+export XDG_CONFIG_HOME="$HOME/.local/config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.local/cache"
+export BAT_CONFIG_PATH="$XDG_CONFIG_HOME/bat/bat.conf"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
+export OCTAVE_HISTFILE="$XDG_CACHE_HOME/octave_hist"
+export OCTAVE_SITE_INITFILE="$XDG_CONFIG_HOME/octave/octaverc"
+export GOPATH="$XDG_DATA_HOME"/go
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+export STACK_ROOT="$XDG_DATA_HOME"/stack
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+export LESSHISTFILE=-
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+export _Z_DATA="$XDG_DATA_HOME/z"
+export SSB_HOME="$XDG_DATA_HOME"/zoom
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+# export XSERVERRC="$XDG_CONFIG_HOME/X11/xserverrc"
+# export DOOMDIR="$XDG_CONFIG_HOME/doom"
+# export TASKRC="$XDG_CONFIG_HOME/taskrc"
+# export TASKDATA="$XDG_DATA_HOME/task"
+# export ABDUCO_SOCKET_DIR="$XDG_CACHE_HOME"
+
+# Functions
+# Startx on login
+# if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ];
+#     then exec river
+# fi
+
+if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+      # 66-all -t default up
+      exec river
+fi

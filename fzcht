@@ -1,0 +1,6 @@
+#!/bin/sh
+
+topic=$(curl -s cht.sh/:list | fzf --reverse)
+read -p "Query: " query
+
+curl -s cht.sh/$topic/`echo $query | tr ' ' '+'` | bat -p --paging=always

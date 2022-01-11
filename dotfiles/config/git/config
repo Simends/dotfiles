@@ -1,0 +1,20 @@
+[user]
+	email = smndagersneve@gmail.com
+	name = Simen Dager Sneve
+	signingkey = 78CF7E628928B432
+[credential "https://github.com"]
+    username = Simends
+[init]
+	defaultBranch = main
+[alias]
+    s = status
+    c = commit
+    cm = commit -m
+    cam = commit -am
+    a = add
+    b = branch
+    d = diff
+    l = log
+    ls = log --stat
+    lg = log --graph
+    files = dotfiles ls-tree --name-only HEAD

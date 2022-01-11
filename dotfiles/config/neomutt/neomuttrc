@@ -1,0 +1,81 @@
+set realname = "Simen Dager Sneve"
+
+set editor = `echo \$EDITOR`
+set copy = yes
+set delete = yes
+set move = yes
+set send_charset = "utf-8"
+set mark_old = no
+set sleep_time = 0
+set mbox_type = Maildir
+set include
+
+# Status Bar
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Pager
+set pager_index_lines = 10          # number of index lines to show
+set pager_context = 3               # number of context lines to show
+set pager_stop                      # don't go to next message automatically
+set menu_scroll
+set tilde
+set index_format = "%4C [%Z] %{%b %d} %-15.15L    %s"
+set use_threads=threads
+set sort=reverse-last-date
+set sort_aux=date
+set sort_browser=reverse-date	    # how to sort files in the dir browser
+set uncollapse_jump                 # don't collapse on an unread message
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+# Compose
+set edit_headers = yes              # show headers when composing
+set fast_reply                      # skip to compose when replying
+set sig_dashes                      # dashes before signature
+set askcc                           # ask for CC:
+set fcc_attach                      # save attachments with the body
+unset mime_forward                  # forward attachments as part of body
+set forward_format = "Fwd: %s"      # format of subject when forwarding
+set forward_decode                  # decode when forwarding
+
+# Sidebar
+set sidebar_visible = no
+set sidebar_width = 30
+set sidebar_divider_char = ' │ '
+set sidebar_short_path = yes
+set sidebar_delim_chars = '/'
+set sidebar_folder_indent = yes
+set sidebar_indent_string = '  '
+
+# Contacts
+set alias_file = "~/.local/config/mail/contacts"
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+
+# Headers
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # and in this order
+
+# Other files
+set header_cache=~/.local/cache/mutt
+set mailcap_path=~/.local/config/neomutt/mailcap
+set signature=~/.local/config/mail/signature
+source ~/.local/config/neomutt/colors
+source ~/.local/config/neomutt/keybindings
+
+## HOTMAIL
+source "~/.local/config/mail/hotmail.muttrc"
+# set folder = ~/.local/share/mail/hotmail/
+folder-hook $folder 'source ~/.local/config/mail/hotmail.muttrc'
+
+## GMAIL
+source "~/.local/config/mail/gmail.muttrc"
+# set folder = ~/.local/share/mail/gmail/
+folder-hook $folder 'source ~/.local/config/mail/gmail.muttrc'
+
+macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.local/config/mail/hotmail.muttrc<enter><change-folder>!<enter>'
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.local/config/mail/gmail.muttrc<enter><change-folder>!<enter>'

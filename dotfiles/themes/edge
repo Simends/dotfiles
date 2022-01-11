@@ -1,0 +1,24 @@
+bg=2b2d3a
+fg=c5cdd9
+
+black1=363a4a
+black2=363a4a
+red1=ec7279
+red2=ec7279
+green1=a0c980
+green2=a0c980
+yellow1=deb974
+yellow2=deb974
+blue1=6cb6eb
+blue2=6cb6eb
+purple1=d38aea
+purple2=d38aea
+cyan1=5dbbc1
+cyan2=5dbbc1
+white1=c5cdd9
+white2=c5cdd9
+
+gtk=Adwaita-dark
+icon=Papirus-dark
+cursor=default
+font=Noto Sans

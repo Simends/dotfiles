@@ -1,0 +1,5 @@
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+video/*; setsid mpv --quiet %s &; copiousoutput
+audio/*; mpv %s ;
+application/*; xdg-open %s &> /dev/null &; 
+image/*; xdg-open %s &> /dev/null &;
