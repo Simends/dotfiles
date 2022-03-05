@@ -1,10 +1,7 @@
 #include "/home/simen/.local/dotfiles/themes/rose-pine"
+#include "/home/simen/.local/config/device-xrdb"
 
 Xcursor.theme: Adwaita
-Xcursor.size: 16
-
-! 100%=96
-Xft.dpi: 96
 
 Xft.antialias: 1
 Xft.hinting: 1
