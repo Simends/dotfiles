@@ -4,19 +4,6 @@
 # A script to work as a general system menu
 #
 
-#MenuOpts="-iwl 20 \
-#    -p Menu"
-
-    # --fn SourceCodePro-Regular,10 \
-    # --nb #1d2021 \
-    # --nf #ebdbb2 \
-    # --hb #cc241d \
-    # --hf #282828 \
-    # --tb #282828 \
-    # --tf #cc241d \
-    # --fb #282828 \
-    # --ff #cc241d \
-#MenuProg="bemenu $MenuOpts"
 MenuOpts="-i -p Menu $@"
 MenuProg="dmenu $MenuOpts"
 MenuPath="$HOME/.local/dotfiles/scripts"
@@ -24,7 +11,7 @@ Terminal="st -e"
 Browser="qutebrowser"
 
 SelPower() {
-    PowerOpts="Lock\nLog Out\nReboot\nShutdown\nReboot to UEFI Menu"
+    PowerOpts="Lock\nLog Out\nReboot\nShutdown\nReboot to UEFI Menu\nReboot to something else"
     PowerMenu=$(echo -e "$PowerOpts" | $MenuProg)
     case "$PowerMenu" in
         "Lock")
@@ -41,6 +28,9 @@ SelPower() {
             ;;
         "Reboot to UEFI Menu")
             loginctl reboot --firmware-setup
+            ;;
+        "Reboot to something else")
+            efibootmgr | tail -n +4 | $MenuProg | grep -Po "(?<=Boot)\w{4}" | xargs sudo efibootmgr -n && loginctl reboot
             ;;
     esac
 }

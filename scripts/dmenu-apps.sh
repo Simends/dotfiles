@@ -26,14 +26,14 @@ SelAppsGames() {
 }
 
 SelAppsNetwork() {
-    AppNetworkOpts="Email\nNewsfeed\nFirefox\nQutebrowser\nNetsurf\nDiscord"
+    AppNetworkOpts="Email\nNewsfeed\nFirefox\nQutebrowser\nNetsurf\nDiscord\nMicrosoft Teams"
     AppNetworkMenu=$(echo -e "$AppNetworkOpts" | $MenuProg)
     case "$AppNetworkMenu" in
         "Email")
             $Terminal neomutt
             ;;
         "Newsfeed")
-            $Terminal newsboat -q
+            $Terminal rss
             ;;
         "Firefox")
             firefox
@@ -47,15 +47,18 @@ SelAppsNetwork() {
         "Discord")
             discord
             ;;
+        "Microsoft Teams")
+            teams
+            ;;
     esac
 }
 
 SelAppsMultimedia() {
-    AppMultimediaOpts="Cmus\nMpv\nAni-cli\nSpotify\nYoutube Playlists\nlofi hip hop radio - beats to relax/study to"
+    AppMultimediaOpts="Music Player\nMpv\nAni-cli\nSpotify\nYoutube Playlists\nlofi hip hop radio - beats to relax/study to"
     AppMultimediaMenu=$(echo -e "$AppMultimediaOpts" | $MenuProg)
     case "$AppMultimediaMenu" in
-        "Cmus")
-            $Terminal cmus
+        "Music Player")
+            deadbeef
             ;;
         "Mpv")
             mpv

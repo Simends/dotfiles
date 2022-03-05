@@ -5,78 +5,57 @@ MenuProg="dmenu $MenuOpts"
 Terminal="$2"
 Browser="$3"
 
-SelGtkTheme() {
-    Themes=$(ls /usr/share/themes)
-    Icons=$(ls /usr/share/icons)
-    ThemeMenu=$(echo -e "Theme\nIcon\nCursor" | $MenuProg)
-    case "$ThemeMenu" in
-        "Theme")
-            echo "$Themes" | $MenuProg | xargs -r gsettings set org.gnome.desktop.interface gtk-theme
-            ;;
-        "Icon")
-            echo "$Icons" | $MenuProg | xargs -r gsettings set org.gnome.desktop.interface icon-theme
-            ;;
-        "Cursor")
-            echo "$Icons" | $MenuProg | xargs -r gsettings set org.gnome.desktop.interface cursor-theme
-            ;;
-    esac
-}
-
-#SelRiverLayoutNS() {
-#    case $(echo -e "Stacktile\nFloating" | $MenuProg) in
-#        "Stacktile")
-#            echo "stacktile"
-#            ;;
-#        "Floating")
-#            echo ""
-#            ;;
-#    esac
-#}
-
-#SelRiver() {
-#    RiverOpts="Set Layout Current Display\nSet Layout All\nSwitch Mode\nSet Border Width"
-#    RiverMenu=$(echo -e "$RiverOpts" | $MenuProg)
-#    case "$RiverMenu" in
-#        "Set Layout Current Display")
-#            riverctl output-layout "$(SelRiverLayoutNS)"
-#            ;;
-#        "Set Layout All")
-#            riverctl default-layout "$(SelRiverLayoutNS)"
-#            ;;
-#        "Switch Mode")
-#            SelMode=$(echo -e "Passthrough" | $MenuProg | tr '[:upper:]' '[:lower:]' )
-#            riverctl enter-mode "$SelMode"
-#            ;;
-#        "Set Border Width")
-#            SelWidth=$(echo "" | $MenuProg)
-#            riverctl border-width "$SelWidth"
-#            ;;
-#    esac
-#}
-
 SelWm() {
     WmOpts="Stop compositor\nStart compositor"
     WmMenu=$(echo -e "$WmOpts" | $MenuProg)
     case "$WmMenu" in
         "Stop compositor")
-            svctl down xcompmgr
+            svctl down picom
             ;;
         "Start compositor")
-            svctl up xcompmgr
+            svctl up picom
             ;;
     esac
 }
 
-SettingsOpts="System Info\nTask Manager\nAudio\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Wallpaper\nChange Theme\nWindow Manager\nShow Fonts"
+SelVm() {
+    VmOpts="Start virtual machine\nStop virtual machine\nManager"
+    VmMenu=$(echo -e "$VmOpts" | $MenuProg)
+    case "$VmMenu" in
+        "Start virtual machine")
+            sudo virsh list --inactive --name | sed '/^$/d' | $MenuProg | xargs sudo virsh start
+            ;;
+        "Stop virtual machine")
+            sudo virsh list --name | sed '/^$/d' | $MenuProg | xargs sudo virsh shutdown
+            ;;
+        "Manager")
+            virt-manager
+            ;;
+    esac
+}
+
+ToggleDPMS() {
+    dpmstat=$(xset q | grep -oP "(?<=DPMS is )\w*$")
+    if [ "${dpmstat}" == "Enabled" ]; then
+        xset -dpms
+    else
+        xset +dpms
+    fi
+}
+
+SettingsOpts="System Info\nToggle DPMS\nTask Manager\nSound\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Wallpaper\nChange Theme\nCompositor\nShow Fonts"
 SettingsMenu=$(echo -e "$SettingsOpts" | $MenuProg)
 case "$SettingsMenu" in
     "System Info")
         cpu-x
         ;;
+    "Toggle DPMS")
+        ToggleDPMS
+        ;;
     "Task Manager")
         $Terminal btop
         ;;
-    "Audio")
+    "Sound")
         pavucontrol
         ;;
     "Network")
@@ -89,7 +68,7 @@ case "$SettingsMenu" in
         gparted
         ;;
     "Virtual Machines")
-        virt-manager
+        SelVm
         ;;
     "Disk Usage")
         $Terminal ncdu -x --exclude-kernfs /
@@ -98,9 +77,9 @@ case "$SettingsMenu" in
         setwp
         ;;
     "Change Theme")
-        SelGtkTheme
+        lxappearance
         ;;
-    "Window Manager")
+    "Compositor")
         SelWm
         ;;
     "Show Fonts")
