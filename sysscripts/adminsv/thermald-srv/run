@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+exec -c
+/usr/bin/thermald --no-daemon --loglevel=info --dbus-enable --adaptive

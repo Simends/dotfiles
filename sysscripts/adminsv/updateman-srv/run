@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+exec -c
+loopwhilex snooze -v -s3600 -J120 -H/6 -M0 -S0
+makewhatis /usr/share/man
