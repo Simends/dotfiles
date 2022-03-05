@@ -1,0 +1,12 @@
+bash-language-server
+clang
+ctags
+gdb
+jdk-openjdk
+lua
+lua-language-server
+neovim-nightly-bin
+podman
+python-pynvim
+shellcheck
+termshark

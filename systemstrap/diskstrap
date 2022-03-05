@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+clear
+echo "Have you partitioned the disks? (type yes)"
+read ans
+if [[ "$ans" != "yes" ]]; then
+    exit
+fi
+
+echo -e "\nWhat is your EFI system partition?"
+read esppart
+echo -e "\nWhat is your root partition?"
+read rootpart
+echo ""
+echo "Creating filesystem on esp"
+mkfs.fat -F 32 "$esppart"
+sleep 1s
+fatlabel "$esppart" BOOT
+sleep 1s
+echo ""
+echo "Creating filesystem on root"
+mkfs.ext4 -L ROOT "$rootpart"
+sleep 2s
+
+mount /dev/disk/by-label/ROOT /mnt
+mkdir /mnt/boot
+mount /dev/disk/by-label/BOOT /mnt/boot
+basestrap /mnt base s6-base elogind-s6 linux-zen linux-zen-headers linux-lts linux-lts-headers linux-firmware mkinitcpio
+fstabgen -U /mnt >> /mnt/etc/fstab
+
+cp -r /dotfiles /mnt/
+clear
+less /mnt/etc/fstab
+
+clear
+echo -e "\nRemember to run systemstrap after entering chroot!"
+artix-chroot /mnt
+
+sleep 1
+umount -R /mnt
+clear
+echo -e "\nReady for reboot.\nRemember to run the userscript!"

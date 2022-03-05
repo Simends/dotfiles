@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+export PS3="-> "
+
+mkdir -p ~/Documents/Projects
+mkdir -p ~/.local/share/gnupg
+mkdir ~/.local/cache
+mkdir ~/.local/config
+mkdir -p ~/Multimedia/Music
+mkdir ~/Multimedia/Pictures
+mkdir ~/Multimedia/Videos
+mkdir ~/Downloads
+cp -r "$HOME/dotfiles" "$HOME/.local/dotfiles"
+sudo cp "$HOME/.local/dotfiles/sysscripts/svctl" "/usr/local/bin/"
+sudo cp -rf "$HOME/.local/dotfiles/sysscripts/adminsv" "/etc/s6/"
+sudo cp "$HOME/.local/dotfiles/sysscripts/zramswap" "/usr/local/bin/"
+sudo cp "$HOME/.local/dotfiles/sysscripts/pam_s6_usertree.sh" "/usr/local/bin/"
+sudo "$HOME/.local/dotfiles/sysscripts/add-pamentry.sh"
+sudo svctl update
+sudo svctl up network
+sudo svctl up dbus
+sleep 5
+sudo pacman -Sy
+
+# Install dotfiles
+echo -e "\n~~~ Installing dotfiles ~~~"
+"$HOME/.local/dotfiles/scripts/dots" "deploy"
+sudo rm -rf /dotfiles
+
+# Install AUR-packages
+echo -e "\n~~~ Installing AUR_helper ~~~"
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -sirc --noconfirm
+cd
+rm -rf yay-bin
+
+paclist=$(cat ~/dotfiles/systemstrap/packages/aurdefault | sed '/#.*/d')
+sudo yay -S $(echo -e "$paclist")
+
+clear
+echo -e "\nWhat additional package-sets would you like?"
+paclist=""
+select ans in $(ls "$HOME/dotfiles/systemstrap/packages/additional")
+do
+    paclist="$paclist\n$(cat "$HOME/dotfiles/systemstrap/packages/additional/$ans")"
+done
+yay -S $(echo -e "$paclist")
+
+# Installing own packages
+echo "~~~ Installing my programs ~~~"
+
+echo "Installing DWM..."
+sudo make -C "$HOME/.local/dotfiles/packages/dwm" install
+
+echo "Installing Dmenu..."
+cd "$HOME/.local/dotfiles/packages/dmenu"
+makepkg -sirc --noconfirm
+cd
+
+echo "Installing ST..."
+sudo make -C "$HOME/.local/dotfiles/packages/st" install
+
+echo "Installing Slock..."
+cd "$HOME/.local/dotfiles/packages/slock"
+makepkg -sirc --noconfirm
+cd
+
+xdg-user-dirs-update
+user=$(whoami)
+sudo mkdir -p /var/log/usertree/simen
+sudo chown s6log:s6log /var/log/usertree/simen
+sudo usermod -s "/usr/bin/zsh" "$user"

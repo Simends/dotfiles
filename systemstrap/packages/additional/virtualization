@@ -1,0 +1,6 @@
+qemu
+qemu-arch-extra
+dnsmasq
+libvirt
+virt-manager
+edk2-ovmf

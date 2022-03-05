@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+
+# A script to install to automate a install of artix-base-s6
+
+export PS3="-> "
+
+# Set timezone
+clear
+echo -e "\n~~~ Setting timezone ~~~\n"
+echo "What is your current timezone?"
+read TIMEZONE
+ln -sf /usr/share/zoneinfo/"$TIMEZONE" /etc/localtime
+hwclock --systohc
+
+# Set localization
+clear
+echo -e "\n~~~ Setting localization ~~~\n"
+echo "Enter locales to generate:"
+all_locales=$(cat /etc/locale.gen | sed 's/^# .*$//g' | sed 's/ *$//g' | sed 's/^#//g' | sed 's/ /:/g')
+echo "" >> /etc/locale.gen
+select ans in $(echo "$all_locales")
+do
+    echo "$ans" | sed 's/:/ /g' >> /etc/locale.gen
+done
+echo ""
+locale-gen
+
+echo -e "\nEnter default locale:"
+select ans in $(cat /etc/locale.gen | sed '/^#.*$/d' | sed 's/ .*$//g')
+do
+    echo "export LANG=$ans" > /etc/locale.conf
+    break
+done
+
+echo -e "\nEnter default keymap:"
+select ans in $(find /usr/share/kbd/keymaps/i386/qwerty -type f -printf '%f\n' | sed 's/.map.gz$//g' | sort)
+do
+    echo "KEYMAP=$ans" > /etc/vconsole.conf
+    break
+done
+
+# Installing packages
+clear
+echo -e "\n~~~ Installing minimal set of packages ~~~\n"
+echo "How many packages should be downloaded in parallell?"
+read PACPDOWNL
+if [[ "$PACPDOWNL" != "" ]]
+then
+    sed -i "s/#ParallelDownloads = .*$/ParallelDownloads = $PACPDOWNL/" /etc/pacman.conf
+fi
+pacminlist=$(cat /dotfiles/systemstrap/packages/min | sed '/#.*/d')
+echo -e "\nSelect microcode to install:"
+select ans in intel-ucode amd-ucode
+do
+    pacminlist="$pacminlist\n$ans"
+    break
+done
+pacman --noconfirm -Rdd iptables
+pacman --needed --noconfirm -S $(echo -e "$pacminlist")
+
+# Users
+clear
+echo -e "\n~~~ Creating users ~~~\n"
+echo "Enter your username:"
+read USERNAME
+echo -e "\nEnter your full name:"
+read FULLNAME
+useradd -m -c "$FULLNAME" "$USERNAME"
+echo -e "\nSelect groups for $USERNAME:"
+select ans in $(cat /etc/group | sed 's/:.*$//g')
+do
+    if [[ "$ans" == "" ]]
+    then
+        break
+    fi
+
+    usermod -aG "$ans" "$USERNAME"
+done
+echo -e "\nEnter password for $USERNAME:"
+passwd "$USERNAME"
+echo -e "\nEnter root password:"
+passwd
+
+# Network
+clear
+echo -e "\n~~~ Configuring Network ~~~\n"
+echo "Enter hostname for this computer:"
+read HOSTNAME
+echo "$HOSTNAME" > /etc/hostname
+echo -e "\n127.0.0.1    localhost" >> /etc/hosts
+echo "::1          localhost" >> /etc/hosts
+echo "127.0.1.1    $HOSTNAME.localdomain  $HOSTNAME" >> /etc/hosts
+echo ""
+
+# Various configurations
+clear
+echo -e "\n~~~ Other Configurations ~~~\n"
+
+echo -e "Configuring Pacman..."
+sed -i "s/#UseSyslog/UseSyslog/" /etc/pacman.conf
+sed -i "s/#Color/Color/" /etc/pacman.conf
+sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
+echo -e "\n# 32-bit libs" >> /etc/pacman.conf
+echo "[lib32]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+echo -e "\n# The Artix universe repo" >> /etc/pacman.conf
+echo "[universe]" >> /etc/pacman.conf
+echo 'Server = https://universe.artixlinux.org/$arch' >> /etc/pacman.conf
+echo -e "\n# Arch repos:\n\n" >> /etc/pacman.conf
+echo "[extra]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+echo -e "\n[community]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+echo -e "\n[multilib]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+
+echo -e "Configuring Sudo..."
+sed -i "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/" /etc/sudoers
+
+echo -e "Configuring Sysctl..."
+mkdir -p /etc/sysctl.d
+echo -e "# Increase network performance" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.tcp_fastopen = 3" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.core.default_qdisc = cake" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.tcp_congestion_control = bbr" >> /etc/sysctl.d/99-sysctl.conf
+echo -e "\n# Virtual Memory" >> /etc/sysctl.d/99-sysctl.conf
+echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.d/99-sysctl.conf
+echo -e "\n# TCP/IP Hardening" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.tcp_syncookies = 1" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.default.rp_filter = 1" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.all.accept_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.default.accept_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.all.secure_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.default.secure_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.all.accept_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv6.conf.default.accept_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.all.send_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo "net.ipv4.conf.default.send_redirects = 0" >> /etc/sysctl.d/99-sysctl.conf
+echo -e "\n# Kernel Hardening" >> /etc/sysctl.d/99-sysctl.conf
+echo "kernel.kptr_restrict = 1" >> /etc/sysctl.d/99-sysctl.conf
+
+# TODO: Pam limits
+
+clear
+echo -e "\n~~~ Installing default set of packages ~~~\n"
+pacman -Sy
+pacdeflist=$(cat /dotfiles/systemstrap/packages/default | sed '/#.*/d')
+pacman --needed --noconfirm -Su $(echo -e "$pacdeflist")
+cp -r /dotfiles /home/"$USERNAME"/
+chown -R "$USERNAME:$USERNAME" /home/"$USERNAME"/dotfiles
+
+clear
+echo -e "\n~~~ Installation Finished! ~~~"
+exit
