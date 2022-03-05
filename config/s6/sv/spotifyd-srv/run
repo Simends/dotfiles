@@ -1,0 +1,18 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+    importas XDG_CONFIG_HOME XDG_CONFIG_HOME
+    importas XDG_CACHE_HOME XDG_CACHE_HOME
+    importas XDG_DATA_HOME XDG_DATA_HOME
+    importas PASSWORD_STORE_DIR PASSWORD_STORE_DIR
+    importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+}
+exec -c
+export XDG_CONFIG_HOME ${XDG_CONFIG_HOME}
+export XDG_CACHE_HOME ${XDG_CACHE_HOME}
+export XDG_DATA_HOME ${XDG_DATA_HOME}
+export PASSWORD_STORE_DIR ${PASSWORD_STORE_DIR}
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
+/usr/bin/spotifyd --no-daemon --config-path=${XDG_CONFIG_HOME}/spotifyd/spotifyd.conf --cache-path=${XDG_CACHE_HOME}/spotifyd

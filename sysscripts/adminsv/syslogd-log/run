@@ -1,0 +1,11 @@
+#!/bin/execlineb -P
+foreground { if -t { test -f /var/log/syslog } rm /var/log/syslog }
+#envfile /etc/s6/config/syslog.conf
+#importas -sCuD "n3 s2000000 T" DIRECTIVES DIRECTIVES
+#define DIRECTIVES "T n5 s2000000"
+ifelse { test -w /var/log } {
+	foreground { install -d -o s6log -g s6log /var/log/syslog }
+	s6-setuidgid s6log exec -c s6-log -d3 -b -- T n5 s2000000 /var/log/syslog
+}
+foreground { install -d -o s6log -g s6log /run/log/syslog }
+s6-setuidgid s6log exec -c s6-log -d3 -b -- T n5 s2000000 /run/log/syslog

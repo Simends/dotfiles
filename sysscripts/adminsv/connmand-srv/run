@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+envfile /etc/s6/config/connman.conf
+importas -sCuD "" OPTS OPTS
+fdmove -c 2 1
+exec connmand -n ${OPTS}

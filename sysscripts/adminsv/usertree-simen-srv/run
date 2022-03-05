@@ -1,0 +1,19 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+emptyenv -p
+export USER "simen"
+s6-envuidgid -i -- "simen"
+s6-applyuidgid -U --
+backtick -in HOME { homeof "simen" }
+s6-envdir -i -- "/home/simen/.local/config/s6/env"
+multisubstitute
+{
+  importas -i USER USER
+  importas -i HOME HOME
+  importas -i UID UID
+  importas -i GID GID
+  importas -i GIDLIST GIDLIST
+}
+export PATH "/home/simen/.local/bin:/usr/bin:/bin"
+foreground { if -n { test -w "/run/user/1000/service" } mkdir -p "/run/user/1000/service" }
+s6-svscan -d3 -- "/run/user/1000/service"

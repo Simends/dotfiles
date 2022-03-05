@@ -1,0 +1,15 @@
+sfeedpath="$XDG_DATA_HOME/sfeed"
+
+feeds() {
+     feed "Arch Linux" "https://www.archlinux.org/feeds/news/"
+     feed "Artix Linux" "https://artixlinux.org/feed.php" "https://artixlinux.org"
+     feed "Distrowatch" "https://distrowatch.com/news/dw.xml" "https://distrowatch.com"
+     feed "Suckless" "https://suckless.org/atom.xml" "https://suckless.org"
+     feed "Mgorny" "https://blogs.gentoo.org/mgorny/feed/" "https://blogs.gentoo.org/mgorny"
+     feed "Drew Devault" "https://drewdevault.com/blog/index.xml"
+     feed "Ariadne" "https://ariadne.space/rss"
+     feed "0pointer" "http://0pointer.net/blog/index.rss20" "http://0pointer.net"
+     feed "OSNews" "https://www.osnews.com/feed/" "https://www.osnews.com"
+     feed "Pressfire" "https://www.pressfire.no/rss.xml" "https://www.pressfire.no"
+     feed "xkcd" "https://xkcd.com/atom.xml" "https://xkcd.com"
+}

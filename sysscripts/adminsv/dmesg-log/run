@@ -1,0 +1,9 @@
+#!/bin/execlineb -P
+foreground { if -t { test -f /var/log/dmesg } rm /var/log/dmesg }
+define DIRECTIVES "n3 s2000000 T"
+ifelse { test -w /var/log } {
+	foreground { install -d -o s6log -g s6log /var/log/dmesg }
+	s6-setuidgid s6log exec -c s6-log -d3 -b -- ${DIRECTIVES} /var/log/dmesg
+}
+foreground { install -d -o s6log -g s6log /run/log/dmesg }
+s6-setuidgid s6log exec -c s6-log -d3 -b -- ${DIRECTIVES} /run/log/dmesg

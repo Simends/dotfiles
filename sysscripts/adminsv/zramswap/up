@@ -1,0 +1,8 @@
+#!/usr/bin/execlineb -P
+
+exec -c
+export ZRAM_SIZE 2G
+export ZRAM_COMPRESSION_ALGORITHM lz4
+export ZRAM_LABEL zram0
+export ZRAM_PRIORITY 100
+/usr/local/bin/zramswap up

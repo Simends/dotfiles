@@ -1,0 +1,9 @@
+#!/usr/bin/execlineb -P
+
+emptyenv -p
+export USER "simen"
+s6-envuidgid -i -- "simen"
+s6-applyuidgid -U --
+backtick -in HOME { homeof "simen" }
+foreground { s6-rc-init -l "/run/user/1000/s6-rc" -c "/home/simen/.local/share/s6/rc/current" "/run/user/1000/service" }
+s6-rc -l "/run/user/1000/s6-rc" -u change default

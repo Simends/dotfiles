@@ -1,0 +1,28 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+    importas HOME HOME
+    importas DISPLAY DISPLAY
+    importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+    importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+    importas XDG_CONFIG_HOME XDG_CONFIG_HOME
+    importas XDG_DATA_HOME XDG_DATA_HOME
+    importas GNUPGHOME GNUPGHOME
+    importas GPG_TTY GPG_TTY
+    importas PASSWORD_STORE_DIR PASSWORD_STORE_DIR
+}
+exec -c
+export HOME ${HOME}
+export DISPLAY ${DISPLAY}
+export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
+export XDG_CONFIG_HOME ${XDG_CONFIG_HOME}
+export XDG_DATA_HOME ${XDG_DATA_HOME}
+export GNUPGHOME ${GNUPGHOME}
+export GPG_TTY ${GPG_TTY}
+export PASSWORD_STORE_DIR ${PASSWORD_STORE_DIR}
+loopwhilex snooze -v -H* -M /30 -S00 -R180 -s1800
+${XDG_CONFIG_HOME}/s6/sv/mailsync-srv/mailsync.sh

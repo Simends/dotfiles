@@ -1,9 +1,0 @@
-[options]
-overlay_font = Monospace:12
-overlay_position_bottom = true
-
-[aliases]
-
-[binds]
-<Shift+K> = next
-<Shift+J> = prev

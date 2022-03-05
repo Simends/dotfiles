@@ -1,0 +1,8 @@
+#!/usr/bin/execlineb -P
+
+emptyenv -p
+export USER "simen"
+s6-envuidgid -i -- "simen"
+s6-applyuidgid -U --
+backtick -in HOME { homeof "simen" }
+s6-rc -l "/run/user/1000/s6-rc" -bad change

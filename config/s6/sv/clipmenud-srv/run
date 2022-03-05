@@ -1,0 +1,18 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+    importas DISPLAY DISPLAY
+    importas USER USER
+    importas XAUTHORITY XAUTHORITY
+    importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+}
+exec -c
+export DISPLAY ${DISPLAY}
+export USER ${USER}
+export XAUTHORITY ${XAUTHORITY}
+export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+export CM_MAX_CLIPS 100
+clipmenud

@@ -1,0 +1,139 @@
+# vim: set ft=sh:
+set shell bash
+set shellopts '-eu'
+set period 1
+set icons
+set scrolloff 10
+set hidden
+set drawbox
+set number
+set relativenumber
+set smartcase
+set info size:ctime
+set preview
+set ratios 2:2
+set wrapscroll
+set ifs "\n"
+cmd open $opener $fx
+
+$lf -remote "send $id set previewer ${XDG_CONFIG_HOME:-$HOME/.config}/lf/prev.sh"
+$lf -remote "send $id set cleaner ${XDG_CONFIG_HOME:-$HOME/.config}/lf/clear_img.sh"
+
+cmd fzf_jump ${{
+    res="$(find . -maxdepth 1 | fzf --border=sharp --reverse --header='Jump to location' | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ]; then
+        cmd="cd"
+    else 
+        cmd="select"                                                       
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+# cmd paste &{{
+#     set -- $(cat ~/.local/share/lf/files)
+#     mode="$1"
+#     shift
+#     case "$mode" in
+#         copy)
+#             rsync -av --ignore-existing --progress -- "$@" . |
+#             stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+#             while IFS= read -r line; do
+#                 lf -remote "send $id echo $line"
+#             done
+#             ;;
+#         move) mv -n -- "$@" .;;
+#     esac
+#     rm ~/.local/share/lf/files
+#     lf -remote "send clear"
+# }}
+
+cmd preview_off &{{
+    lf -remote "send $id set preview!"
+    lf -remote "send $id set drawbox!"
+    lf -remote "send $id set ratios 1"
+}}
+
+cmd preview_on &{{
+    lf -remote "send $id set ratios 2:2"
+    lf -remote "send $id set drawbox on"
+    lf -remote "send $id set preview on"
+}}
+
+cmd info_off &{{
+    lf -remote "send $id set info"
+}}
+
+cmd info_on &{{
+    lf -remote "send $id set info size:ctime"
+}}
+
+cmd delete ${{
+	clear; tput cup $(($(tput lines)/3)); tput bold
+	set -f
+	printf "%s\n\t" "$fx"
+	printf "delete?[y/N]"
+	read ans
+	[ $ans = "y" ] && rm -rf -- $fx
+}}
+
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+cmd on-cd &{{
+    # display git repository status in your prompt
+    source /usr/share/git/completion/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=auto
+    GIT_PS1_SHOWSTASHSTATE=auto
+    GIT_PS1_SHOWUNTRACKEDFILES=auto
+    GIT_PS1_SHOWUPSTREAM=auto
+    GIT_PS1_COMPRESSSPARSESTATE=auto
+    git=$(__git_ps1 " [GIT BRANCH:> %s]") || true
+    fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
+    lf -remote "send $id set promptfmt \"$fmt\""
+    # '&' commands run silently in background (which is what we want here),
+    # but are not connected to stdout.
+    # To make sure our escape sequence still reaches stdout we pipe it to /dev/tty
+    printf "\033]0; $(pwd | sed "s|$HOME|~|") - lf\007" > /dev/tty
+}}
+
+# also run at startup
+on-cd
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# map P paste
+map D delete
+map R bulk-rename
+map gu $ncdu -e --color dark --exclude-kernfs -L
+map ge $nvim $fx
+map gs !echo $fx | sed 's/\s/\n/g'
+map gp preview_off
+map gP preview_on
+map gd info_off
+map gD info_on
+map . set hidden!
+map x $$f
+map X !$f
+map o open
+map <c-f> :fzf_jump

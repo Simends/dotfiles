@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+
+exec -c
+/usr/bin/nft -f /etc/nftables.conf

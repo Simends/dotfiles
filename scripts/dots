@@ -1,0 +1,48 @@
+#!/bin/sh
+
+rootdir="${HOME}/.local/dotfiles"
+themedir="${rootdir}/themes"
+configdir="${rootdir}/config"
+
+SetTheme() {
+    xresourcefile="$configdir/X11/xresources"
+    sed -i "s|^#include \"${themedir}/.*\"$|#include \"${themedir}/$1|" "${xresourcefile}"
+    xrdb -merge "${xresourcefile}"
+}
+
+case "$1" in
+    "theme" | "t")
+        SetTheme "$themedir/$2"
+        ;;
+    "theme-menu" | "tm")
+        ThemeSel=$(find "$themedir" -type f -printf "%f\n" | fzf)
+        SetTheme "$themedir/$ThemeSel"
+        ;;
+    "deploy")
+        if [[ -z "$2" ]]; then
+            echo "Deploying everything ..."
+            echo ">> Deploying configs ..."
+            configs=$(find "$configdir" -maxdepth 1 -mindepth 1 -printf "%f\n")
+            ln -s "$configdir/shell/profile" "$HOME/.zshenv"
+            for ((i=1; i<=$(echo "$configs" | wc -l); i++)); do
+                configname=$(echo "$configs" | sed -n "$i"p)
+                ln -s "$configdir/$configname" "$XDG_CONFIG_HOME/$configname"
+            done
+
+        else
+            echo "Deploying $2 ..."
+            if [[ "$2" == "zsh" ]]; then
+                ln -s "$configdir/zsh" "$XDG_CONFIG_HOME/zsh"
+                ln -s "$configdir/shell" "$XDG_CONFIG_HOME/shell"
+                ln -s "$configdir/shell/profile" "$HOME/.zshenv"
+            else
+                ln -s "$configdir/$2" "$XDG_CONFIG_HOME/$2"
+            fi
+        fi
+        ;;
+    "help")
+        ;;
+    *)
+        git --git-dir=${rootdir}/.git --work-tree=${rootdir} "$@"
+        ;;
+esac

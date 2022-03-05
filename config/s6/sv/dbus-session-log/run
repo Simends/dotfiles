@@ -1,0 +1,6 @@
+#!/bin/execlineb -P
+
+s6-envdir /home/simen/.local/config/s6/env
+importas XDG_CACHE_HOME XDG_CACHE_HOME
+exec -c
+s6-log -b -d3 t n3 s1000000 "${XDG_CACHE_HOME}/s6/log/dbus-session"

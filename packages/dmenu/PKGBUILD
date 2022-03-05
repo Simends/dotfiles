@@ -1,0 +1,41 @@
+# Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
+# Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
+# Contributor: Thorsten Töpper <atsutane-tu@freethoughts.de>
+# Contributor: Thayer Williams <thayer@archlinux.org>
+# Contributor: Jeff 'codemac' Mickey <jeff@archlinux.org>
+
+pkgname=dmenu
+pkgver=5.1
+pkgrel=1
+pkgdesc='Generic menu for X'
+url='https://tools.suckless.org/dmenu/'
+arch=('x86_64')
+license=('MIT')
+depends=('sh' 'glibc' 'coreutils' 'libx11' 'libxinerama' 'libxft' 'freetype2' 'fontconfig' 'libfontconfig.so')
+source=("https://dl.suckless.org/tools/dmenu-${pkgver}.tar.gz" "custom-${pkgname}-${pkgver}.patch")
+sha256sums=('1f4d709ebba37eb7326eba0e665e0f13be4fa24ee35c95b0d79c30f14a348fd5' '867750d0556e595a635e5107c6c2bea058c0ba8b5a714ca0b08c2668aa361ba9')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  echo "CPPFLAGS+=${CPPFLAGS}" >> config.mk
+  echo "CFLAGS+=${CFLAGS}" >> config.mk
+  echo "LDFLAGS+=${LDFLAGS}" >> config.mk
+  patch -p1 -i "${srcdir}/custom-${pkgname}-${pkgver}.patch"
+}
+
+build() {
+  cd ${pkgname}-${pkgver}
+  make \
+	  X11INC=/usr/include/X11 \
+	  X11LIB=/usr/lib/X11 \
+	  FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  make PREFIX=/usr DESTDIR="${pkgdir}" install
+  install -Dm 644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}"
+}
+
+# vim: ts=2 sw=2 et:

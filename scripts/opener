@@ -1,0 +1,59 @@
+#/bin/sh
+
+file="$1"
+type=$(file -Lb --mime-type -- "${file}")
+
+case "${file}" in
+    *.[1-8])
+        man -- "${file}" && exit 0
+        ;;
+    *.od[cbdfgipstm]|*.odft|*.ot[cgipsth]|*.do[ct]|*.do[ct]x|*.p[po]t|*.p[po]tx|\
+    *.xl[st]|*.xl[st]x)
+      libreoffice "${file}" && exit 0
+        ;;
+esac
+
+case "${type}" in
+    text/html)
+        w3m -T "${type}" "${file}"
+        ;;
+    video/*)
+        mpv "${file}"
+        ;;
+    audio/*)
+        mpv "${file}"
+        ;;
+    */pdf)
+        zathura "${file}"
+        ;;
+    application/postscript)
+        zathura "${file}"
+        ;;
+    "application/epub+zip")
+        zathura "${file}"
+        ;;
+    "application/vnd.ms-htmlhelp")
+        xchm "${file}"
+        ;;
+    image/*)
+        sxiv "${file}"
+        ;;
+    "application/msword"|"application/vnd.openxmlformats-officedocument.wordprocessingml.document"|"application/rtf"|"application/vnd.oasis.opendocument.text")
+        libreoffice --writer "${file}"
+        ;;
+    "application/vnd.ms-powerpoint"|"application/vnd.openxmlformats-officedocument.presentationml.presentation"|"application/vnd.oasis.opendocument.presentation")
+        libreoffice --impress "${file}"
+        ;;
+    "application/vnd.ms-excel"|"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"|"application/vnd.oasis.opendocument.spreadsheet")
+        libreoffice --calc "${file}"
+        ;;
+    text/*|application/xml|application/json|application/x-httpd-php)
+        "${EDITOR}" "${file}"
+        ;;
+    "application/x-tar"|"application/x-bzip"|"application/x-bzip2"|"application/gzip"|"application/java-archive"|"application/vnd.rar"|"application/zip"|"application/x-7z-compressed"|"application/x-compress"|"application/x-compressed")
+        xarchiver "${file}"
+        ;;
+    *)
+        xdg-open "${file}"
+        ;;
+esac

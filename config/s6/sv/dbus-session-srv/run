@@ -1,0 +1,10 @@
+#!/usr/bin/execlineb -P
+
+fdmove 2 1
+s6-envdir /home/simen/.local/config/s6/env
+importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+exec -c
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
+export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+dbus-daemon --session --print-pid=4 --nofork --nopidfile --nosyslog --address=${DBUS_SESSION_BUS_ADDRESS}

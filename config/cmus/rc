@@ -1,0 +1,4 @@
+set mpris=true
+set output_plugin=pulse
+set scroll_offset=10
+colorscheme green

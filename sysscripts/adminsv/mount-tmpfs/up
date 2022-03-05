@@ -1,0 +1,2 @@
+#!/bin/execlineb -P
+foreground { mount -t tmpfs tmpfs /tmp }

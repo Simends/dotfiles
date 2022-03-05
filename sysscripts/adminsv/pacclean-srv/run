@@ -1,0 +1,6 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+/usr/bin/snooze -v -s21600 -J3600 -d/5 -H13 -M0 -S0
+foreground { /usr/bin/paccache -rk2 }
+/usr/bin/paccache -ruk0

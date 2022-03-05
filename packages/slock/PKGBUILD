@@ -1,0 +1,33 @@
+# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Contributor: Sebastian A. Liem <sebastian at liem dot se>
+
+pkgname=slock
+pkgver=1.4
+pkgrel=5
+pkgdesc="A simple screen locker for X"
+arch=('x86_64')
+url="https://tools.suckless.org/slock"
+license=('MIT')
+depends=('libxext' 'libxrandr')
+source=("https://dl.suckless.org/tools/$pkgname-$pkgver.tar.gz"
+	"custom-${pkgname}-${pkgver}.patch")
+sha256sums=('b53849dbc60109a987d7a49b8da197305c29307fd74c12dc18af0d3044392e6a'
+            '0bffde2cd53638d84cb8c54fa1028960dc56bdb106eb2fa4c3456958445cc450')
+
+prepare() {
+  cd "$srcdir/slock-$pkgver"
+  # sed -i 's|static const char \*group = "nogroup";|static const char *group = "nobody";|' config.def.h
+  sed -ri 's/((CPP|C|LD)FLAGS) =/\1 +=/g' config.mk
+  patch -p1 -i "${srcdir}/custom-${pkgname}-${pkgver}.patch"
+}
+
+build() {
+  cd "$srcdir/slock-$pkgver"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
+}
+
+package() {
+  cd "$srcdir/slock-$pkgver"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+  install -m644 -D LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

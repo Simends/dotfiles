@@ -1,0 +1,7 @@
+#!/bin/sh
+
+wallpaperdir="$HOME/Multimedia/Pictures/Wallpapers"
+
+sel=$(sxiv -o "$wallpaperdir")
+ln -sf "$sel" "$wallpaperdir/current"
+xwallpaper --zoom "$wallpaperdir/current"

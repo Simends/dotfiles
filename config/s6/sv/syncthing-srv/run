@@ -1,0 +1,12 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+    importas XDG_CONFIG_HOME XDG_CONFIG_HOME
+    importas XDG_DATA_HOME XDG_DATA_HOME
+    importas HOME HOME
+}
+exec -c
+export HOME ${HOME}
+/usr/bin/syncthing serve --no-browser --no-restart --logflags=0 --config=${XDG_CONFIG_HOME}/syncthing --data=${XDG_DATA_HOME}/syncthing 

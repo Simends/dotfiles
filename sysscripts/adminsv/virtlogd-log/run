@@ -1,0 +1,8 @@
+#!/bin/execlineb -P
+define VIRTLOGD_DIRECTIVES "n3 s2000000 T"
+ifelse { test -w /var/log } {
+	foreground { install -d -o s6log -g s6log /var/log/virtlogd }
+	s6-setuidgid s6log exec -c s6-log -d3 -b -- ${VIRTLOGD_DIRECTIVES} /var/log/virtlogd
+}
+foreground { install -d -o s6log -g s6log /run/log/virtlogd }
+s6-setuidgid s6log exec -c s6-log -d3 -b -- ${VIRTLOGD_DIRECTIVES} /run/log/virtlogd
