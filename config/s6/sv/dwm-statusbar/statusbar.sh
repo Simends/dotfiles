@@ -2,12 +2,13 @@
 
 seperator=" | "
 delay="1s"
+source "${XDG_CONFIG_HOME}/device-info.sh"
 
 while true; do
     # Date
     dteicon=" "
 	dteval=$(date +'%a %d/%m/%Y %H:%M')
-    dte="${dteicon}${dteval}"
+    dte="${dteicon}${dteval}${seperator}"
 
     # Memory usage
     memicon=" "
@@ -16,7 +17,7 @@ while true; do
 
     # CPU Temp
     tmpicon=" "
-	tmpval=$(cat /sys/class/thermal/thermal_zone10/temp | sed 's|$| / 1000|' | bc)
+	tmpval=$(cat "/sys/class/thermal/${thermalzone}/temp" | sed 's|$| / 1000|' | bc)
     tmp="${tmpicon}${tmpval}°C${seperator}"
 
     # Net
@@ -26,7 +27,7 @@ while true; do
     else
         neticon=""
     fi
-    net="${neticon}${seperator}"
+    net="${neticon}"
 
     # Battery
     batdir="/sys/class/power_supply/BAT0"
@@ -56,10 +57,12 @@ while true; do
     if [ "${audstat}" == "off" ]; then
         audicon=""
         aud="${audicon}${seperator}"
-    else
+    elif [ "${audstat}" == "on" ]; then
         audicon=" "
         audlvl=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))
         aud="${audicon}${audlvl}${seperator}"
+    else
+        aud=""
     fi
 
     # Mic
@@ -80,6 +83,15 @@ while true; do
         dnd="${dndicon}${seperator}"
     fi
 
+    # DPMS status
+    dpmstat=$(xset q | grep -oP "(?<=DPMS is )\w*$")
+    dpmicon=""
+    if [ "${dpmstat}" == "Enabled" ]; then
+        dpm=""
+    else
+        dpm="${dpmicon}${seperator}"
+    fi
+
     # MPRIS
     mpricon=$(playerctl -f '{{emoji(status)}}' status || echo "")
     if [ "${mpricon}" ];then
@@ -90,6 +102,6 @@ while true; do
         mpr=""
     fi
 
-	xsetroot -name " ${mpr}${dnd}${mic}${aud}${bal}${bat}${net}${tmp}${mem}${dte} "
+	xsetroot -name " ${mpr}${dpm}${dnd}${mic}${aud}${bal}${bat}${tmp}${mem}${dte}${net} "
 	sleep "${delay}"
 done

@@ -7,11 +7,13 @@ multisubstitute
 	importas DISPLAY DISPLAY
 	importas XAUTHORITY XAUTHORITY
 	importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+	importas XDG_CONFIG_HOME XDG_CONFIG_HOME
     importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
 }
 exec -c
 export DISPLAY ${DISPLAY}
 export XAUTHORITY ${XAUTHORITY}
 export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+export XDG_CONFIG_HOME ${XDG_CONFIG_HOME}
 export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
-/home/simen/.local/config/s6/sv/dwm-statusbar/statusbar.sh
+${XDG_CONFIG_HOME}/s6/sv/dwm-statusbar/statusbar.sh
