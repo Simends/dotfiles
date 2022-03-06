@@ -39,7 +39,7 @@ alias fsxl='convert $(fzf --reverse --multi --height=40%) -geometry 800x480 sixe
 alias docker='podman'
 
 alias e="$EDITOR"
-alias f='nnn'
+alias f='lfimg'
 alias se='sudoedit'
 alias sush='sudo -E -s'
 alias g='git'
