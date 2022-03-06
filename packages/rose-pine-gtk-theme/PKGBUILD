@@ -1,0 +1,30 @@
+pkgname=rose-pine-gtk-theme
+pkgver=2.0.0
+pkgrel=1
+pkgdesc="Soho vibes for GTK"
+options=(!strip !zipman libtool staticlibs)
+arch=('any')
+provides=("${pkgname}")
+conflicts=("${pkgname}" "${pkgname}-git")
+url="https://github.com/rose-pine/gtk"
+source=("https://github.com/rose-pine/gtk/releases/download/v${pkgver}/AllRosePineThemesGTK.tar.gz"
+        "https://github.com/rose-pine/gtk/releases/download/v${pkgver}/AllRosePineThemesIcons.tar.gz")
+sha256sums=('5a7cb1c535adb28c9c7af4a983f66f84daa171a7a8ef4d8ebc846e203f6db42b'
+            'ccace5dd520a018f616cb5aaaa885884e69e86fdb4693987315ea833f1c32536')
+
+package() {
+    target=$pkgdir/usr/share
+
+    mkdir -p "${target}/themes"
+    mkdir -p "${target}/icons"
+
+    tar -xof "AllRosePineThemesGTK.tar.gz"
+    tar -xof "AllRosePineThemesIcons.tar.gz"
+
+    cp -r "AllRosePineThemesGTK/rose-pine-gtk" "${target}/themes/"
+    cp -r "AllRosePineThemesGTK/rose-pine-moon-gtk" "${target}/themes/"
+    cp -r "AllRosePineThemesGTK/rose-pine-dawn-gtk" "${target}/themes/"
+    cp -r "AllRosePineThemesIcons/rose-pine-icons" "${target}/icons/"
+    cp -r "AllRosePineThemesIcons/rose-pine-moon-icons" "${target}/icons/"
+    cp -r "AllRosePineThemesIcons/rose-pine-dawn-icons" "${target}/icons/"
+}
