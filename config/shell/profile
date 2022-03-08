@@ -19,12 +19,6 @@ export XKB_DEFAULT_LAYOUT="no"
 export LANG="en_US.UTF-8"
 export LC_COLLATE="en_US.UTF-8"
 
-# Colors
-ColorBlack='393552'
-ColorBg='232136'
-ColorFg='e0def4'
-ColorHl='eb6f92'
-
 # Path
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.local/dotfiles/scripts
@@ -49,9 +43,6 @@ export FZF_DEFAULT_OPTS="--layout=default --info=inline --cycle -1 -0 --color='f
 # export FZF_COMPLETION_TRIGGER=''
 # export FZF_ALT_C_OPTS="--reverse --preview 'tree -C {} | head -200'"
 # export FZF_CTRL_T_OPTS="--reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-
-# Bemenu
-#export BEMENU_OPTS="--fn SourceCodePro-Regular,10 --nb #${ColorBlack} --nf #${ColorFg} --hb #${ColorHl} --hf #${ColorBg} --tb #${ColorBg} --tf #${ColorHl} --fb #${ColorBg} --ff #${ColorHl}"
 
 # Other variables
 # export QT_STYLE_OVERRIDE="qt5ct"

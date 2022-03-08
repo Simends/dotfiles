@@ -33,10 +33,10 @@ alias wttr-moon='curl wttr.in/moon'
 alias clock='tty-clock -cC 4'
 alias pth="echo $PATH | sed 's/:/\n/g'"
 alias nvmestat='sudo nvme smart-log /dev/nvme0n1'
-alias battery="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep 'percentage' | sed 's/\s//g'"
 alias cat-tags='cat tags | sed "/^!/d" | cut -f 1,2 | less'
 alias fsxl='convert $(fzf --reverse --multi --height=40%) -geometry 800x480 sixel:-'
 alias docker='podman'
+alias slcomp='sudo rm config.h && sudo make install'
 
 alias e="$EDITOR"
 alias f='lfimg'
