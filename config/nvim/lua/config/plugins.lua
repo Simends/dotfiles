@@ -713,7 +713,7 @@ M.telescope = {
                 -- layout_strategy = "flex",
                 -- winblend = 25,
                 layout_config = {
-                    height = 30,
+                    height = 60,
                     preview_width = 90,
                     scroll_speed = 25
                     -- height_padding = 3,
@@ -1205,6 +1205,8 @@ M.rose_pine = {
         vim.g.rose_pine_variant = 'moon'
         vim.cmd('colorscheme rose-pine')
         vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+        vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
+        vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
         vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
     end
 }
