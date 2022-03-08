@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+
+notatsyspath="$HOME/Documents/notatsys"
+wikipath="$notatsyspath/wiki"
+templatepath="$notatsyspath/.templates"
+journalpath="$notatsyspath/journal"
+contactspath="$notatsyspath/kontakter"
+finder="fzf --reverse --border=rounded --cycle --height=40%"
+
+searchTags() {
+    tags=$(grep -roP "(?<==)[_a-åA-Å0-9]*(?==(\s|$))" "$wikipath" | cut -d':' -f2 | sort | uniq -c)
+    sel_tag=$(echo "$tags" | $finder | awk '{print $2}')
+    if [ "$sel_tag" == "" ]
+    then
+        exit
+    fi
+    sel_note=$(grep -roP "(?<==)$sel_tag(?==)" "$wikipath" | cut -d':' -f1 | sed "s|^$wikipath/||" | sort | $finder)
+    if [ "$sel_note" == "" ]
+    then
+        exit
+    fi
+    $EDITOR "$wikipath/$sel_note"
+}
+
+findNote() {
+    sel_note=$(find "$wikipath" -type f -printf "%C@ %P\n" | sort | cut -d' ' -f2 | $finder)
+    if [ "$sel_note" == "" ]
+    then
+        exit
+    fi
+    $EDITOR "$wikipath/$sel_note"
+}
+
+printDay() {
+    day_dir="$journalpath/$1"
+    recurring_file=$(echo "$day_dir" | sed -E 's|journal/[0-9]{4}/|journal/alle/|' | sed 's/$/.txt/')
+    if [ ! -d "$day_dir" ]
+    then
+        mkdir -p "$day_dir"
+    fi
+
+    if [ -f "$recurring_file" ]
+    then
+        echo -e "#\n"
+        cat "$recurring_file"
+        echo ""
+    fi
+
+    tasks_file="$day_dir/todo.txt"
+    if [ -f "$tasks_file" ] || [ -f "$recurring_file" ]
+    then
+        echo -e "# Dette skjer i dag\n"
+        if [ -f "$tasks_file" ]
+        then
+            cat "$tasks_file"
+        fi
+        if [ -f "$recurring_file" ]
+        then
+            cat "$recurring_file"
+        fi
+        echo ""
+    fi
+
+    note_file="$day_dir/notater.txt"
+    if [ -f "$note_file" ]
+    then
+        echo -e "# Notater\n"
+        cat "$note_file"
+        echo ""
+    fi
+}
+
+newTask() {
+    day_dir="$journalpath/$2"
+    if [ ! -d "$day_dir" ]
+    then
+        mkdir -p "$day_dir"
+    fi
+    tasks_file="$day_dir/todo.txt"
+    echo "$1" >> "$tasks_file"
+}
+
+newNote() {
+    day_dir="$journalpath/$2"
+    if [ ! -d "$day_dir" ]
+    then
+        mkdir -p "$day_dir"
+    fi
+    notes_file="$day_dir/notater.txt"
+    echo "$1" >> "$notes_file"
+}
+
+journal() {
+    today=$(date +"%Y/%B/%d")
+    case "$2" in
+        "print" | "p")
+            if [ "$3" == "" ] || [ "$3" == "today" ]
+            then
+                day="$today"
+            else
+                day=$(date +"%Y/%B/%d" -d "$3")
+            fi
+            printDay "$day"
+            ;;
+        "add-task" | "t")
+            if [ "$4" == "" ] || [ "$4" == "today" ]
+            then
+                day="$today"
+            else
+                day=$(date +"%Y/%B/%d" -d "$4")
+            fi
+            newTask "$3" "$day"
+            ;;
+        "add-note" | "n")
+            if [ "$4" == "" ] || [ "$4" == "today" ]
+            then
+                day="$today"
+            else
+                day=$(date +"%Y/%B/%d" -d "$4")
+            fi
+            newNote "$3" "$day"
+            ;;
+        *)
+            printDay "$today"
+            ;;
+    esac
+}
+
+wiki() {
+    case "$2" in
+        "tags" | "t")
+            searchTags
+            ;;
+        *)
+            findNote
+            ;;
+    esac
+}
+
+printHelp() {
+    echo "
+wiki tags
+    Search notes based on tag
+wiki find
+    Search notes
+journal print [DAY]
+    Print a day (or today if no day is given)
+journal add-task [DAY]
+    Add a task to a day (or today if no day is given)
+journal add-note [DAY]
+    Add a note to a day (or today if no day is given)
+desktop
+    Open desktop file in EDITOR
+"
+}
+
+case "$1" in
+    "wiki" | "w")
+        wiki "$@"
+        ;;
+    "journal" | "j")
+        journal "$@"
+        ;;
+    "desktop" | "")
+        $EDITOR "$notatsyspath/skrivebord.md"
+        ;;
+    *)
+        printHelp
+        ;;
+esac
