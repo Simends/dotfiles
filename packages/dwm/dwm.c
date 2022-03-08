@@ -2060,11 +2060,11 @@ col(Monitor *m)
                 if (n == 1)
                     resize(c, m->wx - c->bw, m->wy, m->ww - c->bw, m->wh, False);
                 else
-				    resize(c, x + m->wx - c->bw, m->wy, w - c->bw, m->wh - c->bw, False);
+				    resize(c, x + m->wx - c->bw, m->wy, w, m->wh - c->bw, False);
 				x += WIDTH(c) - c->bw;
 			} else {
 				h = (m->wh - y) / (n - i);
-				resize(c, x + m->wx - c->bw, m->wy + y, m->ww - x - c->bw, h - c->bw, False);
+				resize(c, x + m->wx - c->bw, m->wy + y, m->ww - x, h - c->bw, False);
 				y += HEIGHT(c) - c->bw;
 			}
 	}
@@ -2235,11 +2235,11 @@ tile(Monitor *m)
 	                        if (n == 1)
 	                                resize(c, m->wx - c->bw, m->wy, m->ww - c->bw, m->wh, False);
 	                        else
-	                                resize(c, m->wx - c->bw, m->wy + my, mw - c->bw, h - c->bw, False);
+	                                resize(c, m->wx - c->bw, m->wy + my, mw, h - c->bw, False);
 	                        my += HEIGHT(c) - c->bw;
 	                } else {
 	                        h = (m->wh - ty) / (n - i);
-	                        resize(c, m->wx + mw - c->bw, m->wy + ty, m->ww - mw - c->bw, h - c->bw, False);
+	                        resize(c, m->wx + mw - c->bw, m->wy + ty, m->ww - mw, h - c->bw, False);
 	                        ty += HEIGHT(c) - c->bw;
 	                }
 	}

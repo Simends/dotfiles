@@ -1,0 +1,15 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+	importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+    importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+    importas XDG_CONFIG_HOME XDG_CONFIG_HOME
+}
+exec -c
+export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
+export XDG_CONFIG_HOME ${XDG_CONFIG_HOME}
+batsignal -w 15 -c 10 -d 5 -f 100 -a Battery
