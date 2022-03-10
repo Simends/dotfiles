@@ -37,19 +37,19 @@ SelVm() {
 ToggleDPMS() {
     dpmstat=$(xset q | grep -oP "(?<=DPMS is )\w*$")
     if [ "${dpmstat}" == "Enabled" ]; then
-        xset -dpms
+        xset s off -dpms
     else
-        xset +dpms
+        xset s on +dpms
     fi
 }
 
-SettingsOpts="System Info\nToggle DPMS\nTask Manager\nSound\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Wallpaper\nChange Theme\nCompositor\nShow Fonts"
+SettingsOpts="System Info\nToggle Screensaver\nTask Manager\nSound\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Wallpaper\nChange Theme\nCompositor\nShow Fonts"
 SettingsMenu=$(echo -e "$SettingsOpts" | $MenuProg)
 case "$SettingsMenu" in
     "System Info")
         cpu-x
         ;;
-    "Toggle DPMS")
+    "Toggle Screensaver")
         ToggleDPMS
         ;;
     "Task Manager")

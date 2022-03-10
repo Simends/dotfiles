@@ -83,13 +83,14 @@ while true; do
         dnd="${dndicon}${seperator}"
     fi
 
-    # DPMS status
+    # Screensaver status
+    scrsvicon=""
     dpmstat=$(xset q | grep -oP "(?<=DPMS is )\w*$")
-    dpmicon=""
-    if [ "${dpmstat}" == "Enabled" ]; then
-        dpm=""
+    timeoutstat=$(xset q | grep -oP "(?<=timeout:  )\d*")
+    if [ "${dpmstat}" == "Disabled" ] && [ "${timeoutstat}" == "0" ]; then
+        scrsv="${scrsvicon}${seperator}"
     else
-        dpm="${dpmicon}${seperator}"
+        scrsv=""
     fi
 
     # MPRIS
@@ -102,6 +103,6 @@ while true; do
         mpr=""
     fi
 
-	xsetroot -name " ${mpr}${dpm}${dnd}${mic}${aud}${bal}${bat}${tmp}${mem}${dte}${net} "
+	xsetroot -name " ${mpr}${scrsv}${dnd}${mic}${aud}${bal}${bat}${tmp}${mem}${dte}${net} "
 	sleep "${delay}"
 done
