@@ -1,0 +1,219 @@
+#!/bin/sh
+
+extract() {
+    if [ -f "$1" ]; then
+        case $1 in
+             *.tar.bz2)   
+                tar -xjf $1
+                ;;
+            *.tar.gz)
+                tar -xzf $1
+                ;;
+            *.bz2)
+                bunzip2 $1
+                ;;
+            *.rar)
+                unrar x $1
+                ;;
+            *.gz)
+                gunzip $1
+                ;;
+            *.tar)
+                tar -xf $1
+                ;;
+            *.tbz2)
+                tar -xjf $1
+                ;;
+            *.tgz)
+                tar -xzf $1
+                ;;
+            *.zip)
+                unzip $1
+                ;;
+            *.Z)
+                uncompress $1
+                ;;
+            *.7z)
+                7z x $1
+                ;;
+            *.deb)
+                ar x $1
+                ;;
+            *.tar.xz)
+                tar -xf $1
+                ;;
+            *.tar.zst)
+                unzstd $1
+                ;;
+            *.tar.*)
+                tar -xf $1
+                ;;
+            *)
+                echo "'$1' cannot be extracted"
+                ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+create() {
+    if [ -f "$2" ] || [ -d "$2" ]; then
+        case "$1" in
+             *.tar.bz2)   
+                tar -jcf $1 $2
+                ;;
+            *.tar.gz)
+                tar -zcf $1 $2
+                ;;
+            *.bz2)
+                bzip2 -c $2 > $1
+                ;;
+            *.rar)
+                rar a $1 $2
+                ;;
+            *.gz)
+                gzip -c $2 > $1
+                ;;
+            *.tar)
+                tar -cf $1 $2
+                ;;
+            *.tbz2)
+                tar -jcf $1 $2
+                ;;
+            *.tgz)
+                tar -zcf $1 $2
+                ;;
+            *.zip)
+                zip $1 $2
+                ;;
+            *.Z)
+                compress $2
+                ;;
+            *.7z)
+                7z a $1 $2
+                ;;
+            *.deb)
+                ar q $1 $2
+                ;;
+            *.tar.xz)
+                tar -Jcf $1 $2
+                ;;
+            *.tar.zst)
+                tar --zstd -cf $1 $2
+                ;;
+            *.tar.lzma)
+                tar --lzma -cf $1 $2
+                ;;
+            *.tar.*)
+                tar -acf $1 $2
+                ;;
+            *)
+                echo "'$1' is in an invalid format"
+                ;;
+        esac
+    else
+        echo "'$2' is not a valid file or directory"
+    fi
+}
+
+list() {
+    if [ -f "$1" ]; then
+        case $1 in
+             *.tar.bz2)   
+                tar -tf $1
+                ;;
+            *.tar.gz)
+                tar -tf $1
+                ;;
+            *.rar)
+                unrar l $1
+                ;;
+            *.tar)
+                tar -tf $1
+                ;;
+            *.tbz2)
+                tar -tf $1
+                ;;
+            *.tgz)
+                tar -tf $1
+                ;;
+            *.zip)
+                unzip -l $1
+                ;;
+            *.7z)
+                7z l $1
+                ;;
+            *.deb)
+                ar t $1
+                ;;
+            *.tar.xz)
+                tar -tf $1
+                ;;
+            *.tar.zst)
+                tar -tf $1
+                ;;
+            *.tar.*)
+                tar -tf $1
+                ;;
+            *)
+                echo "'$1' cannot be listed"
+                ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+arcat() {
+    if [ -f "$1" ]; then
+        case $1 in
+            *.bz2)
+                bzcat $1
+                ;;
+            *.gz)
+                zcat $1
+                ;;
+            *.zip)
+                unzip -c $1
+                ;;
+            *.Z)
+                uncompress -c $1
+                ;;
+            *)
+                echo "'$1' cannot be extracted"
+                ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+printusage() {
+    echo "
+Usage: archive [COMMAND] [ARCHIVE] [FILE]
+
+Commands:
+extract     Extract an archive
+create      Creates a new archive and adds file to it
+list        List the contents of an archive
+cat         Decompress a file and print it's content to stdout"
+}
+
+case "$1" in
+    "x" | "ex" | "extract")
+        extract $2
+        ;;
+    "c" | "cr" | "create")
+        create $2 $3
+        ;;
+    "l" | "ls" | "list")
+        list $2
+        ;;
+    "cat")
+        arcat $2
+        ;;
+    *)
+        printusage
+        ;;
+esac
