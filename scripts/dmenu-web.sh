@@ -24,12 +24,15 @@ Standard Ebooks: standardebooks.org/ebooks?query=
 Z-Library: 1lib.sk/s/"
 
     SelEngine=$(echo -e "$SearchEngines" | $MenuProg | awk '{print $NF}')
+    if [ "$SelEngine" == "" ]; then
+        exit
+    fi
     SearchTerm=$(echo "" | $MenuProg)
     $Browser "https://$SelEngine$SearchTerm"
 }
 
 bookmarks() {
-    cat $Bookmarkdir/* | $MenuProg | cut -d'|' -f2 | xargs $Browser
+    cat $Bookmarkdir/* | $MenuProg | awk '{print $NF}' | xargs $Browser
 }
 
 SelOpt=$(echo -e "Search\nBookmarks" | $MenuProg)
