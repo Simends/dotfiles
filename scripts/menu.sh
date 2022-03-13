@@ -8,7 +8,7 @@ MenuOpts="-i -p Menu $@"
 MenuProg="dmenu $MenuOpts"
 MenuPath="$HOME/.local/dotfiles/scripts"
 Terminal="st -e"
-Browser="qutebrowser"
+Browser="$BROWSER"
 
 SelPower() {
     PowerOpts="Lock\nLog Out\nReboot\nShutdown\nReboot to UEFI Menu\nReboot to something else"
@@ -35,7 +35,7 @@ SelPower() {
     esac
 }
 
-MainMenu=$(echo -e "Applications\nDirectory\nMedia Player\nWebsearch\nScreenshot\nPasswords\nSSH Sessions\nManuals\nDeadbeef\nToggle Do Not Disturb\nSystray\nSettings\nPower" | $MenuProg)
+MainMenu=$(echo -e "Applications\nDirectory\nMedia Player\nWeb\nScreenshot\nPasswords\nSSH Sessions\nManuals\nDeadbeef\nToggle Do Not Disturb\nSystray\nSettings\nPower" | $MenuProg)
 case "$MainMenu" in
     "Applications")
         "$MenuPath/dmenu-apps.sh" "$MenuOpts" "$Terminal" "$Browser"
@@ -46,7 +46,7 @@ case "$MainMenu" in
     "Media Player")
         "$MenuPath/dmenu-media.sh" "$MenuOpts" "$Terminal" "$Browser"
         ;;
-    "Websearch")
+    "Web")
         "$MenuPath/dmenu-web.sh" "$MenuOpts" "$Terminal" "$Browser"
         ;;
     "Screenshot")
