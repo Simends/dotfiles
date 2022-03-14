@@ -4,7 +4,7 @@ MenuOpts="$1"
 MenuProg="dmenu $MenuOpts"
 Terminal="$2"
 Browser="$3"
-Bookmarkdir="$HOME/.local/dotfiles/bookmarks"
+Bookmarkdir="$HOME/Documents/notatsys/bokmerker"
 
 search() {
     SearchEngines="Ducduckgo: duckduckgo.com/?q=
@@ -32,7 +32,7 @@ Z-Library: 1lib.sk/s/"
 }
 
 bookmarks() {
-    cat $Bookmarkdir/* | $MenuProg | awk '{print $NF}' | xargs $Browser
+    cat $Bookmarkdir/* | $MenuProg -l 20 | awk '{print $NF}' | xargs $Browser
 }
 
 SelOpt=$(echo -e "Search\nBookmarks" | $MenuProg)
