@@ -9,7 +9,7 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { "monospace:size=10" };
+static const char *fonts[]          = { "monospace:size=10", "FontAwesome:style=Regular:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
@@ -46,6 +46,9 @@ static const float mfact     = 0.75; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 2;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+
+/* mouse scroll resize */
+static const int scrollsensetivity = 60; /* 1 means resize window by 1 pixel for each scroll event */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -134,8 +137,8 @@ static Key keys[] = {
     { 0, XF86XK_AudioRaiseVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%+") },
     { 0, XF86XK_AudioLowerVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%-") },
     { 0, XF86XK_AudioMicMute,                       spawn,          SHCMD("amixer -q set Capture Volume toggle") },
-    { 0, XF86XK_MonBrightnessUp,	                spawn,		    SHCMD("xbacklight -inc 10") },
-	{ 0, XF86XK_MonBrightnessDown,	                spawn,		    SHCMD("xbacklight -dec 10") },
+    { 0, XF86XK_MonBrightnessUp,	                spawn,		    SHCMD("sudo light -A 5") },
+	{ 0, XF86XK_MonBrightnessDown,	                spawn,		    SHCMD("sudo light -U 5") },
     { 0, XF86XK_WLAN,                               spawn,          SHCMD("rfkill toggle all") },
 	TAGKEYS(                        XK_1,                      	    0)
 	TAGKEYS(                        XK_2,                      	    1)
@@ -147,6 +150,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      	    7)
 	TAGKEYS(                        XK_9,                      	    8)
 	{ MODKEY|ShiftMask,             XK_q,      	    quit,           {0} },
+};
+
+/* resizemousescroll direction argument list */
+static const int scrollargs[][2] = {
+	/* width change         height change */
+	{ +scrollsensetivity,	0 },
+	{ -scrollsensetivity,	0 },
+	{ 0, 				  	+scrollsensetivity },
+	{ 0, 					-scrollsensetivity },
 };
 
 /* button definitions */
@@ -161,6 +173,10 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button4,        resizemousescroll, {.v = &scrollargs[0]} },
+	{ ClkClientWin,         MODKEY,         Button5,        resizemousescroll, {.v = &scrollargs[1]} },
+	{ ClkClientWin,         MODKEY,         Button6,        resizemousescroll, {.v = &scrollargs[2]} },
+	{ ClkClientWin,         MODKEY,         Button7,        resizemousescroll, {.v = &scrollargs[3]} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },

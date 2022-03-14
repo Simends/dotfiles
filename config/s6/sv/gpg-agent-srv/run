@@ -7,10 +7,12 @@ multisubstitute
 {
 	importas DISPLAY DISPLAY
 	importas XAUTHORITY XAUTHORITY
+    importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
     importas GNUPGHOME GNUPGHOME
 }
 exec -c
 export DISPLAY ${DISPLAY}
 export XAUTHORITY ${XAUTHORITY}
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
 export GNUPGHOME ${GNUPGHOME}
 /usr/bin/gpg-agent --supervised
