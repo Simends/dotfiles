@@ -1,5 +1,3 @@
 #!/bin/execlineb -P
-envfile /etc/s6/config/earlyoom.conf
-importas -sCuD "" EARLYOOM_ARGS EARLYOOM_ARGS
 fdmove -c 2 1
-exec earlyoom ${EARLYOOM_ARGS}
+exec earlyoom

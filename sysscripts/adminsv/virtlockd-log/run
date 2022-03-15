@@ -1,8 +1,7 @@
 #!/bin/execlineb -P
-define VIRTLOCKD_DIRECTIVES "n3 s2000000 T"
 ifelse { test -w /var/log } {
 	foreground { install -d -o s6log -g s6log /var/log/virtlockd }
-	s6-setuidgid s6log exec -c s6-log -d3 -b -- ${VIRTLOCKD_DIRECTIVES} /var/log/virtlockd
+	s6-setuidgid s6log exec -c s6-log -d3 -b -- n3 s2000000 T /var/log/virtlockd
 }
 foreground { install -d -o s6log -g s6log /run/log/virtlockd }
-s6-setuidgid s6log exec -c s6-log -d3 -b -- ${VIRTLOCKD_DIRECTIVES} /run/log/virtlockd
+s6-setuidgid s6log exec -c s6-log -d3 -b -- n3 s2000000 T /run/log/virtlockd
