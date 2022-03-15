@@ -65,7 +65,7 @@ case "$SettingsMenu" in
         arandr
         ;;
     "Disks")
-        gparted
+        sudo gparted
         ;;
     "Virtual Machines")
         SelVm

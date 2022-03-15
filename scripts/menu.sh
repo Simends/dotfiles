@@ -21,16 +21,16 @@ SelPower() {
             loginctl kill-user $(whoami)
             ;;
         "Reboot")
-            loginctl reboot
+            sudo reboot
             ;;
         "Shutdown")
-            loginctl poweroff
+            sudo poweroff
             ;;
         "Reboot to UEFI Menu")
-            loginctl reboot --firmware-setup
+            sudo loginctl reboot --firmware-setup
             ;;
         "Reboot to something else")
-            efibootmgr | tail -n +4 | $MenuProg | grep -Po "(?<=Boot)\w{4}" | xargs sudo efibootmgr -n && loginctl reboot
+            efibootmgr | tail -n +4 | $MenuProg | grep -Po "(?<=Boot)\w{4}" | xargs sudo efibootmgr -n && sudo reboot
             ;;
     esac
 }

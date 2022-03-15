@@ -44,8 +44,6 @@ xset r rate 300 50
 xset m default
 xset b off
 
-lxpolkit &
-
 svctl import-env DISPLAY
 svctl import-env XAUTHORITY
 svctl import-env XDG_VTNR
