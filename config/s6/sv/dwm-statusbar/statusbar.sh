@@ -52,6 +52,15 @@ while true; do
         bal=""
     fi
 
+    # Keyboard layout
+    kblayout=$(setxkbmap -print -verbose 10 | grep -oP "(?<=^layout:\s{5})\w*$")
+    kbvariant=$(setxkbmap -print -verbose 10 | grep -oP "(?<=^variant:\s{4})\w*$" || printf "")
+    if [ "${kbvariant}" != "" ]; then
+        kbl="${kblayout}+${kbvariant}"
+    else
+        kbl="${kblayout}"
+    fi
+
     # Audio
     audstat=$(awk -F"[][]" '/Left:/ { print $4 }' <(amixer sget Master))
     if [ "${audstat}" == "off" ]; then
@@ -103,6 +112,6 @@ while true; do
         mpr=""
     fi
 
-	xsetroot -name " ${mpr}${scrsv}${dnd}${mic}${aud}${bal}${bat}${tmp}${mem}${dte}${net} "
+	xsetroot -name " ${mpr}${scrsv}${dnd}${mic}${aud}${bal}${bat}${tmp}${mem}${dte}${net} ${kbl} "
 	sleep "${delay}"
 done

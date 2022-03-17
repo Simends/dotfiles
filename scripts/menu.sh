@@ -30,7 +30,12 @@ SelPower() {
             sudo loginctl reboot --firmware-setup
             ;;
         "Reboot to something else")
-            efibootmgr | tail -n +4 | $MenuProg | grep -Po "(?<=Boot)\w{4}" | xargs sudo efibootmgr -n && sudo reboot
+            efibootmgr \
+                | tail -n +4 \
+                | $MenuProg \
+                | grep -Po "(?<=Boot)\w{4}" \
+                | xargs sudo efibootmgr -n \
+                && sudo reboot
             ;;
     esac
 }
@@ -41,7 +46,11 @@ case "$MainMenu" in
         "$MenuPath/dmenu-apps.sh" "$MenuOpts" "$Terminal" "$Browser"
         ;;
     "Directory")
-        awk -F "|" '{print $2 " " $1}' "$XDG_DATA_HOME/z" | sort -nr | cut -d" " -f2 | $MenuProg | xargs -r st -d
+        awk -F "|" '{print $2 " " $1}' "$XDG_DATA_HOME/z" \
+            | sort -nr \
+            | cut -d" " -f2 \
+            | $MenuProg \
+            | xargs -r st -d
         ;;
     "Media Player")
         "$MenuPath/dmenu-media.sh" "$MenuOpts" "$Terminal" "$Browser"
@@ -57,13 +66,23 @@ case "$MainMenu" in
         ;;
     "SSH Sessions")
         SshSessions="KissVM: simen@192.168.122.149\nAlpine Linux: simen@192.168.122.180"
-        echo -e "$SshSessions" | $MenuProg | awk '{print $NF}' | xargs -r $Terminal ssh
+        echo -e "$SshSessions" \
+            | $MenuProg \
+            | awk '{print $NF}' \
+            | xargs -r $Terminal ssh
         ;;
     "Manuals")
-        man -k . | $MenuProg | awk '{print $2 " " $1}' | tr -d "()" | xargs -r man -Tpdf | zathura -
+        man -k . \
+            | $MenuProg \
+            | awk '{print $2 " " $1}' \
+            | tr -d "()" \
+            | xargs -r man -Tpdf \
+            | zathura -
         ;;
     "Deadbeef")
-        find "${HOME}/Multimedia/Music" -type f | $MenuProg | xargs -I{} deadbeef --queue '{}'
+        find "${HOME}/Multimedia/Music" -type f \
+            | $MenuProg \
+            | xargs -I{} deadbeef --queue '{}'
         ;;
     "Systray")
         killall trayer

@@ -70,7 +70,14 @@ SelAppsMultimedia() {
             spotify
             ;;
         "Youtube Playlists")
-            ls "$(xdg-user-dir VIDEOS)/YouTube" | $MenuProg | sed "s|^|$(xdg-user-dir VIDEOS)/YouTube/|" | xargs -r cat | $MenuProg | cut -d" " -f1 | sed 's|^|https://www.youtube.com/watch?v=|' | xargs -r mpv
+            ls "$(xdg-user-dir VIDEOS)/YouTube" \
+                | $MenuProg \
+                | sed "s|^|$(xdg-user-dir VIDEOS)/YouTube/|" \
+                | xargs -r cat \
+                | $MenuProg \
+                | cut -d" " -f1 \
+                | sed 's|^|https://www.youtube.com/watch?v=|' \
+                | xargs -r mpv
             ;;
         "lofi hip hop radio - beats to relax/study to")
             mpv "https://www.youtube.com/watch?v=5qap5aO4i9A"
@@ -95,7 +102,7 @@ SelAppsOffice() {
             darktable
             ;;
         "Ardour")
-            ardour6
+            pw-jack ardour6
             ;;
         "Pinta")
             pinta
@@ -142,10 +149,16 @@ SelTmux() {
             echo "" | $MenuProg | xargs -r $Terminal tmux new-session -s
             ;;
         "Attach Session")
-            tmux list-sessions | $MenuProg | cut -d":" -f1 | xargs -r $Terminal tmux attach -t
+            tmux list-sessions \
+                | $MenuProg \
+                | cut -d":" -f1 \
+                | xargs -r $Terminal tmux attach -t
             ;;
         "Delete Session")
-            tmux list-sessions | $MenuProg | cut -d":" -f1 | xargs -r $Terminal tmux kill-session -t
+            tmux list-sessions \
+                | $MenuProg \
+                | cut -d":" -f1 \
+                | xargs -r $Terminal tmux kill-session -t
     esac
 }
 

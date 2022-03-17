@@ -34,6 +34,31 @@ SelVm() {
     esac
 }
 
+SelKb() {
+    KbList="/usr/share/X11/xkb/rules/base.lst"
+    KbLayout=$(cat "$KbList" \
+        | awk '/! layout/,/! variant/&&++c' \
+        | sed '/^!.*/d' | sed '/^$/d' \
+        | sed 's/^ *//' \
+        | $MenuProg \
+        | cut -d' ' -f1)
+
+    if [ "$KbLayout" == "" ]; then
+        exit
+    fi
+    KbVariant=$(cat "$KbList" \
+        | grep "$KbLayout: " \
+        | sed 's/^ *//' \
+        | $MenuProg \
+        | cut -d' ' -f1)
+
+    if [ "$KbVariant" != "" ]; then
+        setxkbmap -layout "$KbLayout" -variant "$KbVariant"
+    else
+        setxkbmap "$KbLayout"
+    fi
+}
+
 ToggleDPMS() {
     dpmstat=$(xset q | grep -oP "(?<=DPMS is )\w*$")
     if [ "${dpmstat}" == "Enabled" ]; then
@@ -43,7 +68,7 @@ ToggleDPMS() {
     fi
 }
 
-SettingsOpts="System Info\nToggle Screensaver\nTask Manager\nSound\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Wallpaper\nChange Theme\nCompositor\nShow Fonts"
+SettingsOpts="System Info\nToggle Screensaver\nTask Manager\nSound\nNetwork\nDisplay\nDisks\nVirtual Machines\nDisk Usage\nChange Keymap\nChange Wallpaper\nChange Theme\nCompositor\nShow Fonts"
 SettingsMenu=$(echo -e "$SettingsOpts" | $MenuProg)
 case "$SettingsMenu" in
     "System Info")
@@ -72,6 +97,9 @@ case "$SettingsMenu" in
         ;;
     "Disk Usage")
         $Terminal ncdu -x --exclude-kernfs /
+        ;;
+    "Change Keymap")
+        SelKb
         ;;
     "Change Wallpaper")
         setwp
