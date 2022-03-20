@@ -1,6 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+#define MAINFONT  "Hermit:pixelsize=12:style=Regular"
+/* #define MAINFONT  "Terminus:pixelsize=14:style=Regular" */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int startwithgaps[]    = { 1 };	/* 1 means gaps are used by default, this can be customized for each tag */
 static const unsigned int gappx[]   = { 10 };   /* default gap between windows in pixels, this can be customized for each tag */
@@ -9,8 +11,8 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { "monospace:size=10", "FontAwesome:style=Regular:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { MAINFONT, "FontAwesome:style=Regular:size=10" };
+static const char dmenufont[]       = MAINFONT;
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -55,8 +57,8 @@ static const Layout layouts[] = {
 	{ "||=",      col },     /* first entry is default */
 	{ "[]=",      tile },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
-    { "###",      gaplessgrid },
-    { "LLL",      tstack },
+  { "###",      gaplessgrid },
+  { "LLL",      tstack },
 	{ "TTT",      bstack },
 	{ "===",      bstackhoriz },
 	{ "[M]",      monocle },
@@ -86,6 +88,10 @@ static const char *dmenucmd[] = { "menu.sh",  "-m", dmenumon, "-fn", dmenufont,
     "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor,
     "-nhb", normbgcolor, "-nhf", selbgcolor, "-shb", selbgcolor, "-shf", normbgcolor,
     NULL };
+static const char *clipmenucmd[] = { "clipmenu",  "-m", dmenumon, "-fn", dmenufont,
+    "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor,
+    "-nhb", normbgcolor, "-nhf", selbgcolor, "-shb", selbgcolor, "-shf", normbgcolor,
+    NULL };
 
 static Key keys[] = {
 	/* modifier                     key        	    function        argument */
@@ -102,7 +108,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      	    incnmaster,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_k,      	    layoutscroll,   {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      	    layoutscroll,   {.i = +1 } },
-    { MODKEY,             		    XK_r,      	    resetlayout,    {0} },
+  { MODKEY,             		      XK_r,      	    resetlayout,    {0} },
 	{ MODKEY,                       XK_Return, 	    zoom,           {0} },
 	{ MODKEY|ControlMask,           XK_Return, 	    focusmaster,    {0} },
 	{ MODKEY,                       XK_Tab,    	    view,           {0} },
@@ -110,8 +116,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_BackSpace, 	spawn,          SHCMD("dunstctl close") },
 	{ MODKEY|ShiftMask,             XK_BackSpace, 	spawn,          SHCMD("dunstctl close-all") },
 	{ MODKEY|ControlMask,           XK_x, 	        spawn,          SHCMD("xkill") },
-	{ MODKEY|ControlMask,           XK_v, 	        spawn,          SHCMD("clipmenu") },
-	{ MODKEY,             		    XK_q,      	    killclient,     {0} },
+	{ MODKEY,                       XK_v, 	        spawn,          {.v = clipmenucmd } },
+	{ MODKEY,             		      XK_q,      	    killclient,     {0} },
 	{ MODKEY,                       XK_t,      	    setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      	    setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_m,      	    setlayout,      {.v = &layouts[5]} },
@@ -119,27 +125,27 @@ static Key keys[] = {
 	{ MODKEY,                       XK_0,      	    view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      	    tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_o,           winview,        {0} },
-    { MODKEY,                       XK_u,           focusurgent,    {0} },
+  { MODKEY,                       XK_u,           focusurgent,    {0} },
 	{ MODKEY,                       XK_comma,  	    focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, 	    focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  	    tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, 	    tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_F1, 		    spawn,          SHCMD("playerctl previous") },
-	{ MODKEY,                       XK_F2, 		    spawn,          SHCMD("playerctl play-pause") },
-	{ MODKEY,                       XK_F3, 		    spawn,          SHCMD("playerctl next") },
+	{ MODKEY,                       XK_F1, 		      spawn,          SHCMD("playerctl previous") },
+	{ MODKEY,                       XK_F2, 		      spawn,          SHCMD("playerctl play-pause") },
+	{ MODKEY,                       XK_F3, 		      spawn,          SHCMD("playerctl next") },
 	{ MODKEY,                       XK_F5,     	    xrdb,           {.v = NULL } },
-	{ MODKEY,             		    XK_F11,      	togglefullscr,  {0} },
+	{ MODKEY,             		      XK_F11,      	  togglefullscr,  {0} },
 	{ MODKEY,                       XK_minus,  	    setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_plus,   	    setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_minus,  	    setgaps,        {.i = GAP_RESET } },
 	{ MODKEY|ShiftMask,             XK_plus,   	    setgaps,        {.i = GAP_TOGGLE} },
-    { 0, XF86XK_AudioMute,                          spawn,          SHCMD("amixer -q set Master Playback Volume toggle") },
-    { 0, XF86XK_AudioRaiseVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%+") },
-    { 0, XF86XK_AudioLowerVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%-") },
-    { 0, XF86XK_AudioMicMute,                       spawn,          SHCMD("amixer -q set Capture Volume toggle") },
-    { 0, XF86XK_MonBrightnessUp,	                spawn,		    SHCMD("sudo light -A 5") },
-	{ 0, XF86XK_MonBrightnessDown,	                spawn,		    SHCMD("sudo light -U 5") },
-    { 0, XF86XK_WLAN,                               spawn,          SHCMD("rfkill toggle all") },
+  { 0, XF86XK_AudioMute,                          spawn,          SHCMD("amixer -q set Master Playback Volume toggle") },
+  { 0, XF86XK_AudioRaiseVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%+") },
+  { 0, XF86XK_AudioLowerVolume,                   spawn,          SHCMD("amixer -q set Master Playback Volume 5%-") },
+  { 0, XF86XK_AudioMicMute,                       spawn,          SHCMD("amixer -q set Capture Volume toggle") },
+  { 0, XF86XK_MonBrightnessUp,	                  spawn,		      SHCMD("sudo light -A 5") },
+	{ 0, XF86XK_MonBrightnessDown,	                spawn,		      SHCMD("sudo light -U 5") },
+  { 0, XF86XK_WLAN,                               spawn,          SHCMD("rfkill toggle all") },
 	TAGKEYS(                        XK_1,                      	    0)
 	TAGKEYS(                        XK_2,                      	    1)
 	TAGKEYS(                        XK_3,                      	    2)

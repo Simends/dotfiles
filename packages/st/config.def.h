@@ -5,7 +5,10 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true";
+/* static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true"; */
+static char *font = "Hurmit Nerd Font:pixelsize=13:style=Regular";
+/* static char *font = "Hack Nerd Font:pixelsize=14:style=Regular"; */
+/* static char *font = "TerminessTTF Nerd Font:pixelsize=15:style=Regular"; */
 static int borderpx = 5;
 
 /*

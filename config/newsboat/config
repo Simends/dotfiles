@@ -1,6 +1,46 @@
 
 # include /usr/share/doc/newsboat/contrib/colorschemes/inkpot
 
+confirm-mark-feed-read no
+scrolloff 10
+show-keymap-hint no
+text-width 80
+
+unbind-key -a
+bind-key q quit
+bind-key ENTER open
+bind-key Q hard-quit
+bind-key r reload
+bind-key R reload-all
+bind-key A mark-feed-read
+bind-key C mark-all-feeds-read
+bind-key s save
+bind-key o open-in-browser
+bind-key ? help
+bind-key N toggle-article-read
+bind-key t set-tag
+bind-key ^T clear-tag
+bind-key / open-search
+bind-key E edit-urls
+bind-key ^L redraw
+bind-key : cmdline
+bind-key f select-filter
+bind-key F set-filter
+bind-key ^F clear-filter
+bind-key ^B bookmark
+bind-key ^E edit-flags
+bind-key D delete-article
+bind-key $ purge-deleted
+bind-key v view-dialogs
+bind-key ^X close-dialog
+bind-key ^V next-dialog
+bind-key ^G prev-dialog
+bind-key | pipe-to
+bind-key g sort
+bind-key G rev-sort
+bind-key . macro-prefix
+bind-key TAB switch-focus
+
 bind-key j down
 bind-key k up
 bind-key j next articlelist
@@ -19,7 +59,7 @@ bind-key N prev-unread
 bind-key D pb-download
 bind-key U show-urls
 bind-key x pb-delete
-macro i set browser imv; open-in-browser; set browser firefox
+macro i set browser mpv; open-in-browser; set browser firefox
 
 # colors
 color background          black      default
