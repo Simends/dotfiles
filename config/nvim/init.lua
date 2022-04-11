@@ -6,8 +6,6 @@
 --  |_| \_|\___|\___/ \_/ |_|_| |_| |_|
 
 require('config/statusline')
-vim.cmd("source $XDG_CONFIG_HOME/nvim/keymaps.vim")
-vim.cmd("source $XDG_CONFIG_HOME/nvim/commands.vim")
 vim.cmd("source $XDG_CONFIG_HOME/nvim/settings.vim")
 
 local plug = require('config.plugins')

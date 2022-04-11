@@ -51,10 +51,11 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 #export MOZ_ENABLE_WAYLAND=1
 export MOZ_DBUS_REMOTE=1
+export GPG_TTY=$(tty)
 #export XDG_CURRENT_DESKTOP=sway
 #export XDG_SESSION_TYPE=wayland
-# export ABDUCO_CMD="zsh"
-export GPG_TTY=$(tty)
+export ABDUCO_CMD="zsh"
+export ABDUCO_SOCKET_DIR="$XDG_CACHE_HOME"
 #export NIX_PATH="$HOME/.nix-defexpr/channels/"
 
 # Home cleaning
@@ -74,7 +75,8 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 export LESSHISTFILE=-
-export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+export LESSKEYIN="$XDG_CONFIG_HOME/lesskey"
+export PASSWORD_STORE_DIR="$HOME/Documents/notatsys/doks/passord"
 export _Z_DATA="$XDG_DATA_HOME/z"
 export SSB_HOME="$XDG_DATA_HOME"/zoom
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
@@ -85,7 +87,6 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 # export DOOMDIR="$XDG_CONFIG_HOME/doom"
 # export TASKRC="$XDG_CONFIG_HOME/taskrc"
 # export TASKDATA="$XDG_DATA_HOME/task"
-# export ABDUCO_SOCKET_DIR="$XDG_CACHE_HOME"
 
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
 	svctl import-env XDG_CONFIG_HOME

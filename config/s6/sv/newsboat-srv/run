@@ -1,0 +1,18 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+    importas XDG_CONFIG_HOME XDG_CONFIG_HOME
+    importas XDG_DATA_HOME XDG_DATA_HOME
+    importas XDG_RUNTIME_DIR XDG_RUNTIME_DIR
+    importas DBUS_SESSION_BUS_ADDRESS DBUS_SESSION_BUS_ADDRESS
+}
+exec -c
+export XDG_CONFIG_HOME ${XDG_CONFIG_HOME}
+export XDG_DATA_HOME ${XDG_DATA_HOME}
+export XDG_RUNTIME_DIR ${XDG_RUNTIME_DIR}
+export DBUS_SESSION_BUS_ADDRESS ${DBUS_SESSION_BUS_ADDRESS}
+loopwhilex snooze -v -H* -M /30 -S00 -R180 -s1800
+${XDG_CONFIG_HOME}/s6/sv/newsboat-srv/feedsync.sh

@@ -1,8 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <X11/XF86keysym.h>
+
 /* appearance */
 #define MAINFONT  "Hermit:pixelsize=12:style=Regular"
 /* #define MAINFONT  "Terminus:pixelsize=14:style=Regular" */
+
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int startwithgaps[]    = { 1 };	/* 1 means gaps are used by default, this can be customized for each tag */
 static const unsigned int gappx[]   = { 10 };   /* default gap between windows in pixels, this can be customized for each tag */
@@ -76,13 +79,13 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
-#include <X11/XF86keysym.h>
-
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *termcmd[]  = { "st", NULL };
 static const char *layoutmenu_cmd = "dwm-layoutmenu.sh";
 static const char *webcmd[]   = { "qutebrowser", NULL };
+static const char *tabcreatecmd[]   = { "tabwin.sh", "create", NULL };
+static const char *tabaddcmd[]   = { "tabwin.sh", "add", NULL };
 static const char *filescmd[] = { "pcmanfm", NULL };
 static const char *dmenucmd[] = { "menu.sh",  "-m", dmenumon, "-fn", dmenufont,
     "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor,
@@ -98,16 +101,15 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  	    spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, 	    spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,  	   	    spawn,          {.v = webcmd } },
-	{ MODKEY,                       XK_e,  	   	    spawn,          {.v = filescmd } },
 	{ MODKEY,                       XK_b,      	    togglebar,      {0} },
-	{ MODKEY,                       XK_h,      	    setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      	    setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_j,      	    focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      	    focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_h,      	    incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_l,      	    incnmaster,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_k,      	    layoutscroll,   {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,      	    layoutscroll,   {.i = +1 } },
+	{ MODKEY,                       XK_n,      	    setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_o,      	    setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_e,      	    focusstack,     {.i = +1 } },
+	{ MODKEY,                       XK_i,      	    focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_n,      	    incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,      	    incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_i,      	    layoutscroll,   {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_e,      	    layoutscroll,   {.i = +1 } },
   { MODKEY,             		      XK_r,      	    resetlayout,    {0} },
 	{ MODKEY,                       XK_Return, 	    zoom,           {0} },
 	{ MODKEY|ControlMask,           XK_Return, 	    focusmaster,    {0} },
@@ -116,6 +118,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_BackSpace, 	spawn,          SHCMD("dunstctl close") },
 	{ MODKEY|ShiftMask,             XK_BackSpace, 	spawn,          SHCMD("dunstctl close-all") },
 	{ MODKEY|ControlMask,           XK_x, 	        spawn,          SHCMD("xkill") },
+	{ MODKEY|ShiftMask,             XK_Tab, 	      spawn,          {.v = tabcreatecmd } },
+	{ MODKEY|ControlMask,           XK_Tab, 	      spawn,          {.v = tabaddcmd } },
 	{ MODKEY,                       XK_v, 	        spawn,          {.v = clipmenucmd } },
 	{ MODKEY,             		      XK_q,      	    killclient,     {0} },
 	{ MODKEY,                       XK_t,      	    setlayout,      {.v = &layouts[0]} },
@@ -124,7 +128,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,  	   	    togglefloating, {0} },
 	{ MODKEY,                       XK_0,      	    view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      	    tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_o,           winview,        {0} },
+	{ MODKEY,                       XK_g,           winview,        {0} },
   { MODKEY,                       XK_u,           focusurgent,    {0} },
 	{ MODKEY,                       XK_comma,  	    focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, 	    focusmon,       {.i = +1 } },

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+_fzfargs="--height=40% --reverse --border=sharp"
+
+sel=$(find ./ ! -path '*/\.*' -type f | fzf $_fzfargs --preview='less {}')
+if [ -f "$sel" ]
+then
+  $EDITOR "$sel"
+fi

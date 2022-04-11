@@ -6,13 +6,24 @@ bind attach g noop
 bind index M noop
 bind index C noop
 bind pager C noop
+bind index n noop
+bind pager g noop
+bind attach g noop
+bind index e noop
+bind index i noop
+bind index o noop
 
 bind index,pager B sidebar-toggle-visible
-bind index,pager J sidebar-next
-bind index,pager K sidebar-prev
-bind index,pager L sidebar-open
-bind pager j next-line
-bind pager k previous-line
+bind index,pager E sidebar-next
+bind index,pager I sidebar-prev
+bind index,pager O sidebar-open
+bind pager e next-line
+bind pager i previous-line
+bind index e next-entry
+bind index i previous-entry
+bind index o display-message
+bind index,pager k search-next
+bind index,pager K search-opposite
 bind attach,index,pager \CD next-page
 bind attach,index,pager \CU previous-page
 bind pager gg top
@@ -20,8 +31,9 @@ bind pager G bottom
 bind attach,index gg first-entry
 bind attach,index G last-entry
 
+bind index,pager n exit
 bind index R        group-reply
-bind index o        sync-mailbox
+bind index s sync-mailbox
 bind index <tab>    collapse-thread
 bind index <space>  tag-entry
 

@@ -123,6 +123,10 @@ on-cd
 cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
 
 # map P paste
+map n updir
+map i up
+map e down
+map o open
 map D delete
 map R bulk-rename
 map gu $ncdu -e --color dark --exclude-kernfs -L
@@ -135,5 +139,4 @@ map gD info_on
 map . set hidden!
 map x $$f
 map X !$f
-map o open
 map <c-f> :fzf_jump

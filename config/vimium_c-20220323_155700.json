@@ -1,0 +1,41 @@
+{
+	"name": "Vimium C",
+	"@time": "3/23/2022, 3:57:00 PM",
+	"time": 1648047420498,
+	"environment": {
+		"extension": "1.96.6",
+		"platform": "linux",
+		"firefox": 98
+	},
+	"exclusionRules": [
+		{
+			"pattern": ":https://mail.google.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://www.overleaf.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": ":https://monkeytype.com/",
+			"passKeys": ""
+		}
+	],
+	"keyMappings": [
+		"#!no-check",
+		"mapKey e j",
+		"mapKey i k",
+		"mapKey o l",
+		"mapKey j e",
+		"mapKey l i",
+		"mapKey k o",
+		"mapKey E J",
+		"mapKey I K",
+		"mapKey O L",
+		"mapKey J E",
+		"mapKey L I",
+		"mapKey K O",
+		""
+	],
+	"linkHintCharacters": "arstdhneio"
+}

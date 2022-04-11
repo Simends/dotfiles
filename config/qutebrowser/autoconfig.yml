@@ -10,6 +10,8 @@ settings:
     global: both
   content.notifications.enabled:
     https://www.reddit.com: false
+  keyhint.blacklist:
+    global: null
   qt.force_platformtheme:
     global: null
   qt.highdpi:
