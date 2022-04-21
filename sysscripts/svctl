@@ -221,8 +221,6 @@ s6compile() {
     	echo -e "\n\033[1mCreating symlink for new database...\033[0m"
 	ln -sfn "$newdir" "$compileddir/current" && echo -e "$okprint"
     	echo ""
-
-    	# /usr/share/libalpm/scripts/s6-rc-db-update-hook
 }
 
 s6editbundle() {
@@ -298,6 +296,35 @@ s6sendsig() {
     s6-svc "$sigflg" "$servicedirs/$2"
 }
 
+s6iter() {
+  case "$1" in
+    "set")
+      dbdir="$compileddir/compiled@$2"
+    	echo  -e "\n\033[1mSwitching to new database...\033[0m"
+    	s6-rc-update -l "$livedir" "$dbdir" && echo -e "$okprint"
+
+    	echo -e "\n\033[1mCreating symlink for new database...\033[0m"
+	    ln -sfn "$dbdir" "$compileddir/current" && echo -e "$okprint"
+    	echo ""
+      ;;
+    "list")
+      ls "$compileddir" | grep 'compiled@.*' | sed 's/compiled@//'
+      ;;
+    *)
+      echo "
+Usage:
+
+database list
+    List all compiled databases
+
+database set DATE
+    Set database compiled at DATE as current database
+
+"
+      ;;
+  esac
+}
+
 case "$1" in
     "stat" | "i")
         s6stat "$2"
@@ -346,6 +373,9 @@ case "$1" in
     "set-env")
 	    s6setenv "$2" "$3" "$4"
 	    ;;
+    "database" | "db")
+      s6iter "$2" "$3"
+      ;;
     *)
         echo "
 Usage:
@@ -391,6 +421,12 @@ import-env VARIABLE [ ENVDIR ]
 
 set-env VARIABLE VALUE [ ENVDIR ]
     Set environment variable to specific value
+
+database list
+    List all compiled databases
+
+database set DATE
+    Set database compiled at DATE as current database
 
 "
         ;;
