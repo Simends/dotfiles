@@ -60,27 +60,32 @@ M.lspconfig = {
       vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
       vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
       vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', [[<cmd>lua vim.lsp.buf.definition()<cr>]], opt)					-- Go to defenetion
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', [[<cmd>lua vim.lsp.buf.declaration()<cr>]], opt)					-- Go to decleration
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', [[<cmd>lua vim.lsp.buf.implementation()<cr>]], opt)					-- Go to references
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', [[<cmd>lua vim.lsp.buf.references()<cr>]], opt)					-- Go to references
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g[', [[<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>]], opt)				-- Go to previous diagnostic
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g]', [[<cmd>lua vim.lsp.diagnostic.goto_next()<cr>]], opt)				-- Go to next diagnostic
-      vim.api.nvim_buf_set_keymap(bufnr, 'i', '<C-j>', [[<cmd>lua vim.lsp.buf.signature_help()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-s>', [[<cmd>SymbolsOutline<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>eo', [[<cmd>SymbolsOutline<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ek', [[<cmd>lua vim.lsp.buf.hover()<cr>]], opt)					-- Hover
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ee', [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], opt)	-- Show diagnostic
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ed', [[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], opt)			-- Show diagnostic
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>en', [[<cmd>lua vim.lsp.buf.rename()<cr>]], opt)				-- Rename
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>es', [[<cmd>lua vim.lsp.buf.signature_help()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>el', [[<cmd>lua vim.lsp.codelens.display()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>eL', [[<cmd>lua vim.lsp.codelens.run()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>eS', [[<cmd>lua vim.lsp.buf.document_symbol()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>er', [[<cmd>lua vim.lsp.codelens.run()<cr>]], opt)			-- Show buffer symbols
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ef', [[<cmd>lua vim.lsp.buf.formatting()<cr>]], opt)				-- Format buffer
-      vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>ef', [[<cmd>lua vim.lsp.buf.range_formatting()<cr>]], opt)				-- Format buffer
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ea', [[<cmd>lua vim.lsp.buf.code_action()<cr>]], opt)				-- Show code actions
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'I', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      local maps = {
+        g = {
+          d = {[[<cmd>lua vim.lsp.buf.definition()<cr>]], "Goto definition"},
+          D = {[[<cmd>lua vim.lsp.buf.declaration()<cr>]], "Goto declaration"},
+          i = {[[<cmd>lua vim.lsp.buf.implementation()<cr>]], "Goto implementation"},
+          r = {[[<cmd>lua vim.lsp.buf.references()<cr>]], "Goto references"},
+          ['['] = {[[<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>]], "Goto previous diagnostic"},
+          [']'] = {[[<cmd>lua vim.lsp.diagnostic.goto_next()<cr>]], "Goto next diagnostic"}
+        },
+        ['<leader>'] = {
+          e = {
+            name = "LSP",
+            o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
+            e = {[[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], "Show diagnostic"},
+            d = {[[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], "Show all diagnostics"},
+            n = {[[<cmd>lua vim.lsp.buf.rename()<cr>]], "Rename"},
+            s = {[[<cmd>lua vim.lsp.buf.signature_help()<cr>]], "Show signature"},
+            l = {[[<cmd>lua vim.lsp.codelens.display()<cr>]], "Show codelens"},
+            L = {[[<cmd>lua vim.lsp.codelens.run()<cr>]], "Run codelens"},
+            f = {[[<cmd>lua vim.lsp.buf.formatting()<cr>]], "Format buffer"},
+            a = {"<cmd>Telescope lsp_code_actions<cr>", "Code actions"}
+          }
+        }
+      }
+      require('which-key').register(maps, opt)
     end
     if not configs.rust_hdl then
       configs.rust_hdl = {
@@ -322,6 +327,39 @@ M.symbols_outline = {
     }
 }
 
+M.fidget = {
+  'j-hui/fidget.nvim',
+  config = function()
+    require"fidget".setup{}
+  end
+}
+
+M.lightbulb = {
+  'kosayoda/nvim-lightbulb',
+  config = function()
+    require'nvim-lightbulb'.setup {
+      -- LSP client names to ignore
+      -- Example: {"sumneko_lua", "null-ls"}
+      -- ignore = {},
+      sign = {
+        enabled = true,
+        priority = 10,
+      },
+      float = {
+        enabled = false,
+      },
+      virtual_text = {
+        enabled = false,
+      },
+      status_text = {
+        enabled = false,
+      }
+    }
+    vim.fn.sign_define('LightBulbSign', { text = "", texthl = "DiagnosticWarn", linehl="", numhl="" })
+    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+  end
+}
+
 M.code_action_menu = {
     'weilbith/nvim-code-action-menu',
     opt = true,
@@ -380,7 +418,7 @@ M.treesitter_textobjects = {
             textobjects = {
                 select = {
                     enable = true,
-                    -- Automatically jump forward to textobj, similar to targets.vim 
+                    -- Automatically jump forward to textobj, similar to targets.vim
                     lookahead = true,
                     keymaps = {
                         -- You can use the capture groups defined in textobjects.scm
@@ -456,6 +494,30 @@ M.playground = {
     end
 }
 
+M.nvim_gps = {
+    "SmiteshP/nvim-gps",
+    config = function()
+        require("nvim-gps").setup({
+            icons = {
+		            ["class-name"] = ' ',      -- Classes and class-like objects
+		            ["function-name"] = ' ',   -- Functions
+		            ["method-name"] = ' ',     -- Methods (functions inside class-like objects)
+		            ["container-name"] = ' ',  -- Containers (example: lua tables)
+		            ["tag-name"] = '炙'         -- Tags (example: html tags)
+	          },
+
+	          separator = ' > ',
+
+	          -- limit for amount of context shown
+	          -- 0 means no limit
+	          depth = 6,
+
+	          -- indicator used when context hits depth limit
+	          depth_limit_indicator = "..."
+        })
+    end
+}
+
 M.telescope = {
     'nvim-telescope/telescope.nvim',
     as = 'telescope',
@@ -464,9 +526,9 @@ M.telescope = {
         require("telescope").setup {
             defaults = {
                 color_devicons = false,
-                -- prompt_prefix = "   ",
-                -- selection_caret = "   ",
-                -- entry_prefix = "    ",
+                prompt_prefix = "   ",
+                selection_caret = "   ",
+                entry_prefix = "    ",
                 scroll_strategy = "cycle",
                 -- layout_strategy = "flex",
                 -- winblend = 25,
@@ -498,10 +560,344 @@ M.telescope = {
 M.telescope_fzy_native = {
     'nvim-telescope/telescope-fzy-native.nvim',
     after = 'telescope',
-    config =
-        function()
-            require('telescope').load_extension('fzy_native')
+    config = function()
+        require('telescope').load_extension('fzy_native')
+    end
+}
+
+M.telescope_repo = {
+    'cljoly/telescope-repo.nvim',
+    requires = {'telescope'},
+    config = function()
+        require'telescope'.load_extension('repo')
+    end
+}
+
+M.dap = {
+  'mfussenegger/nvim-dap',
+  config = function()
+    local dap = require('dap')
+    local api = vim.api
+    -----------------------------
+    -- Adapters------------------
+    -----------------------------
+    -- C/C++/Rust
+    dap.adapters.lldb = {
+      type = 'executable',
+      command = '/usr/bin/lldb-vscode',
+      name = "lldb"
+    }
+    -----------------------------
+    -- Adapter configs-----------
+    -----------------------------
+    dap.configurations.cpp = {
+      {
+        name = "Launch",
+        type = "lldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = {},
+        -- 💀
+        -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+        --
+        --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+        --
+        -- Otherwise you might get the following error:
+        --
+        --    Error on launch: Failed to attach to the target process
+        --
+        -- But you should be aware of the implications:
+        -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+        runInTerminal = false,
+        -- 💀
+        -- If you use `runInTerminal = true` and resize the terminal window,
+        -- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
+        -- To avoid that uncomment the following option
+        -- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
+        --postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
+      },
+    }
+    -- If you want to use this for rust and c, add something like this:
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
+    -----------------------------
+    -- Other Configs-------------
+    -----------------------------
+    local keymap_restore = {}
+    dap.listeners.after['event_initialized']['me'] = function()
+      for _, buf in pairs(api.nvim_list_bufs()) do
+        local keymaps = api.nvim_buf_get_keymap(buf, 'n')
+        for _, keymap in pairs(keymaps) do
+          if keymap.lhs == "I" then
+            table.insert(keymap_restore, keymap)
+            api.nvim_buf_del_keymap(buf, 'n', 'I')
+          end
         end
+      end
+      api.nvim_set_keymap(
+        'n', 'I', '<Cmd>lua require("dap.ui.widgets").hover()<CR>', { silent = true })
+    end
+
+    dap.listeners.after['event_terminated']['me'] = function()
+      for _, keymap in pairs(keymap_restore) do
+        api.nvim_buf_set_keymap(
+          keymap.buffer,
+          keymap.mode,
+          keymap.lhs,
+          keymap.rhs,
+          { silent = keymap.silent == 1 }
+        )
+      end
+      keymap_restore = {}
+    end
+    local opt = {noremap = true, silent = true}
+    local map = {
+      ['<F5>'] = {[[<cmd>lua require'dap'.continue()<CR>]], "Continue"},
+      ['<F10>'] = {[[<cmd>lua require'dap'.step_over()<cr>]], "Step over"},
+      ['<F11>'] = {[[<cmd>lua require'dap'.step_into()<cr>]], "Step into"},
+      ['<F12>'] = {[[<cmd>lua require'dap'.step_out()<CR>]], "Step out"},
+      ['<F9>'] = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "Toggle breakpoint"},
+      ['<leader>'] = {
+        d = {
+          name = "Debug",
+          r = {[[<cmd>lua require'dap'.repl.toggle()<CR>]], "Toggle REPL"},
+          s = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)]], "Show scopes"},
+          f = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').frames)]], "Show frames"},
+          e = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').expression)]], "Show expression"},
+          t = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').threads)]], "Show threads"},
+          B = {[[<cmd>lua require'dap'.clear_breakpoints()<CR>]], "Clear all breakpoints"}
+        }
+      }
+    }
+    require('which-key').register(map, opt)
+  end
+}
+
+M.telescope_dap = {
+  'nvim-telescope/telescope-dap.nvim',
+  requires = {'telescope', 'nvim-dap'},
+  config = function()
+    require('telescope').load_extension('dap')
+    local opt = {noremap = true, silent = true, prefix = '<leader>'}
+    local map = {
+      d = {
+        b = {[[<cmd>lua require'telescope'.extensions.dap.list_breakpoints{}<cr>]], "List all breakpoints"}
+      }
+    }
+    require('which-key').register(map, opt)
+  end
+}
+
+M.dap_virtual_text = {
+  'theHamsta/nvim-dap-virtual-text',
+  requires = {'nvim-dap', 'treesitter'},
+  config = function()
+    require("nvim-dap-virtual-text").setup {
+      enabled = true,                     -- enable this plugin (the default)
+      enabled_commands = true,            -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+      highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
+      highlight_new_as_changed = false,   -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+      show_stop_reason = true,            -- show stop reason when stopped for exceptions
+      commented = false,                  -- prefix virtual text with comment string
+      -- experimental features:
+      virt_text_pos = 'eol',              -- position of virtual text, see `:h nvim_buf_set_extmark()`
+      all_frames = false,                 -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+      virt_lines = false,                 -- show virtual lines instead of virtual text (will flicker!)
+      virt_text_win_col = nil             -- position the virtual text at a fixed window column (starting from the first text column) ,
+      -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
+    }
+    local opt = {noremap = true, silent = true, prefix = '<leader>'}
+    local map = {
+      d = {
+        v = {'<cmd>DapVirtualTextToggle<cr>', 'Toggle virtual text'}
+      }
+    }
+    require('which-key').register(map, opt)
+  end
+}
+
+M.dressing = {
+  'stevearc/dressing.nvim',
+  config = function()
+    require('dressing').setup({
+      input = {
+        -- Set to false to disable the vim.ui.input implementation
+        enabled = true,
+
+        -- Default prompt string
+        default_prompt = "Input:",
+
+        -- Can be 'left', 'right', or 'center'
+        prompt_align = "left",
+
+        -- When true, <Esc> will close the modal
+        insert_only = true,
+
+        -- These are passed to nvim_open_win
+        anchor = "SW",
+        border = "rounded",
+        -- 'editor' and 'win' will default to being centered
+        relative = "cursor",
+
+        -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+        prefer_width = 40,
+        width = nil,
+        -- min_width and max_width can be a list of mixed types.
+        -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+        max_width = { 140, 0.9 },
+        min_width = { 20, 0.2 },
+
+        -- Window transparency (0-100)
+        winblend = 10,
+        -- Change default highlight groups (see :help winhl)
+        winhighlight = "",
+
+        override = function(conf)
+          -- This is the config that will be passed to nvim_open_win.
+          -- Change values here to customize the layout
+          return conf
+        end,
+
+        -- see :help dressing_get_config
+        get_config = nil,
+      },
+      select = {
+        -- Set to false to disable the vim.ui.select implementation
+        enabled = true,
+
+        -- Priority list of preferred vim.select implementations
+        backend = { "telescope", "builtin" },
+
+        -- Options for telescope selector
+        -- These are passed into the telescope picker directly. Can be used like:
+        -- telescope = require('telescope.themes').get_ivy({...})
+        telescope = nil,
+
+        -- Options for fzf selector
+        fzf = nil,
+
+        -- Options for fzf_lua selector
+        fzf_lua = nil,
+
+        -- Options for nui Menu
+        nui = nil,
+
+        -- Options for built-in selector
+        builtin = {
+          -- These are passed to nvim_open_win
+          anchor = "NW",
+          border = "rounded",
+          -- 'editor' and 'win' will default to being centered
+          relative = "editor",
+
+          -- Window transparency (0-100)
+          winblend = 10,
+          -- Change default highlight groups (see :help winhl)
+          winhighlight = "",
+
+          -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+          -- the min_ and max_ options can be a list of mixed types.
+          -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+          width = nil,
+          max_width = { 140, 0.8 },
+          min_width = { 40, 0.2 },
+          height = nil,
+          max_height = 0.9,
+          min_height = { 10, 0.2 },
+
+          override = function(conf)
+            -- This is the config that will be passed to nvim_open_win.
+            -- Change values here to customize the layout
+            return conf
+          end,
+        },
+
+        -- Used to override format_item. See :help dressing-format
+        format_item_override = {},
+
+        -- see :help dressing_get_config
+        get_config = nil,
+      },
+    })
+  end
+}
+
+M.which_key = {
+  "folke/which-key.nvim",
+  config = function()
+    require("which-key").setup {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      plugins = {
+    marks = true, -- shows a list of your marks on ' and `
+    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+    spelling = {
+      enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+      suggestions = 20, -- how many suggestions should be shown in the list?
+    },
+    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
+    -- No actual key bindings are created
+    presets = {
+      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+      motions = true, -- adds help for motions
+      text_objects = true, -- help for text objects triggered after entering an operator
+      windows = true, -- default bindings on <c-w>
+      nav = true, -- misc bindings to work with windows
+      z = true, -- bindings for folds, spelling and others prefixed with z
+      g = true, -- bindings for prefixed with g
+    },
+  },
+  -- add operators that will trigger motion and text object completion
+  -- to enable all native operators, set the preset / operators plugin above
+  operators = { gc = "Comments" },
+  key_labels = {
+    -- override the label used to display some keys. It doesn't effect WK in any other way.
+    -- For example:
+    -- ["<space>"] = "SPC",
+    -- ["<cr>"] = "RET",
+    -- ["<tab>"] = "TAB",
+  },
+  icons = {
+    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+    separator = "➜", -- symbol used between a key and it's label
+    group = "+", -- symbol prepended to a group
+  },
+  popup_mappings = {
+    scroll_down = '<c-d>', -- binding to scroll down inside the popup
+    scroll_up = '<c-u>', -- binding to scroll up inside the popup
+  },
+  window = {
+    border = "single", -- none, single, double, shadow
+    position = "bottom", -- bottom, top
+    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+    winblend = 0
+  },
+  layout = {
+    height = { min = 4, max = 25 }, -- min and max height of the columns
+    width = { min = 20, max = 50 }, -- min and max width of the columns
+    spacing = 3, -- spacing between columns
+    align = "left", -- align columns left, center or right
+  },
+  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+  show_help = true, -- show help message on the command line when the popup is visible
+  triggers = "auto", -- automatically setup triggers
+  -- triggers = {"<leader>"} -- or specify a list manually
+  triggers_blacklist = {
+    -- list of mode / prefixes that should never be hooked by WhichKey
+    -- this is mostly relevant for key maps that start with a native binding
+    -- most people should not need to change this
+    i = { "j", "k" },
+    v = { "j", "k" },
+  },
+    }
+  end
 }
 
 M.zen_mode = {
@@ -632,10 +1028,99 @@ M.undotree = {
     end
 }
 
+M.qf_helper = {
+  'stevearc/qf_helper.nvim',
+  config = function()
+    require'qf_helper'.setup({
+      prefer_loclist = true,       -- Used for QNext/QPrev (see Commands below)
+      sort_lsp_diagnostics = true, -- Sort LSP diagnostic results
+      quickfix = {
+        autoclose = true,          -- Autoclose qf if it's the only open window
+        default_bindings = true,   -- Set up recommended bindings in qf window
+        default_options = true,    -- Set recommended buffer and window options
+        max_height = 10,           -- Max qf height when using open() or toggle()
+        min_height = 5,            -- Min qf height when using open() or toggle()
+        track_location = 'cursor', -- Keep qf updated with your current location
+        -- Use `true` to update position as well
+      },
+      loclist = {                  -- The same options, but for the loclist
+        autoclose = true,
+        default_bindings = true,
+        default_options = true,
+        max_height = 10,
+        min_height = 5,
+        track_location = 'cursor',
+      },
+    })
+    local opt = {noremap = true, silent = true, prefix = "Q"}
+    local map = {
+      Q = {"<cmd>QFToggle<cr>", "Toggle quickfix"},
+      q = {"<cmd>QFToggle!<cr>", "Toggle silent quickfix"},
+      L = {"<cmd>LLToggle<cr>", "Toggle loclist"},
+      l = {"<cmd>LLToggle!<cr>", "Toggle silent loclist"},
+      O = {"<cmd>QNext<cr>", "Next in list"},
+      o = {"<cmd>QNext!<cr>", "Next silent in list"},
+      N = {"<cmd>QPrev<cr>", "Prev in list"},
+      n = {"<cmd>QPrev!<cr>", "Prev silent in list"}
+    }
+    require('which-key').register(map, opt)
+  end
+}
+
 M.gitsigns = {
-    'lewis6991/gitsigns.nvim',
-    as = 'gitsigns',
-    requires = {'nvim-lua/plenary.nvim'}
+  'lewis6991/gitsigns.nvim',
+  as = 'gitsigns',
+  requires = {'nvim-lua/plenary.nvim'},
+  config = function()
+    local opt = {noremap = true, silent = true}
+    local map = {
+      g = {
+        ['{'] = {"<cmd>Gitsigns prev_hunk<cr>", "Next git hunk"},
+        ['}'] = {"<cmd>Gitsigns next_hunk<cr>", "Previous git hunk"}
+      },
+      ['<leader>'] = {
+        g = {
+          name = "Git",
+          B = {"<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle line blame"},
+          l = {"<cmd>Gitsigns setqflist<cr>", "Show all hunks"},
+          c = {"<cmd>Telescope git_commits<cr>", "Show all commits"},
+          C = {"<cmd>Telescope git_bcommits<cr>", "Show all buffer commits"},
+          b = {"<cmd>Telescope git_branches<cr>", "Show branches"},
+          s = {"<cmd>Telescope git_status<cr>", "Show status"},
+          S = {"<cms>Telescope git_stash<cr>", "Show stash"},
+          h = {
+            name = "Hunk",
+            s = {"<cmd>Gitsigns stage_hunk<cr>", "Stage"},
+            u = {"<cmd>Gitsigns undo_stage_hunk<cr>", "Undo stage"},
+            r = {"<cmd>Gitsigns reset_hunk<cr>", "Reset"},
+            R = {"<cmd>Gitsigns reset_buffer<cr>", "Reset buffer"},
+            p = {"<cmd>Gitsigns preview_hunk<cr>", "Preview"}
+          }
+        }
+      }
+    }
+    require('which-key').register(map, opt)
+  end
+}
+
+M.indentguides = {
+  'lukas-reineke/indent-blankline.nvim',
+  opt = true,
+  cmd = {'IndentBlanklineToggle', 'IndentBlanklineToggle!'},
+  config = function()
+    require("indent_blankline").setup {
+      space_char_blankline = " ",
+      show_end_of_line = false,
+      show_current_context = true,
+      show_current_context_start = false,
+      use_treesitter = true,
+    }
+    -- vim.cmd('IndentBlanklineDisable!')
+  end
+}
+
+M.sneak = {
+  'justinmk/vim-sneak'
 }
 
 M.surround = {

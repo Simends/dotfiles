@@ -24,19 +24,28 @@ local function lsp_diagnostic_component()
     return table.concat(output)
 end
 
+local function gps_status_component()
+    local gps = require("nvim-gps")
+    if gps.is_available() and gps.get_location() ~= '' then
+        return ' > ' .. gps.get_location()
+    else
+        return ''
+    end
+end
+
 function status_line()
     return table.concat {
         "▊",
         " ",
         "%f", -- Filename and path
+        gps_status_component(),
         "%m ", -- Modified flag
         "%y ", -- Filetype
         -- " ",
-        -- "%l/%L:%c ", -- Line number and column
         "%p%% ", -- Percentage through file
-        require'scripts.lightbulb'.get_text(),
         "%=",
         "%=",
+        -- "%l/%L:%c ", -- Line number and column
         git_status_component(),
         lsp_diagnostic_component(),
         "▊"

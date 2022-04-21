@@ -59,13 +59,15 @@ set shortmess+=cI
 " Commands
 
 com! -nargs=+ Grep vimgrep <args> **/*
+com! Trailtrim %s/\s\+$//e
 
 au Filetype markdown set wrap
 au Filetype markdown set colorcolumn=0
 
 au FileType sh set makeprg=shellcheck\ -f\ gcc\ %
 
-au Filetype qf nnoremap <silent><cr> :.cc<cr>zA
+au Filetype qf nnoremap <silent><cr> :.cc<cr>
+au Filetype qf nnoremap <c-i> <c-w>k
 au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 " nvim
@@ -92,7 +94,6 @@ nmap gb :e #<cr>
 nnoremap J mzJ`z:delmarks z<cr>
 vnoremap I :m '>+1<cr>gv=gv
 vnoremap E :m '<-2<cr>gv=gv
-nmap Q !!sh<cr>
 nnoremap <c-m> :mode<cr>
 nnoremap <c-l> :nohl<cr><c-l>
 
@@ -104,27 +105,6 @@ nnoremap <F5> :make<cr>
 nnoremap å :redo<cr>
 nnoremap æ :Telescope find_files<cr>
 nnoremap ø :Telescope live_grep<cr>
-
-nmap <leader>tt :vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
-nmap <leader>tu :UndotreeToggle<cr>
-nmap <leader>tz :ZenMode<cr>
-
-nmap <leader>hpu :PackerSync<cr>
-nmap <leader>hps :PackerStatus<cr>
-nmap <leader>hpp :PackerProfile<cr>
-nmap <leader>hc :checkhealth<cr>
-nmap <leader>hh :Telescope help_tags<cr>
-
-nmap g{ :Gitsigns prev_hunk<cr>
-nmap g} :Gitsigns next_hunk<cr>
-nmap <leader>gB :Gitsigns toggle_current_line_blame<cr>
-nmap <leader>ghs :Gitsigns stage_hunk<cr>
-nmap <leader>ghu :Gitsigns undo_stage_hunk<cr>
-nmap <leader>ghr :Gitsigns reset_hunk<cr>
-nmap <leader>ghR :Gitsigns reset_buffer<cr>
-nmap <leader>ghp :Gitsigns preview_hunk<cr>
-nmap <leader>gl :Gitsigns setqflist<cr>
-nmap <leader>gg :Git<cr>
 
 " Qwerty
 " nnoremap n nztzv
