@@ -1,4 +1,4 @@
-#include "/home/simen/.local/dotfiles/themes/rose-pine"
+#include "/home/simen/.local/dotfiles/themes/kanagawa"
 #include "/home/simen/.local/config/device-xrdb"
 
 Xcursor.theme: Adwaita

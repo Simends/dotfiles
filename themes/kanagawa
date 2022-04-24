@@ -1,0 +1,35 @@
+#define colorforeground #dcd7ba
+#define colorbackground #1f1f28
+
+! Black
+#define c0 #090618
+! Dark Red
+#define c1 #c34043
+! Dark Green
+#define c2 #76946a
+! Dark Yellow
+#define c3 #c0a36e
+! Dark Blue
+#define c4 #7e9cd8
+! Dark Magenta
+#define c5 #957fb8
+! Dark Cyan
+#define c6 #6a9589
+! Light Gray
+#define c7 #c8c093
+! Dark Gray
+#define c8 #727169
+! Red
+#define c9 #e82424
+! Green
+#define c10 #98bb6c
+! Yellow
+#define c11 #e6c384
+! Blue
+#define c12 #7fb4ca
+! Magenta
+#define c13 #938aa9
+! Cyan
+#define c14 #7aa89f
+! White
+#define c15 #dcd7ba
