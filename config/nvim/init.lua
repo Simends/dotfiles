@@ -9,8 +9,6 @@
 
 require('statusline')
 vim.cmd("source $XDG_CONFIG_HOME/nvim/settings.vim")
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrw = 1
 local plug = require('plugins')
 local use = require('packer').use
 require('packer').startup({

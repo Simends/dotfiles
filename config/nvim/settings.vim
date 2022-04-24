@@ -3,7 +3,6 @@
 " Settings
 
 filetype plugin indent on
-" syntax on
 
 set number
 set relativenumber
@@ -70,11 +69,6 @@ au Filetype qf nnoremap <silent><cr> :.cc<cr>
 au Filetype qf nnoremap <c-i> <c-w>k
 au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
-" nvim
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
-
 
 " Mappings
 
@@ -103,8 +97,6 @@ nnoremap <F3> :cn<cr>
 nnoremap <F5> :make<cr>
 
 nnoremap å :redo<cr>
-nnoremap æ :Telescope find_files<cr>
-nnoremap ø :Telescope live_grep<cr>
 
 " Qwerty
 " nnoremap n nztzv
@@ -169,3 +161,17 @@ nnoremap <C-o> <C-w>l
 
 nnoremap <leader>l o<esc>k0
 nnoremap <leader>L O<esc>j0
+
+" nvim
+if has('nvim')
+  set foldmethod=expr
+  set foldexpr=nvim_treesitter#foldexpr()
+  au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
+  let g:loaded_netrwPlugin = 1
+  let g:loaded_netrw = 1
+  nnoremap æ :Telescope find_files<cr>
+  nnoremap ø :Telescope live_grep<cr>
+else
+  set foldmethod=indent
+  syntax on
+end
