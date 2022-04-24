@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 /* static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true"; */
-static char *font = "Hurmit Nerd Font:pixelsize=13:style=Regular";
+static char *font = "Hurmit Nerd Font:pixelsize=18:style=Regular";
 /* static char *font = "Hack Nerd Font:pixelsize=14:style=Regular"; */
 /* static char *font = "TerminessTTF Nerd Font:pixelsize=15:style=Regular"; */
 static int borderpx = 5;
@@ -249,14 +249,14 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_K,       	zoom,           {.f = +1} },
-	{ TERMMOD,              XK_J,        	zoom,           {.f = -1} },
+	{ TERMMOD,              XK_I,       	zoom,           {.f = +1} },
+	{ TERMMOD,              XK_E,        	zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ TERMMOD, 		        XK_U, 		    externalpipe, 	{ .v = openurlcmd } },
-	{ TERMMOD, 		        XK_E, 		    externalpipe, 	{ .v = editscreencmd } },
+	{ TERMMOD, 		        XK_K, 		    externalpipe, 	{ .v = editscreencmd } },
 	{ TERMMOD, 		        XK_M, 		    externalpipe, 	{ .v = mancmd } },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },

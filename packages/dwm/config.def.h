@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-#define MAINFONT  "Hermit:pixelsize=12:style=Regular"
+#define MAINFONT  "Hermit:pixelsize=18:style=Regular"
 /* #define MAINFONT  "Terminus:pixelsize=14:style=Regular" */
 
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
