@@ -31,6 +31,7 @@ M.lspconfig = {
   as = 'lspconfig',
   config = {function()
     -- Servers
+    -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     local servers = {
       'jedi_language_server',
       'tsserver',
@@ -60,7 +61,7 @@ M.lspconfig = {
       vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
       vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
       vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'I', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'I', '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
       local maps = {
         g = {
           d = {[[<cmd>lua vim.lsp.buf.definition()<cr>]], "Goto definition"},
@@ -74,6 +75,7 @@ M.lspconfig = {
           e = {
             name = "LSP",
             o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
+            O = {[[<cmd>Telescope lsp_workspace_symbols<cr>]], "Find symbols"},
             e = {[[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], "Show diagnostic"},
             d = {[[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], "Show all diagnostics"},
             n = {[[<cmd>lua vim.lsp.buf.rename()<cr>]], "Rename"},
@@ -86,19 +88,6 @@ M.lspconfig = {
         }
       }
       require('which-key').register(maps, opt)
-    end
-    if not configs.rust_hdl then
-      configs.rust_hdl = {
-        default_config = {
-          cmd = {"/usr/lib/rustlib/x86_64-unknown-linux-gnu/bin/vhdl_ls"};
-          filetypes = { "vhdl" };
-          root_dir = function(fname)
-            return util.root_pattern('vhdl_ls.toml')(fname)
-          end;
-          settings = {};
-        };
-        on_attach = on_attach,
-      }
     end
     for _, server in ipairs(servers) do
       lsp[server].setup {
@@ -149,35 +138,6 @@ M.lspconfig = {
         embeddedLanguages = {css = true, javascript = true}
       }
     }
-    lsp.rust_hdl.setup {}
-        -- lsp.zeta_note.setup{
-        --     on_attach = on_attach,
-        --     capabilities = capabilities,
-        --     cmd = {'/home/simen/.local/bin/zeta-note-linux'}
-        -- }
-        -- Pyright LSP
-        -- lsp.pyright.setup {
-        --     on_attach = on_attach,
-        --     capabilities = capabilities,
-        --     cmd = { "pyright", "--stdio" }
-        -- }
-        -- if not lsp.rust_hdl then
-        -- if not lsp.rust_hdl then
-        --     lsp.rust_hdl = {
-        --         default_config = {
-        --             cmd = {"vhdl_ls"};
-        --             filetypes = {'vhdl'};
-        --             root_dir = function(fname)
-        --                 return util.root_pattern('vhdl_ls.toml')(fname)
-        --             end;
-        --             -- root_dir = util.root_pattern('vhdl_ls.toml');
-        --             settings = {};
-        --         };
-        --     }
-        -- end
-        -- lsp.rust_hdl.setup {};
-        -- if not lsp.rust_hdl then configs['rust_hdl'] = {default_config = {}} end
-        -- end
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = false,
       signs = false,
@@ -211,6 +171,30 @@ M.lspconfig = {
   end}
 }
 
+M.null_ls = {
+  'jose-elias-alvarez/null-ls.nvim',
+  config = function()
+    vim.api.nvim_set_keymap('n', '<leader>eI', [[<cmd>NullLsInfo<cr>]], {noremap = true, silent = true})						-- Show server status
+    local nls = require("null-ls")
+    local code_actions = nls.builtins.code_actions
+    --local format = nls.builtins.formatting
+    local diag = nls.builtins.diagnostics
+    local comp = nls.builtins.completion
+    local hover = nls.builtins.hover
+    require("null-ls").setup({
+      sources = {
+        -- See: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+        --format.stylua,
+        comp.spell,
+        diag.checkmake,
+        diag.shellcheck,
+        code_actions.shellcheck,
+        hover.dictionary
+      },
+    })
+  end
+}
+
 M.nvim_ts_rainbow = {
   'p00f/nvim-ts-rainbow',
   config = function()
@@ -230,8 +214,7 @@ M.nvim_cmp = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-nvim-lsp",
         {"saadparwaiz1/cmp_luasnip", after = 'luasnip'},
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-emoji"
+        "hrsh7th/cmp-path"
     },
     config = {
         function()
@@ -286,7 +269,6 @@ M.nvim_cmp = {
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
                     { name = 'path' },
-                    { name = 'emoji' }
                 },
             }
         end
@@ -297,7 +279,7 @@ M.luasnip = {
     'L3MON4D3/LuaSnip',
     as = 'luasnip',
     config = {function()
-        require("config.snippets")
+        require("snippets")
     end}
 }
 
@@ -412,32 +394,35 @@ M.treesitter = {
 }
 
 M.treesitter_textobjects = {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    config = function()
-        require'nvim-treesitter.configs'.setup {
-            textobjects = {
-                select = {
-                    enable = true,
-                    -- Automatically jump forward to textobj, similar to targets.vim
-                    lookahead = true,
-                    keymaps = {
-                        -- You can use the capture groups defined in textobjects.scm
-                        ["af"] = "@function.outer",
-                        ["if"] = "@function.inner",
-                        ["ac"] = "@class.outer",
-                        ["ic"] = "@class.inner",
-                        -- Or you can define your own textobjects like this
-                        -- ["iF"] = {
-                        --     python = "(function_definition) @function",
-                        --     cpp = "(function_definition) @function",
-                        --     c = "(function_definition) @function",
-                        --     java = "(method_declaration) @function",
-                        -- },
-                    },
-                },
-            },
-        }
-    end
+  'nvim-treesitter/nvim-treesitter-textobjects',
+  config = function()
+    require'nvim-treesitter.configs'.setup {
+      textobjects = {
+        select = {
+          enable = true,
+          -- Automatically jump forward to textobj, similar to targets.vim
+          lookahead = true,
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            ["ic"] = "@class.inner",
+            ["il"] = "@loop.inner",
+            ["al"] = "@loop.outer",
+            ["aC"] = "@comment.outer",
+            -- Or you can define your own textobjects like this
+            -- ["iF"] = {
+            --     python = "(function_definition) @function",
+            --     cpp = "(function_definition) @function",
+            --     c = "(function_definition) @function",
+            --     java = "(method_declaration) @function",
+            -- },
+          },
+        },
+      },
+    }
+  end
 }
 
 M.treesitter_refactor = {
@@ -469,29 +454,31 @@ M.treesitter_refactor = {
 }
 
 M.playground = {
-    'nvim-treesitter/playground',
-    config = function()
-        require "nvim-treesitter.configs".setup {
-            playground = {
-                enable = true,
-                disable = {},
-                updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-                persist_queries = false, -- Whether the query persists across vim sessions
-                keybindings = {
-                    toggle_query_editor = 'o',
-                    toggle_hl_groups = 'i',
-                    toggle_injected_languages = 't',
-                    toggle_anonymous_nodes = 'a',
-                    toggle_language_display = 'I',
-                    focus_language = 'f',
-                    unfocus_language = 'F',
-                    update = 'R',
-                    goto_node = '<cr>',
-                    show_help = '?',
-                },
-            }
-        }
-    end
+  'nvim-treesitter/playground',
+  opt = true,
+  cmd = {"TSPlaygroundToggle"},
+  config = function()
+    require "nvim-treesitter.configs".setup {
+      playground = {
+        enable = true,
+        disable = {},
+        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        persist_queries = false, -- Whether the query persists across vim sessions
+        keybindings = {
+          toggle_query_editor = 'o',
+          toggle_hl_groups = 'i',
+          toggle_injected_languages = 't',
+          toggle_anonymous_nodes = 'a',
+          toggle_language_display = 'I',
+          focus_language = 'f',
+          unfocus_language = 'F',
+          update = 'R',
+          goto_node = '<cr>',
+          show_help = '?',
+        },
+      }
+    }
+  end
 }
 
 M.nvim_gps = {
@@ -519,42 +506,44 @@ M.nvim_gps = {
 }
 
 M.telescope = {
-    'nvim-telescope/telescope.nvim',
-    as = 'telescope',
-    requires = {'nvim-lua/plenary.nvim'},
-    config = function()
-        require("telescope").setup {
-            defaults = {
-                color_devicons = false,
-                prompt_prefix = "   ",
-                selection_caret = "   ",
-                entry_prefix = "    ",
-                scroll_strategy = "cycle",
-                -- layout_strategy = "flex",
-                -- winblend = 25,
-                layout_config = {
-                    height = 60,
-                    preview_width = 90,
-                    scroll_speed = 25
-                    -- height_padding = 3,
-                    -- width_padding = 10
-                },
-                mappings = {i = {["<C-n>"] = false, ["<C-p>"] = false}}
+  'nvim-telescope/telescope.nvim',
+  as = 'telescope',
+  requires = {'nvim-lua/plenary.nvim'},
+  config = function()
+    require("telescope").setup {
+      defaults = {
+        color_devicons = true,
+        prompt_prefix = "   ",
+        selection_caret = "   ",
+        entry_prefix = "    ",
+        scroll_strategy = "cycle",
+        sorting_strategy = "ascending",
+        layout_strategy = "flex",
+        -- winblend = 25, -- Transparency
+        -- flip_columns = 140,
+        layout_config = {
+          height = 60,
+          anchor = "N",
+          scroll_speed = 25,
+          prompt_position = "top",
+          vertical = {
+            mirror = true
+          }
+        },
+      },
+      pickers = {
+        buffers = {
+          sort_lastused = true,
+          mappings = {
+            i = {
+              ["<c-d>"] = require("telescope.actions").delete_buffer,
             },
-            pickers = {
-                buffers = {
-                    sort_lastused = true,
-                    -- previewer = true,
-                    mappings = {
-                        i = {
-                            ["<c-d>"] = require("telescope.actions").delete_buffer,
-                        },
-                        n = {["<c-d>"] = require("telescope.actions").delete_buffer}
-                    }
-                }
-            }
+            n = {["<c-d>"] = require("telescope.actions").delete_buffer}
+          }
         }
-    end
+      }
+    }
+  end
 }
 
 M.telescope_fzy_native = {
@@ -826,6 +815,149 @@ M.dressing = {
   end
 }
 
+M.hlslens = {
+  'kevinhwang91/nvim-hlslens',
+  config = function()
+    require('hlslens').setup({
+      calm_down = false, -- When the cursor is out of the position range of the matched instance and calm_down is true, clear all lens
+      nearest_only = false, -- Only add lens for the nearest matched instance and ignore others
+      nearest_float_when = 'auto', -- When to open the floating window for the nearest lens. 'auto': floating window will be opened if room isn't enough for virtual text; 'always': always use floating window instead of virtual text; 'never': never use floating window for the nearest lens
+      override_lens = function(render, posList, nearest, idx, relIdx)
+        local sfw = vim.v.searchforward == 1
+        local indicator, text, chunks
+        local absRelIdx = math.abs(relIdx)
+        if absRelIdx > 1 then
+          indicator = ('%d%s'):format(absRelIdx, sfw ~= (relIdx > 1) and 'K' or 'k')
+        elseif absRelIdx == 1 then
+          indicator = sfw ~= (relIdx == 1) and 'K' or 'k'
+        else
+          indicator = ''
+        end
+        local lnum, col = unpack(posList[idx])
+        if nearest then
+          local cnt = #posList
+          if indicator ~= '' then
+            text = ('[%s %d/%d]'):format(indicator, idx, cnt)
+          else
+            text = ('[%d/%d]'):format(idx, cnt)
+          end
+          chunks = {{' ', 'Ignore'}, {text, 'HlSearchLensNear'}}
+        else
+          text = ('[%s %d]'):format(indicator, idx)
+          chunks = {{' ', 'Ignore'}, {text, 'HlSearchLens'}}
+        end
+        render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+      end
+    })
+    local kopts = {noremap = true, silent = true}
+    vim.api.nvim_set_keymap('n', 'k', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.api.nvim_set_keymap('n', 'K', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+    vim.cmd([[
+    hi! link HlSearchNear Search 
+    hi! link HlSearchLens Search 
+    hi! link HlSearchLensNear Search 
+    hi! link HlSearchFloat Search 
+    ]])
+  end
+}
+
+M.scrollbar = {
+  'petertriho/nvim-scrollbar',
+  opt = true,
+  cmd = {"ScrollbarToggle", "ScrollbarShow"},
+  config = function()
+    require("scrollbar").setup({
+      show = true,
+      set_highlights = true,
+      handle = {
+        text = " ",
+        color = nil,
+        cterm = nil,
+        highlight = "CursorColumn",
+        hide_if_all_visible = true, -- Hides handle if all lines are visible
+      },
+      excluded_buftypes = {
+        "terminal",
+      },
+      excluded_filetypes = {
+        "prompt",
+        "TelescopePrompt",
+      },
+      autocmd = {
+        render = {
+          "BufWinEnter",
+          "TabEnter",
+          "TermEnter",
+          "WinEnter",
+          "CmdwinLeave",
+          "TextChanged",
+          "VimResized",
+          "WinScrolled",
+        },
+      },
+      handlers = {
+        diagnostic = true,
+        search = true, -- Requires hlslens to be loaded, will run require("scrollbar.handlers.search").setup() for you
+      },
+      marks = {
+        Search = {
+          text = { "-", "=" },
+          priority = 0,
+          color = nil,
+          cterm = nil,
+          highlight = "TSTag",
+        },
+        Error = {
+          text = { "-", "=" },
+          priority = 1,
+          color = nil,
+          cterm = nil,
+          highlight = "DiagnosticVirtualTextError",
+        },
+        Warn = {
+          text = { "-", "=" },
+          priority = 2,
+          color = nil,
+          cterm = nil,
+          highlight = "DiagnosticVirtualTextWarn",
+        },
+        Info = {
+          text = { "-", "=" },
+          priority = 3,
+          color = nil,
+          cterm = nil,
+          highlight = "DiagnosticVirtualTextInfo",
+        },
+        Hint = {
+          text = { "-", "=" },
+          priority = 4,
+          color = nil,
+          cterm = nil,
+          highlight = "DiagnosticVirtualTextHint",
+        },
+        Misc = {
+          text = { "-", "=" },
+          priority = 5,
+          color = nil,
+          cterm = nil,
+          highlight = "Normal",
+        },
+      },
+    })
+    require("scrollbar.handlers.search").setup()
+  end
+}
+
+M.colorizer = {
+  'norcalli/nvim-colorizer.lua',
+  opt = true,
+  cmd = {"ColorizerToggle"}
+}
+
 M.which_key = {
   "folke/which-key.nvim",
   config = function()
@@ -834,68 +966,68 @@ M.which_key = {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
       plugins = {
-    marks = true, -- shows a list of your marks on ' and `
-    registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-    spelling = {
-      enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-      suggestions = 20, -- how many suggestions should be shown in the list?
-    },
-    -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-    -- No actual key bindings are created
-    presets = {
-      operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      motions = true, -- adds help for motions
-      text_objects = true, -- help for text objects triggered after entering an operator
-      windows = true, -- default bindings on <c-w>
-      nav = true, -- misc bindings to work with windows
-      z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
-    },
-  },
-  -- add operators that will trigger motion and text object completion
-  -- to enable all native operators, set the preset / operators plugin above
-  operators = { gc = "Comments" },
-  key_labels = {
-    -- override the label used to display some keys. It doesn't effect WK in any other way.
-    -- For example:
-    -- ["<space>"] = "SPC",
-    -- ["<cr>"] = "RET",
-    -- ["<tab>"] = "TAB",
-  },
-  icons = {
-    breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-    separator = "➜", -- symbol used between a key and it's label
-    group = "+", -- symbol prepended to a group
-  },
-  popup_mappings = {
-    scroll_down = '<c-d>', -- binding to scroll down inside the popup
-    scroll_up = '<c-u>', -- binding to scroll up inside the popup
-  },
-  window = {
-    border = "single", -- none, single, double, shadow
-    position = "bottom", -- bottom, top
-    margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-    padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-    winblend = 0
-  },
-  layout = {
-    height = { min = 4, max = 25 }, -- min and max height of the columns
-    width = { min = 20, max = 50 }, -- min and max width of the columns
-    spacing = 3, -- spacing between columns
-    align = "left", -- align columns left, center or right
-  },
-  ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-  hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
-  show_help = true, -- show help message on the command line when the popup is visible
-  triggers = "auto", -- automatically setup triggers
-  -- triggers = {"<leader>"} -- or specify a list manually
-  triggers_blacklist = {
-    -- list of mode / prefixes that should never be hooked by WhichKey
-    -- this is mostly relevant for key maps that start with a native binding
-    -- most people should not need to change this
-    i = { "j", "k" },
-    v = { "j", "k" },
-  },
+        marks = true, -- shows a list of your marks on ' and `
+        registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+        spelling = {
+          enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
+          suggestions = 20, -- how many suggestions should be shown in the list?
+        },
+        -- the presets plugin, adds help for a bunch of default keybindings in Neovim
+        -- No actual key bindings are created
+        presets = {
+          operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
+          motions = true, -- adds help for motions
+          text_objects = true, -- help for text objects triggered after entering an operator
+          windows = true, -- default bindings on <c-w>
+          nav = true, -- misc bindings to work with windows
+          z = true, -- bindings for folds, spelling and others prefixed with z
+          g = true, -- bindings for prefixed with g
+        },
+      },
+      -- add operators that will trigger motion and text object completion
+      -- to enable all native operators, set the preset / operators plugin above
+      operators = { gc = "Comments" },
+      key_labels = {
+        -- override the label used to display some keys. It doesn't effect WK in any other way.
+        -- For example:
+        -- ["<space>"] = "SPC",
+        -- ["<cr>"] = "RET",
+        -- ["<tab>"] = "TAB",
+      },
+      icons = {
+        breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
+        separator = "➜", -- symbol used between a key and it's label
+        group = "+", -- symbol prepended to a group
+      },
+      popup_mappings = {
+        scroll_down = '<c-d>', -- binding to scroll down inside the popup
+        scroll_up = '<c-u>', -- binding to scroll up inside the popup
+      },
+      window = {
+        border = "single", -- none, single, double, shadow
+        position = "top", -- bottom, top
+        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+        padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+        winblend = 0
+      },
+      layout = {
+        height = { min = 4, max = 25 }, -- min and max height of the columns
+        width = { min = 20, max = 50 }, -- min and max width of the columns
+        spacing = 3, -- spacing between columns
+        align = "center", -- align columns left, center or right
+      },
+      ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+      show_help = true, -- show help message on the command line when the popup is visible
+      triggers = "auto", -- automatically setup triggers
+      -- triggers = {"<leader>"} -- or specify a list manually
+      triggers_blacklist = {
+        -- list of mode / prefixes that should never be hooked by WhichKey
+        -- this is mostly relevant for key maps that start with a native binding
+        -- most people should not need to change this
+        i = { "j", "k" },
+        v = { "j", "k" },
+      },
     }
   end
 }
@@ -1019,6 +1151,20 @@ M.nvim_tree = {
     end}
 }
 
+M.dirbuf = {
+  'elihunter173/dirbuf.nvim',
+  opt = true,
+  cmd = {"Dirbuf"},
+  config = function()
+    require("dirbuf").setup {
+      hash_padding = 2,
+      show_hidden = true,
+      sort_order = "default",
+      write_cmd = "DirbufSync",
+    }
+  end
+}
+
 M.undotree = {
     'mbbill/undotree',
     opt = true,
@@ -1072,34 +1218,7 @@ M.gitsigns = {
   as = 'gitsigns',
   requires = {'nvim-lua/plenary.nvim'},
   config = function()
-    local opt = {noremap = true, silent = true}
-    local map = {
-      g = {
-        ['{'] = {"<cmd>Gitsigns prev_hunk<cr>", "Next git hunk"},
-        ['}'] = {"<cmd>Gitsigns next_hunk<cr>", "Previous git hunk"}
-      },
-      ['<leader>'] = {
-        g = {
-          name = "Git",
-          B = {"<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle line blame"},
-          l = {"<cmd>Gitsigns setqflist<cr>", "Show all hunks"},
-          c = {"<cmd>Telescope git_commits<cr>", "Show all commits"},
-          C = {"<cmd>Telescope git_bcommits<cr>", "Show all buffer commits"},
-          b = {"<cmd>Telescope git_branches<cr>", "Show branches"},
-          s = {"<cmd>Telescope git_status<cr>", "Show status"},
-          S = {"<cms>Telescope git_stash<cr>", "Show stash"},
-          h = {
-            name = "Hunk",
-            s = {"<cmd>Gitsigns stage_hunk<cr>", "Stage"},
-            u = {"<cmd>Gitsigns undo_stage_hunk<cr>", "Undo stage"},
-            r = {"<cmd>Gitsigns reset_hunk<cr>", "Reset"},
-            R = {"<cmd>Gitsigns reset_buffer<cr>", "Reset buffer"},
-            p = {"<cmd>Gitsigns preview_hunk<cr>", "Preview"}
-          }
-        }
-      }
-    }
-    require('which-key').register(map, opt)
+    require('gitsigns').setup()
   end
 }
 
@@ -1246,10 +1365,10 @@ M.rose_pine = {
         -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
         vim.g.rose_pine_variant = 'moon'
         vim.cmd('colorscheme rose-pine')
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
-        vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
-        vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
     end
 }
 
@@ -1273,8 +1392,8 @@ M.kanagawa = {
     config = function ()
         vim.cmd('set background=dark')
         vim.cmd('colorscheme kanagawa')
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+        -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
     end
 }
 

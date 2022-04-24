@@ -33,7 +33,7 @@ set smartindent
 set wildmenu
 set wildmode=full
 
-set colorcolumn=80
+"set colorcolumn=80
 set showtabline=1
 set linebreak
 set nowrap
