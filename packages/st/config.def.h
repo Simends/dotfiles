@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 /* static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true"; */
-static char *font = "Hurmit Nerd Font:pixelsize=18:style=Regular";
+static char *font = "Hurmit Nerd Font:pixelsize=13:style=Regular";
 /* static char *font = "Hack Nerd Font:pixelsize=14:style=Regular"; */
 /* static char *font = "TerminessTTF Nerd Font:pixelsize=15:style=Regular"; */
 static int borderpx = 5;
@@ -69,6 +69,18 @@ static unsigned int blinktimeout = 800;
  * thickness of underline and bar cursors
  */
 static unsigned int cursorthickness = 2;
+
+/*
+ * 1: render most of the lines/blocks characters without using the font for
+ *    perfect alignment between cells (U2500 - U259F except dashes/diagonals).
+ *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
+ * 0: disable (render all U25XX glyphs normally from the font).
+ */
+const int boxdraw = 0;
+const int boxdraw_bold = 0;
+
+/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
+const int boxdraw_braille = 0;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -249,19 +261,19 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_I,       	zoom,           {.f = +1} },
-	{ TERMMOD,              XK_E,        	zoom,           {.f = -1} },
+	{ TERMMOD,              XK_I,       	  zoom,           {.f = +1} },
+	{ TERMMOD,              XK_E,        	  zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ TERMMOD, 		        XK_U, 		    externalpipe, 	{ .v = openurlcmd } },
-	{ TERMMOD, 		        XK_K, 		    externalpipe, 	{ .v = editscreencmd } },
-	{ TERMMOD, 		        XK_M, 		    externalpipe, 	{ .v = mancmd } },
+	{ TERMMOD, 		          XK_U, 		      externalpipe, 	{ .v = openurlcmd } },
+	{ TERMMOD, 		          XK_K, 		      externalpipe, 	{ .v = editscreencmd } },
+	{ TERMMOD, 		          XK_M, 		      externalpipe, 	{ .v = mancmd } },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ TERMMOD,              XK_N,           newterm,        {.i =  0} },
-	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
+	{ TERMMOD,              XK_H,           iso14755,       {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };

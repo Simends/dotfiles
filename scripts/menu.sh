@@ -40,7 +40,7 @@ SelPower() {
     esac
 }
 
-MainMenu=$(echo -e "Applications\nDirectory\nMedia Player\nWeb\nScreenshot\nPasswords\nSSH Sessions\nManuals\nDeadbeef\nToggle Do Not Disturb\nSystray\nSettings\nPower" | $MenuProg)
+MainMenu=$(echo -e "Applications\nDirectory\nMedia Player\nWeb\nScreenshot\nPasswords\nSSH Sessions\nManuals\nDeadbeef\nToggle Do Not Disturb\nCopy Emoji\nSystray\nSettings\nPower" | $MenuProg)
 case "$MainMenu" in
     "Applications")
         "$MenuPath/dmenu-apps.sh" "$MenuOpts" "$Terminal" "$Browser"
@@ -90,6 +90,9 @@ case "$MainMenu" in
         ;;
     "Toggle Do Not Disturb")
         dunstctl set-paused toggle
+        ;;
+      "Copy Emoji")
+        "$MenuPath/dmenu-unicode.sh" "$MenuOpts"
         ;;
     "Settings")
         "$MenuPath/dmenu-settings.sh" "$MenuOpts" "$Terminal" "$Browser"

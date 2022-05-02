@@ -15,9 +15,9 @@ require('packer').startup({
   function()
 
 
------------------------------------------
----------------- PLUGINS ----------------
------------------------------------------
+    -----------------------------------------
+    ---------------- PLUGINS ----------------
+    -----------------------------------------
 
     -- The plugin manager
     use(plug.packer)
@@ -41,7 +41,9 @@ require('packer').startup({
 
     -- Telescope
     use(plug.telescope)                 -- Better fuzzy finding
-    use(plug.telescope_fzy_native)      -- Even faster telescope
+    use(plug.telescope_fzf_native)      -- Native FZF sorter
+    -- use(plug.telescope_fzy_native)      -- Native FZY sorter
+    use(plug.dressing)                  -- Telescope more places and better ui
 
     -- Debugger
     use(plug.dap)
@@ -62,7 +64,6 @@ require('packer').startup({
     use(plug.which_key)                 -- Remember all the keybindings
     use(plug.hlslens)
     use(plug.scrollbar)
-    use(plug.dressing)                  -- Telescope more places and better ui
     use(plug.colorizer)
     use(plug.indentguides)
     use(plug.qf_helper)                 -- Better quickfix and loclist
@@ -70,6 +71,7 @@ require('packer').startup({
     use(plug.zen_mode)                  -- Distraction free writing
     use(plug.undotree)                  -- Visualize vims powerful revision history
     use(plug.dirbuf)
+    use(plug.autopairs)
 
     -- Notation
     use(plug.mkdnflow)                  -- Better notetaking TODO: Something wrong
@@ -95,13 +97,21 @@ local opt = {noremap = true, silent = true}
 
 local map = {
   g = {
+    d = {[[<cmd>lua vim.lsp.buf.definition()<cr>]], "Goto definition"},
+    D = {[[<cmd>lua vim.lsp.buf.declaration()<cr>]], "Goto declaration"},
+    i = {[[<cmd>lua vim.lsp.buf.implementation()<cr>]], "Goto implementation"},
+    r = {[[<cmd>lua vim.lsp.buf.references()<cr>]], "Goto references"},
+    ['['] = {[[<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>]], "Goto previous diagnostic"},
+    [']'] = {[[<cmd>lua vim.lsp.diagnostic.goto_next()<cr>]], "Goto next diagnostic"},
     ['{'] = {"<cmd>Gitsigns prev_hunk<cr>", "Next git hunk"},
     ['}'] = {"<cmd>Gitsigns next_hunk<cr>", "Previous git hunk"}
   },
+
   ['<leader>'] = {
     l = {"o<esc>k0", "New line below"},
     L = {"O<esc>j0", "New line above"},
     r = {":e<cr>", "Reload buffer"},
+
     D = {
       name = "Directory",
       D = {"<cmd>Dirbuf<cr>", "Open directory"},
@@ -109,6 +119,12 @@ local map = {
       p = {"<cmd>Dirbuf %<cr>", "Open parent directory"},
       q = {"<cmd>DirbufQuit<cr>", "Close directory"},
     },
+
+    m = {
+      name = "Make",
+      m = {"<cmd>make<cr>", "Make project"},
+    },
+
     t = {
       name = "Toggle",
       a = {"<cmd>TSPlaygroundToggle<cr>", "Abstract syntax tree browser"},
@@ -124,18 +140,35 @@ local map = {
       I = {"<cmd>IndentBlanklineToggle!<cr>", "Indent guides globally"},
       s = {"<cmd>ScrollbarToggle<cr>", "Scrollbar"},
     },
+
+    e = {
+      name = "LSP",
+      o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
+      O = {[[<cmd>Telescope lsp_workspace_symbols<cr>]], "Find symbols"},
+      e = {[[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], "Show diagnostic"},
+      d = {[[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], "Show all diagnostics"},
+      n = {[[<cmd>lua vim.lsp.buf.rename()<cr>]], "Rename"},
+      s = {[[<cmd>lua vim.lsp.buf.signature_help()<cr>]], "Show signature"},
+      l = {[[<cmd>lua vim.lsp.codelens.display()<cr>]], "Show codelens"},
+      L = {[[<cmd>lua vim.lsp.codelens.run()<cr>]], "Run codelens"},
+      f = {[[<cmd>lua vim.lsp.buf.formatting()<cr>]], "Format buffer"},
+      a = {[[<cmd>lua vim.lsp.buf.code_action()<cr>]], "Code actions"}
+    },
+
     f = {
       name = "Find",
+      b = {"<cmd>Telescope buffers<cr>", "Buffers"},
+      c = {"<cmd>Telescope command_history<cr>", "Commands"},
       f = {"<cmd>Telescope find_files<cr>", "Files"},
       g = {"<cmd>Telescope live_grep<cr>", "Grep"},
-      p = {"<cmd>Telescope repo list<cr>", "Git repos"},
-      b = {"<cmd>Telescope buffers<cr>", "Buffers"},
       j = {"<cmd>Telescope jumplist<cr>", "Jumplist"},
-      q = {"<cmd>Telescope quickfix<cr>", "Quickfix"},
+      p = {"<cmd>Telescope repo list<cr>", "Git repos"},
       l = {"<cmd>Telescope loclist<cr>", "Loclist"},
-      c = {"<cmd>Telescope command_history<cr>", "Commands"},
-      m = {"<cmd>Telescope marks<cr>", "Marks"}
+      m = {"<cmd>Telescope marks<cr>", "Marks"},
+      q = {"<cmd>Telescope quickfix<cr>", "Quickfix"},
+      s = {"<cmd>Telescope lsp_workspace_symbols<cr>", "Symbols"}
     },
+
     g = {
       name = "Git",
       b = {"<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle line blame"},
@@ -159,6 +192,7 @@ local map = {
         p = {"<cmd>Gitsigns preview_hunk<cr>", "Preview"}
       }
     },
+
     w = {
       name = "Window",
       n = {"<C-w>h", "Left"},
@@ -172,6 +206,7 @@ local map = {
     -- name = "Insert",
     -- TODO: Template
     -- },
+    --
     h = {
       name = "Support",
       c = {"<cmd>checkhealth<cr>", "Check health"},
@@ -186,7 +221,9 @@ local map = {
         p = {"<cmd>PackerProfile<cr>", "Profile"},
       }
     }
-  }
+  },
+
+  I = {'<cmd>lua vim.lsp.buf.hover()<CR>', "Hover"}
 }
 
 require('which-key').register(map, opt)

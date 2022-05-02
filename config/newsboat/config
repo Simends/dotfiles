@@ -3,6 +3,7 @@ confirm-mark-feed-read no
 scrolloff 10
 show-keymap-hint yes
 text-width 80
+browser qutebrowser
 
 unbind-key -a
 bind-key q quit
@@ -53,8 +54,9 @@ bind-key o open
 bind-key n quit
 bind-key k next-unread
 bind-key U show-urls
+bind-key l open-in-browser
 bind-key p enqueue
-macro e set browser mpv; open-in-browser; set browser firefox
+macro e set browser mpv; open-in-browser; set browser qutebrowser
 
 # colors
 color background          black      default

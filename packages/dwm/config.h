@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-#define MAINFONT  "Hermit:pixelsize=12:style=Regular"
+#define MAINFONT  "Hermit:pixelsize=10:style=Regular"
 /* #define MAINFONT  "Terminus:pixelsize=14:style=Regular" */
 
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
@@ -36,14 +36,19 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class                        instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",                       NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox",                    NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "Picture-in-Picture",         NULL,     NULL,           0,         1,          0,           1,        -1 },
-	{ "St",                         NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,                         NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
-	{ "Display",                    NULL,     NULL,	          0,         1,          0,           1,        -1 },
-	{ "Trayer",                     NULL,     NULL,	          0,         1,          0,           1,        -1 },
+	/* class                        instance  title           tags mask  isfloating  isterminal   swallow   monitor */
+	{ "Gimp",                       NULL,     NULL,           0,         1,          0,           1,        -1 },
+	{ "Firefox",                    NULL,     NULL,           1 << 8,    0,          0,           1,        -1 },
+	{ "Picture-in-Picture",         NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "St",                         NULL,     NULL,           0,         0,          1,           1,        -1 },
+	{ NULL,                         NULL,     "Event Tester", 0,         0,          0,           0,        -1 }, /* xev */
+	{ "Display",                    NULL,     NULL,	          0,         1,          0,           0,        -1 },
+	{ "Trayer",                     NULL,     NULL,	          0,         1,          0,           0,        -1 },
+	{ "Sxiv",                       NULL,     NULL,           0,         0,          0,           1,        -1 },
+	{ "Zathura",                    NULL,     NULL,           0,         0,          0,           1,        -1 },
+	{ "Pcmanfm",                    NULL,     NULL,           0,         0,          0,           1,        -1 },
+	{ "mpv",                        NULL,     NULL,           0,         0,          0,           1,        -1 },
+	{ "qutebrowser",                NULL,     NULL,           0,         0,          0,           1,        -1 },
 };
 
 /* layout(s) */

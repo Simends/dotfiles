@@ -5,8 +5,8 @@ M.packer = {
   'wbthomason/packer.nvim',
   config = function ()
     vim.api.nvim_set_keymap('n', '<leader>hpu', '<cmd>PackerSync<cr>', {noremap = true, silent = true})
-	  vim.api.nvim_set_keymap('n', '<leader>hps', '<cmd>PackerStatus<cr>', {noremap = true, silent = true})
-	  vim.api.nvim_set_keymap('n', '<leader>hpp', '<cmd>PackerProfile<cr>', {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', '<leader>hps', '<cmd>PackerStatus<cr>', {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', '<leader>hpp', '<cmd>PackerProfile<cr>', {noremap = true, silent = true})
   end
 }
 
@@ -33,7 +33,7 @@ M.lspconfig = {
     -- Servers
     -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
     local servers = {
-      'jedi_language_server',
+      'pylsp',
       'tsserver',
       'clangd',
       'bashls',
@@ -52,7 +52,7 @@ M.lspconfig = {
     vim.api.nvim_set_keymap('n', '<leader>ei', [[<cmd>LspInfo<cr>]], {noremap = true, silent = true})						-- Show server status
     local on_attach = function(_, bufnr)
       vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-      local opt = {noremap = true, silent = true}
+      -- local opt = {noremap = true, silent = true}
       vim.cmd [[ command! LspFormat execute 'lua vim.lsp.buf.formatting()' ]]
       vim.cmd [[ command! LspCodelensRun execute 'lua vim.lsp.codelens.run()' ]]
       vim.cmd [[ command! LspCodelensRefresh execute 'lua vim.lsp.codelens.refresh()' ]]
@@ -61,33 +61,33 @@ M.lspconfig = {
       vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
       vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
       vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
-      vim.api.nvim_buf_set_keymap(bufnr, 'n', 'I', '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
-      local maps = {
-        g = {
-          d = {[[<cmd>lua vim.lsp.buf.definition()<cr>]], "Goto definition"},
-          D = {[[<cmd>lua vim.lsp.buf.declaration()<cr>]], "Goto declaration"},
-          i = {[[<cmd>lua vim.lsp.buf.implementation()<cr>]], "Goto implementation"},
-          r = {[[<cmd>lua vim.lsp.buf.references()<cr>]], "Goto references"},
-          ['['] = {[[<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>]], "Goto previous diagnostic"},
-          [']'] = {[[<cmd>lua vim.lsp.diagnostic.goto_next()<cr>]], "Goto next diagnostic"}
-        },
-        ['<leader>'] = {
-          e = {
-            name = "LSP",
-            o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
-            O = {[[<cmd>Telescope lsp_workspace_symbols<cr>]], "Find symbols"},
-            e = {[[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], "Show diagnostic"},
-            d = {[[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], "Show all diagnostics"},
-            n = {[[<cmd>lua vim.lsp.buf.rename()<cr>]], "Rename"},
-            s = {[[<cmd>lua vim.lsp.buf.signature_help()<cr>]], "Show signature"},
-            l = {[[<cmd>lua vim.lsp.codelens.display()<cr>]], "Show codelens"},
-            L = {[[<cmd>lua vim.lsp.codelens.run()<cr>]], "Run codelens"},
-            f = {[[<cmd>lua vim.lsp.buf.formatting()<cr>]], "Format buffer"},
-            a = {"<cmd>Telescope lsp_code_actions<cr>", "Code actions"}
-          }
-        }
-      }
-      require('which-key').register(maps, opt)
+      -- vim.api.nvim_buf_set_keymap(bufnr, 'n', 'I', '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
+      -- local maps = {
+      --   g = {
+      --     d = {[[<cmd>lua vim.lsp.buf.definition()<cr>]], "Goto definition"},
+      --     D = {[[<cmd>lua vim.lsp.buf.declaration()<cr>]], "Goto declaration"},
+      --     i = {[[<cmd>lua vim.lsp.buf.implementation()<cr>]], "Goto implementation"},
+      --     r = {[[<cmd>lua vim.lsp.buf.references()<cr>]], "Goto references"},
+      --     ['['] = {[[<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>]], "Goto previous diagnostic"},
+      --     [']'] = {[[<cmd>lua vim.lsp.diagnostic.goto_next()<cr>]], "Goto next diagnostic"}
+      --   },
+      --   ['<leader>'] = {
+      --     e = {
+      --       name = "LSP",
+      --       o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
+      --       O = {[[<cmd>Telescope lsp_workspace_symbols<cr>]], "Find symbols"},
+      --       e = {[[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], "Show diagnostic"},
+      --       d = {[[<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>]], "Show all diagnostics"},
+      --       n = {[[<cmd>lua vim.lsp.buf.rename()<cr>]], "Rename"},
+      --       s = {[[<cmd>lua vim.lsp.buf.signature_help()<cr>]], "Show signature"},
+      --       l = {[[<cmd>lua vim.lsp.codelens.display()<cr>]], "Show codelens"},
+      --       L = {[[<cmd>lua vim.lsp.codelens.run()<cr>]], "Run codelens"},
+      --       f = {[[<cmd>lua vim.lsp.buf.formatting()<cr>]], "Format buffer"},
+      --       a = {"<cmd>Telescope lsp_code_actions<cr>", "Code actions"}
+      --     }
+      --   }
+      -- }
+      -- require('which-key').register(maps, opt)
     end
     for _, server in ipairs(servers) do
       lsp[server].setup {
@@ -140,34 +140,15 @@ M.lspconfig = {
     }
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = false,
-      signs = false,
+      signs = true,
       underline = true,
       update_in_insert = false,
     })
-    vim.fn.sign_define('LspDiagnosticsSignError', {
-      text = "",
-      texthl = "LspDiagnosticsSignError",
-      linehl = "",
-      numhl = ""
-    })
-    vim.fn.sign_define('LspDiagnosticsSignWarning', {
-      text = "",
-      texthl = "LspDiagnosticsSignWarning",
-      linehl = "",
-      numhl = ""
-    })
-    vim.fn.sign_define('LspDiagnosticsSignInformation', {
-      text = "",
-      texthl = "LspDiagnosticsSignInformation",
-      linehl = "",
-      numhl = ""
-    })
-    vim.fn.sign_define('LspDiagnosticsSignHint', {
-      text = "",
-      texthl = "LspDiagnosticsSignHint",
-      linehl = "",
-      numhl = ""
-    })
+    local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+    end
   end}
 }
 
@@ -209,104 +190,104 @@ M.nvim_ts_rainbow = {
 }
 
 M.nvim_cmp = {
-    "hrsh7th/nvim-cmp",
-    requires = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
-        {"saadparwaiz1/cmp_luasnip", after = 'luasnip'},
-        "hrsh7th/cmp-path"
-    },
-    config = {
-        function()
-            local has_words_before = function()
-                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  "hrsh7th/nvim-cmp",
+  requires = {
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-nvim-lsp",
+    {"saadparwaiz1/cmp_luasnip", after = 'luasnip'},
+    "hrsh7th/cmp-path"
+  },
+  config = {
+    function()
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local luasnip = require("luasnip")
+      local cmp = require("cmp")
+      cmp.setup {
+        completion = {
+          completeopt = 'menu,menuone,noselect'
+        },
+        mapping = {
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.close(),
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
             end
+          end, { "i", "s" }),
 
-            local luasnip = require("luasnip")
-            local cmp = require("cmp")
-            cmp.setup {
-                completion = {
-                    completeopt = 'menu,menuone,noselect'
-                },
-                mapping = {
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.close(),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        elseif luasnip.expand_or_jumpable() then
-                            luasnip.expand_or_jump()
-                        elseif has_words_before() then
-                            cmp.complete()
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif luasnip.jumpable(-1) then
-                            luasnip.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ['<CR>'] = cmp.mapping.confirm({ select = false })
-                },
-                snippet = {
-                    expand = function(args)
-                        require'luasnip'.lsp_expand(args.body)
-                    end
-                },
-                sources = {
-                    { name = 'buffer' },
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                },
-            }
-        end
-    }
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ['<CR>'] = cmp.mapping.confirm({ select = false })
+        },
+        snippet = {
+          expand = function(args)
+            require'luasnip'.lsp_expand(args.body)
+          end
+        },
+        sources = {
+          { name = 'buffer' },
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'path' },
+        },
+      }
+    end
+  }
 }
 
 M.luasnip = {
-    'L3MON4D3/LuaSnip',
-    as = 'luasnip',
-    config = {function()
-        require("snippets")
-    end}
+  'L3MON4D3/LuaSnip',
+  as = 'luasnip',
+  config = {function()
+    require("snippets")
+  end}
 }
 
 M.symbols_outline = {
-    'simrat39/symbols-outline.nvim',
-    opt = true,
-    cmd = {'SymbolsOutline'},
-    after = 'lspconfig',
-    config = {
-        function()
-            vim.g.symbols_outline = {
-                highlight_hovered_item = true,
-                show_guides = true,
-                auto_preview = true,
-                position = 'right',
-                keymaps = {
-                    close = "<Esc>",
-                    goto_location = "<Cr>",
-                    focus_location = "o",
-                    hover_symbol = "<C-space>",
-                    rename_symbol = "r",
-                    code_actions = "a"
-                },
-                lsp_blacklist = {}
-            }
-        end
-    }
+  'simrat39/symbols-outline.nvim',
+  opt = true,
+  cmd = {'SymbolsOutline'},
+  after = 'lspconfig',
+  config = {
+    function()
+      vim.g.symbols_outline = {
+        highlight_hovered_item = true,
+        show_guides = true,
+        auto_preview = true,
+        position = 'right',
+        keymaps = {
+          close = "<Esc>",
+          goto_location = "<Cr>",
+          focus_location = "o",
+          hover_symbol = "<C-space>",
+          rename_symbol = "r",
+          code_actions = "a"
+        },
+        lsp_blacklist = {}
+      }
+    end
+  }
 }
 
 M.fidget = {
@@ -338,59 +319,60 @@ M.lightbulb = {
       }
     }
     vim.fn.sign_define('LightBulbSign', { text = "", texthl = "DiagnosticWarn", linehl="", numhl="" })
-    vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+    --vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
   end
 }
 
 M.code_action_menu = {
-    'weilbith/nvim-code-action-menu',
-    opt = true,
-    cmd = 'CodeActionMenu',
+  'weilbith/nvim-code-action-menu',
+  opt = true,
+  cmd = 'CodeActionMenu',
 }
 
 M.treesitter = {
-    'nvim-treesitter/nvim-treesitter',
-    as = 'treesitter',
-    run = ':TSUpdate',
-    config = {function()
-        require'nvim-treesitter.configs'.setup {
-            -- ensure_installed = "maintained",
-            ensure_installed = {
-                "bash",
-                "c",
-                "cpp",
-                "css",
-                "dockerfile",
-                "html",
-                "javascript",
-                "json",
-                "json5",
-                "jsonc",
-                "latex",
-                "lua",
-                "markdown",
-                "nix",
-                "python",
-                "yaml",
-            },
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = true,
-            },
-            incremental_selection = {
-                enable = true,
-                keymaps = {
-                    init_selection = "gnn",
-                    node_incremental = "grn",
-                    scope_incremental = "grc",
-                    node_decremental = "grm",
-                },
-            },
-            indent = {
-                enable = true,
-            },
-        }
-    end}
+  'nvim-treesitter/nvim-treesitter',
+  as = 'treesitter',
+  run = ':TSUpdate',
+  config = {function()
+    require'nvim-treesitter.configs'.setup {
+      -- ensure_installed = "maintained",
+      ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "dockerfile",
+        "fennel",
+        "html",
+        "javascript",
+        "json",
+        "json5",
+        "jsonc",
+        "latex",
+        "lua",
+        "markdown",
+        "nix",
+        "python",
+        "yaml",
+      },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = true,
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "gnn",
+          node_incremental = "grn",
+          scope_incremental = "grc",
+          node_decremental = "grm",
+        },
+      },
+      indent = {
+        enable = true,
+      },
+    }
+  end}
 }
 
 M.treesitter_textobjects = {
@@ -426,31 +408,31 @@ M.treesitter_textobjects = {
 }
 
 M.treesitter_refactor = {
-    'nvim-treesitter/nvim-treesitter-refactor',
-    config = function()
-        require'nvim-treesitter.configs'.setup {
-            refactor = {
-                highlight_definitions = { enable = true },
-                highlight_current_scope = { enable = false },
-                smart_rename = {
-                    enable = true,
-                    keymaps = {
-                        smart_rename = "grr",
-                    },
-                },
-                navigation = {
-                    enable = true,
-                    keymaps = {
-                        goto_definition = "gnd",
-                        list_definitions = "gnD",
-                        list_definitions_toc = "gO",
-                        goto_next_usage = "<a-*>",
-                        goto_previous_usage = "<a-#>",
-                    },
-                },
-            },
-        }
-    end
+  'nvim-treesitter/nvim-treesitter-refactor',
+  config = function()
+    require'nvim-treesitter.configs'.setup {
+      refactor = {
+        highlight_definitions = { enable = true },
+        highlight_current_scope = { enable = false },
+        smart_rename = {
+          enable = true,
+          keymaps = {
+            smart_rename = "grr",
+          },
+        },
+        navigation = {
+          enable = true,
+          keymaps = {
+            goto_definition = "gnd",
+            list_definitions = "gnD",
+            list_definitions_toc = "gO",
+            goto_next_usage = "<a-*>",
+            goto_previous_usage = "<a-#>",
+          },
+        },
+      },
+    }
+  end
 }
 
 M.playground = {
@@ -482,27 +464,27 @@ M.playground = {
 }
 
 M.nvim_gps = {
-    "SmiteshP/nvim-gps",
-    config = function()
-        require("nvim-gps").setup({
-            icons = {
-		            ["class-name"] = ' ',      -- Classes and class-like objects
-		            ["function-name"] = ' ',   -- Functions
-		            ["method-name"] = ' ',     -- Methods (functions inside class-like objects)
-		            ["container-name"] = ' ',  -- Containers (example: lua tables)
-		            ["tag-name"] = '炙'         -- Tags (example: html tags)
-	          },
+  "SmiteshP/nvim-gps",
+  config = function()
+    require("nvim-gps").setup({
+      icons = {
+        ["class-name"] = ' ',      -- Classes and class-like objects
+        ["function-name"] = ' ',   -- Functions
+        ["method-name"] = ' ',     -- Methods (functions inside class-like objects)
+        ["container-name"] = ' ',  -- Containers (example: lua tables)
+        ["tag-name"] = '炙'         -- Tags (example: html tags)
+      },
 
-	          separator = ' > ',
+      separator = ' > ',
 
-	          -- limit for amount of context shown
-	          -- 0 means no limit
-	          depth = 6,
+      -- limit for amount of context shown
+      -- 0 means no limit
+      depth = 6,
 
-	          -- indicator used when context hits depth limit
-	          depth_limit_indicator = "..."
-        })
-    end
+      -- indicator used when context hits depth limit
+      depth_limit_indicator = "..."
+    })
+  end
 }
 
 M.telescope = {
@@ -547,19 +529,28 @@ M.telescope = {
 }
 
 M.telescope_fzy_native = {
-    'nvim-telescope/telescope-fzy-native.nvim',
-    after = 'telescope',
-    config = function()
-        require('telescope').load_extension('fzy_native')
-    end
+  'nvim-telescope/telescope-fzy-native.nvim',
+  after = 'telescope',
+  config = function()
+    require('telescope').load_extension('fzy_native')
+  end
+}
+
+M.telescope_fzf_native = {
+  'nvim-telescope/telescope-fzf-native.nvim',
+  run = 'make',
+  after = 'telescope',
+  config = function()
+    require('telescope').load_extension('fzf')
+  end
 }
 
 M.telescope_repo = {
-    'cljoly/telescope-repo.nvim',
-    requires = {'telescope'},
-    config = function()
-        require'telescope'.load_extension('repo')
-    end
+  'cljoly/telescope-repo.nvim',
+  requires = {'telescope'},
+  config = function()
+    require'telescope'.load_extension('repo')
+  end
 }
 
 M.dap = {
@@ -1081,74 +1072,74 @@ M.zen_mode = {
 }
 
 M.nvim_tree = {
-    'kyazdani42/nvim-tree.lua',
-    as = 'nvim-tree',
-    opt = false,
-    cmd = {'NvimTreeToggle'},
-    after = 'devicons',
-    config = {function()
-        -- following options are the default
-        -- each of these are documented in `:help nvim-tree.OPTION_NAME`
-        require'nvim-tree'.setup {
-            disable_netrw       = true,
-            hijack_netrw        = true,
-            open_on_setup       = false,
-            ignore_ft_on_setup  = {},
-            auto_close          = true,
-            open_on_tab         = false,
-            hijack_cursor       = false,
-            update_cwd          = false,
-            update_to_buf_dir   = {
-                enable = true,
-                auto_open = true,
-            },
-            diagnostics = {
-                enable = false,
-                icons = {
-                    hint = "",
-                    info = "",
-                    warning = "",
-                    error = "",
-                }
-            },
-            update_focused_file = {
-                enable      = false,
-                update_cwd  = false,
-                ignore_list = {}
-            },
-            system_open = {
-                cmd  = nil,
-                args = {}
-            },
-            filters = {
-                dotfiles = false,
-                custom = {}
-            },
-            git = {
-                enable = true,
-                ignore = true,
-                timeout = 500,
-            },
-            view = {
-                width = 30,
-                height = 30,
-                hide_root_folder = false,
-                side = 'right',
-                auto_resize = false,
-                mappings = {
-                    custom_only = false,
-                    list = {}
-                },
-                number = false,
-                relativenumber = false
-            },
-            trash = {
-                cmd = "trash",
-                require_confirm = true
-            }
+  'kyazdani42/nvim-tree.lua',
+  as = 'nvim-tree',
+  opt = false,
+  cmd = {'NvimTreeToggle'},
+  after = 'devicons',
+  config = {function()
+    -- following options are the default
+    -- each of these are documented in `:help nvim-tree.OPTION_NAME`
+    require'nvim-tree'.setup {
+      disable_netrw       = true,
+      hijack_netrw        = true,
+      open_on_setup       = false,
+      ignore_ft_on_setup  = {},
+      auto_close          = true,
+      open_on_tab         = false,
+      hijack_cursor       = false,
+      update_cwd          = false,
+      update_to_buf_dir   = {
+        enable = true,
+        auto_open = true,
+      },
+      diagnostics = {
+        enable = false,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
         }
-	    vim.api.nvim_set_keymap('n', '<leader>te', '<cmd>NvimTreeToggle<cr>', {noremap = true, silent = true})
-    end}
+      },
+      update_focused_file = {
+        enable      = false,
+        update_cwd  = false,
+        ignore_list = {}
+      },
+      system_open = {
+        cmd  = nil,
+        args = {}
+      },
+      filters = {
+        dotfiles = false,
+        custom = {}
+      },
+      git = {
+        enable = true,
+        ignore = true,
+        timeout = 500,
+      },
+      view = {
+        width = 30,
+        height = 30,
+        hide_root_folder = false,
+        side = 'right',
+        auto_resize = false,
+        mappings = {
+          custom_only = false,
+          list = {}
+        },
+        number = false,
+        relativenumber = false
+      },
+      trash = {
+        cmd = "trash",
+        require_confirm = true
+      }
+    }
+    vim.api.nvim_set_keymap('n', '<leader>te', '<cmd>NvimTreeToggle<cr>', {noremap = true, silent = true})
+  end}
 }
 
 M.dirbuf = {
@@ -1166,12 +1157,12 @@ M.dirbuf = {
 }
 
 M.undotree = {
-    'mbbill/undotree',
-    opt = true,
-    cmd = {'UndotreeToggle'},
-    config = function()
-        vim.g.undotree_WindowLayout = 3
-    end
+  'mbbill/undotree',
+  opt = true,
+  cmd = {'UndotreeToggle'},
+  config = function()
+    vim.g.undotree_WindowLayout = 3
+  end
 }
 
 M.qf_helper = {
@@ -1238,60 +1229,82 @@ M.indentguides = {
   end
 }
 
+M.autopairs = {
+  'windwp/nvim-autopairs',
+  config = function()
+    require('nvim-autopairs').setup({
+      disable_filetype = { "TelescopePrompt" , "vim" },
+      enable_check_bracket_line = false,
+      check_ts = true,
+      ts_config = {
+        lua = {'string'},-- it will not add a pair on that treesitter node
+        javascript = {'template_string'},
+        java = false,-- don't check treesitter on java
+      }
+    })
+    -- If you want insert `(` after select function or method item
+    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+    local cmp = require('cmp')
+    cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+    -- add a lisp filetype (wrap my-function), FYI: Hardcoded = { "clojure", "clojurescript", "fennel", "janet" }
+    cmp_autopairs.lisp[#cmp_autopairs.lisp+1] = "racket"
+  end
+}
+
 M.sneak = {
   'justinmk/vim-sneak'
 }
 
 M.surround = {
-    'tpope/vim-surround',
-    requires = 'tpope/vim-repeat'
+  'tpope/vim-surround',
+  requires = 'tpope/vim-repeat'
 }
 
 M.commentary_vim = {
-    'tpope/vim-commentary'
+  'tpope/vim-commentary'
 }
 
 M.fugitive = {
-    'tpope/vim-fugitive'
+  'tpope/vim-fugitive'
 }
 
 M.mkdnflow = {
-    'jakewvincent/mkdnflow.nvim',
-    config = function()
-        require('mkdnflow').setup({
-            -- Config goes here; leave blank for defaults
-            -- Type: boolean. Use default mappings (see '❕Commands and default
-            --     mappings').
-            -- 'false' disables mappings
-            default_mappings = true,
+  'jakewvincent/mkdnflow.nvim',
+  config = function()
+    require('mkdnflow').setup({
+      -- Config goes here; leave blank for defaults
+      -- Type: boolean. Use default mappings (see '❕Commands and default
+--     mappings').
+      -- 'false' disables mappings
+      default_mappings = true,
 
-            -- Type: boolean. Create directories (recursively) if link contains a
-            --     missing directory.
-            -- 'false' prevents missing directories from being created
-            create_dirs = true,
+      -- Type: boolean. Create directories (recursively) if link contains a
+      --     missing directory.
+-- 'false' prevents missing directories from being created
+      create_dirs = true,
 
-            -- Type: string. Navigate to links relative to the directory of the first-
-            --     opened file.
-            -- 'current' navigates links relative to currently open file
-            links_relative_to = 'first',
+      -- Type: string. Navigate to links relative to the directory of the first-
+      --     opened file.
+      -- 'current' navigates links relative to currently open file
+      links_relative_to = 'first',
 
-            -- Type: key-value pair(s). The plugin's features are enabled only when one
-            -- of these filetypes is opened; otherwise, the plugin does nothing.
-            filetypes = {md = true, rmd = true, markdown = true},
+      -- Type: key-value pair(s). The plugin's features are enabled only when one
+      -- of these filetypes is opened; otherwise, the plugin does nothing.
+      filetypes = {md = true, rmd = true, markdown = true},
 
-            -- Type: boolean. When true, the createLinks() function tries to evaluate
-            --     the string provided as the value of new_file_prefix.
-            -- 'false' results in the value of new_file_prefix being used as a string,
-            --     i.e. it is not evaluated, and the prefix will be invariant.
-            evaluate_prefix = false,
+      -- Type: boolean. When true, the createLinks() function tries to evaluate
+      --     the string provided as the value of new_file_prefix.
+      -- 'false' results in the value of new_file_prefix being used as a string,
+      --     i.e. it is not evaluated, and the prefix will be invariant.
+      evaluate_prefix = false,
 
-            -- Type: string. Defines the prefix that should be used to create new links.
-            --     This is evaluated at the time createLink() is run, which is to say
-            --     that it's run whenever <CR> is pressed (under the default mappings).
-            --     This makes for many interesting possibilities.
-            new_file_prefix = '',
-        })
-    end
+      -- Type: string. Defines the prefix that should be used to create new links.
+      --     This is evaluated at the time createLink() is run, which is to say
+      --     that it's run whenever <CR> is pressed (under the default mappings).
+      --     This makes for many interesting possibilities.
+      new_file_prefix = '',
+    })
+  end
 }
 
 M.vimtex = {
@@ -1305,96 +1318,96 @@ M.vimtex = {
 }
 
 M.devicons = {
-    'kyazdani42/nvim-web-devicons',
-    as = 'devicons'
+  'kyazdani42/nvim-web-devicons',
+  as = 'devicons'
 }
 
 M.tokyonight = {
-    'folke/tokyonight.nvim',
-    config = function()
-        -- The theme comes in three styles, storm, a darker variant night and day.
-        vim.g.tokyonight_style = "storm"
-        -- Configure the colors used when opening a :terminal in Neovim
-        vim.g.tokyonight_terminal_colors = true
-        -- Make comments italic
-        vim.g.tokyonight_italic_comments = true
-        -- Make keywords italic
-        vim.g.tokyonight_italic_keywords = true
-        -- Make functions italic
-        vim.g.tokyonight_italic_functions = true
-        -- Make variables and identifiers italic
-        vim.g.tokyonight_italic_variables = false
-        -- Enable this to disable setting the background color
-        vim.g.tokyonight_transparent = false
-        -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard StatusLine and LuaLine.
-        vim.g.tokyonight_hide_inactive_statusline = true
-        -- Set a darker background on sidebar-like windows.
-        vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-        -- Sidebar like windows like NvimTree get a darker background
-        vim.g.tokyonight_dark_sidebar = true
-        -- Float windows like the lsp diagnostics windows get a darker background.
-        vim.g.tokyonight_dark_float = true
-        -- You can override specific color groups to use other groups or a hex color
-        -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-        -- Adjusts the brightness of the colors of the Day style. Number between 0 and 1, from dull to vibrant colors
-        vim.g.tokyonight_day_brightness = 0.3
-        -- Load the colorscheme
-        vim.cmd[[colorscheme tokyonight]]
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-    end
+  'folke/tokyonight.nvim',
+  config = function()
+    -- The theme comes in three styles, storm, a darker variant night and day.
+    vim.g.tokyonight_style = "storm"
+    -- Configure the colors used when opening a :terminal in Neovim
+    vim.g.tokyonight_terminal_colors = true
+    -- Make comments italic
+    vim.g.tokyonight_italic_comments = true
+    -- Make keywords italic
+    vim.g.tokyonight_italic_keywords = true
+    -- Make functions italic
+vim.g.tokyonight_italic_functions = true
+    -- Make variables and identifiers italic
+    vim.g.tokyonight_italic_variables = false
+    -- Enable this to disable setting the background color
+    vim.g.tokyonight_transparent = false
+    -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard StatusLine and LuaLine.
+    vim.g.tokyonight_hide_inactive_statusline = true
+    -- Set a darker background on sidebar-like windows.
+    vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+    -- Sidebar like windows like NvimTree get a darker background
+    vim.g.tokyonight_dark_sidebar = true
+    -- Float windows like the lsp diagnostics windows get a darker background.
+    vim.g.tokyonight_dark_float = true
+    -- You can override specific color groups to use other groups or a hex color
+    -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+    -- Adjusts the brightness of the colors of the Day style. Number between 0 and 1, from dull to vibrant colors
+    vim.g.tokyonight_day_brightness = 0.3
+    -- Load the colorscheme
+    vim.cmd[[colorscheme tokyonight]]
+    vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+    vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+  end
 }
 
 M.edge = {
-    'sainnhe/edge',
-    config = function()
-        vim.g.edge_style = 'neon'
-        vim.g.edge_enable_italic = 1
-        vim.cmd('colorscheme edge')
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-    end
+  'sainnhe/edge',
+  config = function()
+    vim.g.edge_style = 'neon'
+    vim.g.edge_enable_italic = 1
+    vim.cmd('colorscheme edge')
+    vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+    vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+  end
 }
 
 M.rose_pine = {
-    'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function ()
-        -- Set variant
-        -- Defaults to 'dawn' if vim background is light
-        -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
-        vim.g.rose_pine_variant = 'moon'
-        vim.cmd('colorscheme rose-pine')
-        -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        -- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
-        -- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
-        -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-    end
+  'rose-pine/neovim',
+  as = 'rose-pine',
+  config = function ()
+    -- Set variant
+    -- Defaults to 'dawn' if vim background is light
+    -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+    vim.g.rose_pine_variant = 'moon'
+    vim.cmd('colorscheme rose-pine')
+    -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+    -- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
+    -- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
+    -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+  end
 }
 
 M.gruvbox_material = {
-    'sainnhe/gruvbox-material',
-    config = function ()
-        vim.g.gruvbox_material_palette = 'mix'
-        vim.g.gruvbox_material_background = 'medium'
-        vim.g.gruvbox_material_enable_italic = 1
-        vim.g.gruvbox_material_disable_italic_comment = 0
-        vim.g.gruvbox_material_enable_bold = 1
-        vim.cmd('set background=dark')
-        vim.cmd('colorscheme gruvbox-material')
-        vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-    end
+  'sainnhe/gruvbox-material',
+  config = function ()
+    vim.g.gruvbox_material_palette = 'mix'
+    vim.g.gruvbox_material_background = 'medium'
+    vim.g.gruvbox_material_enable_italic = 1
+    vim.g.gruvbox_material_disable_italic_comment = 0
+    vim.g.gruvbox_material_enable_bold = 1
+    vim.cmd('set background=dark')
+    vim.cmd('colorscheme gruvbox-material')
+    vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+    vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+  end
 }
 
 M.kanagawa = {
-    "rebelot/kanagawa.nvim",
-    config = function ()
-        vim.cmd('set background=dark')
-        vim.cmd('colorscheme kanagawa')
-        -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-        -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
-    end
+  "rebelot/kanagawa.nvim",
+  config = function ()
+    vim.cmd('set background=dark')
+    vim.cmd('colorscheme kanagawa')
+    -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+    -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+  end
 }
 
 return M

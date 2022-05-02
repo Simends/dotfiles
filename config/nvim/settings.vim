@@ -174,4 +174,4 @@ if has('nvim')
 else
   set foldmethod=indent
   syntax on
-end
+  end

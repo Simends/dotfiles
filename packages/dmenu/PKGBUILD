@@ -15,7 +15,7 @@ license=('MIT')
 groups=('custom')
 depends=('sh' 'glibc' 'coreutils' 'libx11' 'libxinerama' 'libxft' 'freetype2' 'fontconfig' 'libfontconfig.so')
 source=("https://dl.suckless.org/tools/dmenu-${pkgver}.tar.gz" "custom-${pkgname}-${pkgver}.patch")
-sha256sums=('1f4d709ebba37eb7326eba0e665e0f13be4fa24ee35c95b0d79c30f14a348fd5' '867750d0556e595a635e5107c6c2bea058c0ba8b5a714ca0b08c2668aa361ba9')
+sha256sums=('1f4d709ebba37eb7326eba0e665e0f13be4fa24ee35c95b0d79c30f14a348fd5' '41b8b75060e9029060619e253d78f486bc01562e12a9cf3bdcf720a7c753c0dc')
 
 prepare() {
   cd ${pkgname}-${pkgver}

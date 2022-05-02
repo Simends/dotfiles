@@ -1084,25 +1084,14 @@ treset(void)
 void
 newterm(const Arg* a)
 {
-	int res;
 	switch (fork()) {
 	case -1:
 		die("fork failed: %s\n", strerror(errno));
 		break;
 	case 0:
-		switch (fork()) {
-		case -1:
-			die("fork failed: %s\n", strerror(errno));
-			break;
-		case 0:
-			res = chdir(getcwd_by_pid(pid));
-			execlp("st", "./st", NULL);
-			break;
-		default:
-			exit(0);
-		}
-	default:
-		wait(NULL);
+		chdir(getcwd_by_pid(pid));
+		execlp("st", "./st", NULL);
+		break;
 	}
 }
 
@@ -1372,6 +1361,9 @@ tsetchar(Rune u, const Glyph *attr, int x, int y)
 	term.dirty[y] = 1;
 	term.line[y][x] = *attr;
 	term.line[y][x].u = u;
+
+	if (isboxdraw(u))
+		term.line[y][x].mode |= ATTR_BOXDRAW;
 }
 
 void
