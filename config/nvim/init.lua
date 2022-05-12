@@ -14,9 +14,9 @@ require('packer').startup({
   function()
 
 
------------------------------------------
----------------- PLUGINS ----------------
------------------------------------------
+    -----------------------------------------
+    ---------------- PLUGINS ----------------
+    -----------------------------------------
 
     -- Plugin manager
     use.plugin('packer')
@@ -57,6 +57,9 @@ require('packer').startup({
 
     -- Editor
     use.plugin('autopairs')
+    use.plugin('apathy')
+    use.plugin('eunuch')
+    use.plugin('vmath')
     use.plugin('indentguides')
     use.plugin('surround')                  -- Change brackets and brackets with a motion
     use.plugin('commentary')            -- Comment with a motion
@@ -115,60 +118,61 @@ local nolint = {lsp = true, treesitter = true, dap = true, linter = false, forma
 local lint = {lsp = true, treesitter = true, dap = true, linter = true, formatter = true}
 
 
-    use.lang('asm',        nolint)
-    use.lang('c',          nolint)
-    use.lang('python',     nolint)
-    -- use.lang('haskell',    nolint)
-    use.lang('lua',        nolint)
-    use.lang('fennel',     nolint)
-    -- use.lang('hdl',        nolint)
-    use.lang('makefile',   lint)
-    use.lang('dockerfile', nolint)
-    use.lang('sh',         lint)
-    use.lang('html',       nolint)
-    use.lang('javascript', nolint)
-    use.lang('css',        lint)
-    use.lang('json',       nolint)
-    use.lang('yaml',       nolint)
-    use.lang('latex',      nolint)
-    use.lang('markdown',   lint)
+use.lang('asm',        nolint)
+use.lang('c',          nolint)
+use.lang('python',     nolint)
+-- use.lang('haskell',    nolint)
+use.lang('lua',        nolint)
+use.lang('fennel',     nolint)
+-- use.lang('hdl',        nolint)
+use.lang('makefile',   lint)
+use.lang('dockerfile', nolint)
+use.lang('sh',         lint)
+use.lang('html',       nolint)
+use.lang('javascript', nolint)
+use.lang('css',        lint)
+use.lang('json',       nolint)
+use.lang('yaml',       nolint)
+use.lang('latex',      nolint)
+use.lang('markdown',   lint)
 
 
 ------------------------------------------
 ---------------- MAPPINGS ----------------
 ------------------------------------------
 
-    local opt = {noremap = true, silent = true}
+local opt = {noremap = true, silent = true}
 
-    local map = {
-      ['<leader>'] = {
-        r = {":e<cr>", "Reload buffer"},
-        w = {"<cmd>Trailtrim<cr>", "Trim trialing whitespace"},
+local map = {
+  ['<leader>'] = {
+    r = {":e<cr>", "Reload buffer"},
+    p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
+    w = {[[mz:%s/\s\+$//e<cr>`z:delmarks z<cr>]], "Trim trialing whitespace"},
 
-        m = {
-          name = "Make",
-          m = {"<cmd>make<cr>", "Make project"},
-        },
+    m = {
+      name = "Make",
+      m = {"<cmd>make<cr>", "Make project"},
+    },
 
-        t = {
-          name = "Toggle",
-          t = {[[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]], "Show comments"},
-          n = {":set nu!<cr>:set rnu!<cr>", "Linenumbers"},
-          o = {":set cc=80<cr>", "Show colorcolumn"},
-          O = {":set cc=0<cr>", "Hide colorcolumn"},
-        },
+    t = {
+      name = "Toggle",
+      t = {[[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]], "Show comments"},
+      n = {":set nu!<cr>:set rnu!<cr>", "Linenumbers"},
+      o = {":set cc=80<cr>", "Show colorcolumn"},
+      O = {":set cc=0<cr>", "Hide colorcolumn"},
+    },
 
-        h = {
-          name = "Support",
-          c = {"<cmd>checkhealth<cr>", "Check health"},
-          p = {
-            name = "Packages",
-            u = {require('packer').sync, "Update"},
-            s = {require('packer').status, "Status"},
-            p = {require('packer').profile, "Profile"},
-          }
-        }
+    h = {
+      name = "Support",
+      c = {"<cmd>checkhealth<cr>", "Check health"},
+      p = {
+        name = "Packages",
+        u = {require('packer').sync, "Update"},
+        s = {require('packer').status, "Status"},
+        p = {require('packer').profile, "Profile"},
       }
     }
+  }
+}
 
-    require('which-key').register(map, opt)
+require('which-key').register(map, opt)

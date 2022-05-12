@@ -21,7 +21,7 @@ set undofile
 set hidden
 set nobackup
 set nowritebackup
-set noswapfile
+set swapfile
 
 set tabstop=2
 set softtabstop=2
@@ -52,13 +52,15 @@ set shell=/bin/sh
 set lazyredraw
 set modeline
 set shortmess+=c
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set list
 
 
 " Commands
 
 com! -nargs=+ Grep vimgrep <args> **/*
 com! -nargs=+ Ctags !ctags -R --language-force=<args>
-com! Trailtrim %s/\s\+$//e
+au SwapExists * let v:swapchoice = 'o'
 
 au Filetype markdown set wrap
 au Filetype markdown set colorcolumn=0
@@ -71,32 +73,6 @@ au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 
 " Mappings
-
-let mapleader = " "
-let maplocalleader = ","
-
-nmap Y y$
-nmap { {zt
-nmap } }zt
-inoremap , ,<c-g>u
-inoremap . .<c-g>u
-inoremap ? ?<c-g>u
-inoremap ! !<c-g>u
-nmap ZA :wqa<cr>
-nmap ZW :w<cr>
-nmap gb :e #<cr>
-nnoremap J mzJ`z:delmarks z<cr>
-vnoremap I :m '>+1<cr>gv=gv
-vnoremap E :m '<-2<cr>gv=gv
-nnoremap <c-m> :mode<cr>
-nnoremap <c-l> :nohl<cr><c-l>
-nnoremap <F7> :make<cr>
-
-nnoremap å :redo<cr>
-
-" Qwerty
-" nnoremap n nztzv
-" nnoremap N Nztzv
 
 " Colemak-dh
 nnoremap n h
@@ -152,6 +128,35 @@ onoremap L O
   au FileType netrw nnoremap <buffer> j e
   au FileType netrw nnoremap <buffer> k n
   au FileType netrw nnoremap <buffer> l o
+
+let mapleader = " "
+let maplocalleader = ","
+
+nmap Y y$
+nmap { {zt
+nmap } }zt
+nnoremap , ;
+nnoremap ; ,
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ? ?<c-g>u
+inoremap ! !<c-g>u
+nmap ZA :wqa<cr>
+nmap ZW :w<cr>
+nmap gb :e #<cr>
+nnoremap gd <C-]>zt
+nnoremap J mzJ`z:delmarks z<cr>
+vnoremap E :m '>+1<cr>gv=gv
+vnoremap I :m '<-2<cr>gv=gv
+nnoremap <c-m> :mode<cr>
+nnoremap <c-l> :nohl<cr><c-l>
+nnoremap <F7> :make<cr>
+
+nnoremap å :redo<cr>
+
+" Qwerty
+" nnoremap n nztzv
+" nnoremap N Nztzv
 
 " nvim
 if has('nvim')
