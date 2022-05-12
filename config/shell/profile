@@ -24,6 +24,7 @@ export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/.local/dotfiles/scripts
 export PATH=$PATH:~/.local/share/npm-global/bin
 export PATH=$PATH:~/.local/bin/Appimages
+export PATH=$PATH:~/.local/share/cargo/bin/
 export PATH=$PATH:/opt/intelFPGA/20.1/quartus/bin/
 # export PATH=$PATH:/usr/lib/rustlib/x86_64-unknown-linux-gnu/bin
 
