@@ -2,5 +2,5 @@
 *.rej
 *.orig
 *.o
-dwm
-st
+dwm/dwm
+st/st

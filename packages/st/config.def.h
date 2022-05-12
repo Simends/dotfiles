@@ -5,10 +5,17 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-/* static char *font = "Liberation Mono:pixelsize=14:antialias=true:autohint=true"; */
-static char *font = "Hurmit Nerd Font:pixelsize=13:style=Regular";
+/* static char *font = "Hurmit Nerd Font:pixelsize=13:antialias=true:autohint=false"; */
 /* static char *font = "Hack Nerd Font:pixelsize=14:style=Regular"; */
 /* static char *font = "TerminessTTF Nerd Font:pixelsize=15:style=Regular"; */
+/* static char *font = "BlexMono Nerd Font:pixelsize=13:antialias=true:autohint=false"; */
+static char *fonts[] = {
+  "Hurmit Nerd Font:pixelsize=13:antialias=true:autohint=false",
+  "Hack Nerd Font:pixelsize=13:antialias=true:autohint=false",
+  "BlexMono Nerd Font:pixelsize=13:antialias=true:autohint=false",
+  "TerminessTTF Nerd Font:pixelsize=13:antialias=true:autohint=false",
+};
+static size_t currentfont = 0;
 static int borderpx = 5;
 
 /*
@@ -60,6 +67,12 @@ static double minlatency = 8;
 static double maxlatency = 33;
 
 /*
+ * Synchronized-Update timeout in ms
+ * https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec
+ */
+static uint su_timeout = 200;
+
+/*
  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
  * attribute.
  */
@@ -76,11 +89,11 @@ static unsigned int cursorthickness = 2;
  *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
  * 0: disable (render all U25XX glyphs normally from the font).
  */
-const int boxdraw = 0;
-const int boxdraw_bold = 0;
+const int boxdraw = 1;
+const int boxdraw_bold = 1;
 
 /* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
-const int boxdraw_braille = 0;
+const int boxdraw_braille = 1;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -200,7 +213,6 @@ static uint forcemousemod = ShiftMask;
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-		{ "font",         STRING,  &font },
 		{ "color0",       STRING,  &colorname[0] },
 		{ "color1",       STRING,  &colorname[1] },
 		{ "color2",       STRING,  &colorname[2] },
@@ -272,6 +284,7 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD, 		          XK_M, 		      externalpipe, 	{ .v = mancmd } },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+	{ TERMMOD,              XK_S,           cyclefonts,     {}        },
 	{ TERMMOD,              XK_N,           newterm,        {.i =  0} },
 	{ TERMMOD,              XK_H,           iso14755,       {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
@@ -570,4 +583,4 @@ static char ascii_printable[] =
 #define UNDERCURL_SPIKY 1
 #define UNDERCURL_CAPPED 2
 // Active style
-#define UNDERCURL_STYLE UNDERCURL_CURLY
+#define UNDERCURL_STYLE UNDERCURL_SPIKY

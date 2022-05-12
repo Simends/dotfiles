@@ -1,0 +1,83 @@
+From f7fb9a9597ec1f428455e9ef1cfcdac879a7af83 Mon Sep 17 00:00:00 2001
+From: Justinas Grigas <jstn_as@protonmail.com>
+Date: Fri, 4 Jun 2021 10:44:24 +0000
+Subject: [PATCH] [PATCH] cycles between fonts
+
+this is an update to the original cyclefonts patch which doesn't apply
+cleanly to the git version, with some tweaks.
+
+currentfont is now of type size_t.
+cycling fonts now properly redraws the screen.
+optional font can be loaded at the start.
+---
+ config.def.h |  7 ++++++-
+ x.c          | 14 +++++++++++++-
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index 6f05dce..ff9bac9 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,7 +5,11 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *fonts[] = {
++	"Liberation Mono:pixelsize=12:antialias=true:autohint=true",
++	"Gohu GohuFont:pixelsize=11:antialias=false:autohint=false",
++};
++static size_t currentfont = 0;
+ static int borderpx = 2;
+ 
+ /*
+@@ -199,6 +203,7 @@ static Shortcut shortcuts[] = {
+ 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+ 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+ 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
++	{ TERMMOD,              XK_S,           cyclefonts,     {}        },
+ };
+ 
+ /*
+diff --git a/x.c b/x.c
+index 7186040..9a658fa 100644
+--- a/x.c
++++ b/x.c
+@@ -59,6 +59,7 @@ static void zoom(const Arg *);
+ static void zoomabs(const Arg *);
+ static void zoomreset(const Arg *);
+ static void ttysend(const Arg *);
++static void cyclefonts(const Arg *);
+ 
+ /* config.h for applying patches and the configuration. */
+ #include "config.h"
+@@ -328,6 +329,17 @@ ttysend(const Arg *arg)
+ 	ttywrite(arg->s, strlen(arg->s), 1);
+ }
+ 
++void
++cyclefonts(const Arg *arg)
++{
++	currentfont++;
++	currentfont %= (sizeof fonts / sizeof fonts[0]);
++	usedfont = fonts[currentfont];
++	Arg larg;
++	larg.f = usedfontsize;
++	zoomabs(&larg);
++}
++
+ int
+ evcol(XEvent *e)
+ {
+@@ -1115,7 +1127,7 @@ xinit(int cols, int rows)
+ 	if (!FcInit())
+ 		die("could not init fontconfig.\n");
+ 
+-	usedfont = (opt_font == NULL)? font : opt_font;
++	usedfont = (opt_font == NULL)? fonts[currentfont] : opt_font;
+ 	xloadfonts(usedfont, 0);
+ 
+ 	/* colors */
+-- 
+2.31.1
+
