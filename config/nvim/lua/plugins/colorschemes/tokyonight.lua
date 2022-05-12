@@ -28,12 +28,6 @@ local M = {
       -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
       -- Adjusts the brightness of the colors of the Day style. Number between 0 and 1, from dull to vibrant colors
       vim.g.tokyonight_day_brightness = 0.3
-      -- Load the colorscheme
-      vim.cmd[[colorscheme tokyonight]]
-      -- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-      -- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
-      -- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
-      -- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
     end
   }
 }

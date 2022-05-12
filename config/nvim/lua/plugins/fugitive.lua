@@ -12,20 +12,21 @@ local M = {
   packer = {
     'tpope/vim-fugitive',
     config = function ()
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> h <plug>fugitive:ii')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> k <plug>fugitive:i')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> o <plug>fugitive:li')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> s <plug>fugitive:t')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> u <plug>fugitive:v')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> - <plug>fugitive:-')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> U <plug>fugitive:V')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> X <plug>fugitive:XI')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> = <plug>fugitive:=')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> < <plug>fugitive:<')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> > <plug>fugitive:>')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> H <plug>fugitive:II')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> p <plug>fugitive:q')
-      vim.cmd('au User FugitiveIndex nnoremap <buffer> P <plug>fugitive:Q')
+      vim.g.fugitive_defer_to_existing_maps = 1
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> h <plug>fugitive:i]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> k <plug>fugitive:n]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> o <plug>fugitive:l]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> s <plug>fugitive:s]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> u <plug>fugitive:u]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> - <plug>fugitive:-]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> U <plug>fugitive:U]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> X <plug>fugitive:X]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> = <plug>fugitive:=]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> < <plug>fugitive:<]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> > <plug>fugitive:>]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> H <plug>fugitive:I]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> p <plug>fugitive:p]]
+      vim.cmd[[au User FugitiveIndex nnoremap <buffer> P <plug>fugitive:P]]
     end
   }
 }

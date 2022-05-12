@@ -8,6 +8,12 @@
 
 
 vim.cmd("source $XDG_CONFIG_HOME/nvim/settings.vim")
+vim.cmd('set background=dark')
+-- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+-- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
+-- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
+-- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+vim.cmd('colorscheme kanagawa')
 local use = require('util.use')
 require('util.bootstrap').packer()
 require('packer').startup({
@@ -99,10 +105,11 @@ require('packer').startup({
 
     -- Colorschemes
     use.plugin('colorschemes.kanagawa')
-    -- use.plugin('colorschemes.melange')
-    -- use.plugin('colorschemes.rose_pine')
-    -- use.plugin('colorschemes.gruvbox_material')
-    -- use.plugin('colorschemes.tokyonight')
+    use.plugin('colorschemes.melange')
+    use.plugin('colorschemes.catpuccin')
+    use.plugin('colorschemes.rose_pine')
+    use.plugin('colorschemes.gruvbox_material')
+    use.plugin('colorschemes.tokyonight')
 
   end,
   config = require('plugins.packer').config
