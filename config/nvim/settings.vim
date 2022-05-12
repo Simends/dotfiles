@@ -50,14 +50,14 @@ set path=**
 set conceallevel=2
 set shell=/bin/sh
 set lazyredraw
-set laststatus=2
 set modeline
-set shortmess+=cI
+set shortmess+=c
 
 
 " Commands
 
 com! -nargs=+ Grep vimgrep <args> **/*
+com! -nargs=+ Ctags !ctags -R --language-force=<args>
 com! Trailtrim %s/\s\+$//e
 
 au Filetype markdown set wrap
@@ -90,11 +90,7 @@ vnoremap I :m '>+1<cr>gv=gv
 vnoremap E :m '<-2<cr>gv=gv
 nnoremap <c-m> :mode<cr>
 nnoremap <c-l> :nohl<cr><c-l>
-
-nnoremap <F1> :cp<cr>
-nnoremap <F2> :copen<cr>
-nnoremap <F3> :cn<cr>
-nnoremap <F5> :make<cr>
+nnoremap <F7> :make<cr>
 
 nnoremap å :redo<cr>
 
@@ -111,7 +107,6 @@ nnoremap k nztzv
 nnoremap j e
 nnoremap h i
 nnoremap l o
-
 nnoremap E J
 nnoremap I K
 nnoremap O L
@@ -119,7 +114,6 @@ nnoremap K Nztzv
 nnoremap J E
 nnoremap H I
 nnoremap L O
-
 vnoremap n h
 vnoremap e j
 vnoremap i k
@@ -128,7 +122,6 @@ vnoremap k nztzv
 vnoremap j e
 vnoremap h i
 vnoremap l o
-
 vnoremap E J
 vnoremap I K
 vnoremap O L
@@ -136,7 +129,6 @@ vnoremap K Nztzv
 vnoremap J E
 vnoremap H I
 vnoremap L O
-
 onoremap n h
 onoremap e j
 onoremap i k
@@ -145,7 +137,6 @@ onoremap k n
 onoremap j e
 onoremap h i
 onoremap l o
-
 onoremap E J
 onoremap I K
 onoremap O L
@@ -153,25 +144,25 @@ onoremap K N
 onoremap J E
 onoremap H I
 onoremap L O
-
-nnoremap <C-n> <C-w>h
-nnoremap <C-e> <C-w>j
-nnoremap <C-i> <C-w>k
-nnoremap <C-o> <C-w>l
-
-nnoremap <leader>l o<esc>k0
-nnoremap <leader>L O<esc>j0
+  au FileType netrw nnoremap <buffer> n h
+  au FileType netrw nnoremap <buffer> e j
+  au FileType netrw nnoremap <buffer> i k
+  au FileType netrw nnoremap <buffer> o l
+  au FileType netrw nnoremap <buffer> h i
+  au FileType netrw nnoremap <buffer> j e
+  au FileType netrw nnoremap <buffer> k n
+  au FileType netrw nnoremap <buffer> l o
 
 " nvim
 if has('nvim')
   set foldmethod=expr
   set foldexpr=nvim_treesitter#foldexpr()
+  set laststatus=3
   au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
-  let g:loaded_netrwPlugin = 1
-  let g:loaded_netrw = 1
   nnoremap æ :Telescope find_files<cr>
   nnoremap ø :Telescope live_grep<cr>
 else
   set foldmethod=indent
+  set laststatus=2
   syntax on
-  end
+end
