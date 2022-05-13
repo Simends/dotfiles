@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+define CGROUP_MODE "hybrid"
+define CGROUP_CONTROLLERS "none"
+define HAVE_CONTROLLER1_GROUPS "true"
+exec sh /etc/s6-rc/sv/mount-cgroups/shell_up $CGROUP_MODE $CGROUP_CONTROLLERS $HAVE_CONTROLLER1_GROUPS

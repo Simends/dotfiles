@@ -1,4 +1,0 @@
-#!/usr/bin/execlineb -P
-
-exec -c
-/usr/local/bin/zramswap down

@@ -1,0 +1,6 @@
+# Configure the zram disk used for swap
+
+ZRAM_SIZE="2G"
+ZRAM_LABEL="zram0"
+ZRAM_PRIORITY="100"
+ZRAM_COMPRESSION_ALGORITHM="lz4"

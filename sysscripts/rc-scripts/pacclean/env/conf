@@ -1,0 +1,10 @@
+#
+# For explanation on settings see man:snooze(1)
+#
+
+
+# Clean package cache
+
+TIMEFIELD="-d/5 -H13 -M0 -S0"
+DELAY="3600"
+SLACK="21600"

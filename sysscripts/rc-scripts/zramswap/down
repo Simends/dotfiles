@@ -1,0 +1,7 @@
+#!/usr/bin/execlineb -P
+
+exec -c
+if {swapoff /dev/zram0}
+if {rmmod zram}
+redirfd -w 1 /sys/module/zswap/parameters/enabled
+echo 1

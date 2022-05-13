@@ -1,0 +1,10 @@
+#
+# For explanation on settings see man:snooze(1)
+#
+
+
+# Update locate database
+
+TIMEFIELD="-H/6 -M0 -S0"
+DELAY="120"
+SLACK="3600"

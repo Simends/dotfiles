@@ -1,0 +1,11 @@
+#!/usr/bin/execlineb -P
+
+envfile env/conf
+importas -sCuD "-d* -H12 -M0 -S0" TIMEFIELD TIMEFIELD
+importas -sCuD "0" DELAY DELAY
+importas -sCuD "60" SLACK SLACK
+fdmove -c 2 1
+/usr/bin/snooze -v -s${SLACK} -J${DELAY} ${TIMEFIELD}
+
+loopwhilex snooze -v -s3600 -J120 -H/6 -M0 -S0
+makewhatis /usr/share/man

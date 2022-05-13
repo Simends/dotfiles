@@ -1,0 +1,22 @@
+#!/usr/bin/execlineb -P
+
+define ZRAM_SIZE "2G"
+define ZRAM_LABEL "zram0"
+define ZRAM_PRIORITY "100"
+define ZRAM_COMPRESSION_ALGORITHM "lz4"
+
+if {
+  redirfd -w 1 /sys/module/zswap/parameters/enabled 
+  echo 0
+}
+if { modprobe zram }
+if { 
+  redirfd -w 1 /sys/block/zram0/comp_algorithm
+  echo "${ZRAM_COMPRESSION_ALGORITHM}"
+}
+if { 
+  redirfd -w 1 /sys/block/zram0/disksize
+  echo "${ZRAM_SIZE}"
+}
+if { mkswap --label "${ZRAM_LABEL}" /dev/zram0 }
+swapon --priority "${ZRAM_PRIORITY}" /dev/zram0

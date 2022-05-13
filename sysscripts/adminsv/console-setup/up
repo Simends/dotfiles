@@ -1,2 +1,0 @@
-#!/bin/execlineb -P
-exec sh /etc/s6/sv/console-setup/shell_up

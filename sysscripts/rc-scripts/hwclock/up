@@ -1,0 +1,3 @@
+#!/bin/execlineb -P
+define HARDWARECLOCK "UTC"
+ifelse { test $HARDWARECLOCK = UTC } { hwclock --systz --utc --noadjfile } hwclock --systz --localtime --noadjfile
