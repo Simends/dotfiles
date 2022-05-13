@@ -1,0 +1,283 @@
+
+if has('nvim')
+  au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
+  set laststatus=3
+  set termguicolors
+  set signcolumn=yes
+  nnoremap <silent> , ;
+  nnoremap <silent> ; ,
+else
+
+  " Automatically install vim-plug
+  let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+  if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+  " Install plugins
+  call plug#begin()
+    Plug 'tpope/vim-apathy'
+    Plug 'tpope/vim-capslock'         " <C-g>c
+    Plug 'tpope/vim-characterize'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-endwise'
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-sleuth'
+    Plug 'tpope/vim-speeddating'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'tpope/vim-vinegar'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/gv.vim', { 'on': 'GV' }
+    Plug 'junegunn/rainbow_parentheses.vim', { 'on': 'RainbowParentheses' }
+    Plug 'junegunn/vim-easy-align'
+    Plug 'justinmk/vim-sneak'
+    Plug 'nixon/vim-vmath'
+    Plug 'glts/vim-radical'           " gA, crd, crx, cro, crb
+    Plug 'glts/vim-magnum'
+    Plug 'atweiden/vim-betterdigraphs'
+    Plug 'editorconfig/editorconfig-vim'
+    Plug 'kana/vim-textobj-user'
+    Plug 'kana/vim-textobj-indent'    " (a/i)i
+    Plug 'thinca/vim-textobj-between' " (a/i)f<char>
+    Plug 'somini/vim-textobj-fold'    " (a/i)z
+    Plug 'mattn/vim-textobj-url'      " (a/i)u
+    Plug 'sheerun/vim-polyglot'
+    Plug 'lervag/vimtex'
+    Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
+    Plug 'mbbill/undotree', { 'on':  'UndotreeToggle' }
+    Plug 'morhetz/gruvbox'
+  call plug#end()
+  colorscheme gruvbox
+  syntax on
+  set nocp
+  set laststatus=2
+  set foldmethod=indent
+  set nrformats=alpha,hex
+  set statusline=▊\ \ %y\ %f%h%q%m%r\ %=%=%l/%L:%c\ %p%%\ %{FugitiveStatusline()}\ %{&fileencoding?&fileencoding:&encoding}[%{&fileformat}]\ \ ▊
+  highlight ColorColumn ctermbg=magenta
+  call matchadd('ColorColumn', '\%81v', 100)
+  let g:undotree_WindowLayout = 3
+  let g:tagbar_position = 'botright vertical'
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+  let g:fugitive_defer_to_existing_maps = 1
+  au User FugitiveIndex nnoremap <buffer> h <plug>fugitive:i
+  au User FugitiveIndex nnoremap <buffer> k <plug>fugitive:n
+  au User FugitiveIndex nnoremap <buffer> o <plug>fugitive:l
+  au User FugitiveIndex nnoremap <buffer> s <plug>fugitive:s
+  au User FugitiveIndex nnoremap <buffer> u <plug>fugitive:u
+  au User FugitiveIndex nnoremap <buffer> - <plug>fugitive:-
+  au User FugitiveIndex nnoremap <buffer> U <plug>fugitive:U
+  au User FugitiveIndex nnoremap <buffer> X <plug>fugitive:X
+  au User FugitiveIndex nnoremap <buffer> = <plug>fugitive:=
+  au User FugitiveIndex nnoremap <buffer> < <plug>fugitive:<
+  au User FugitiveIndex nnoremap <buffer> > <plug>fugitive:>
+  au User FugitiveIndex nnoremap <buffer> H <plug>fugitive:I
+  au User FugitiveIndex nnoremap <buffer> p <plug>fugitive:p
+  au User FugitiveIndex nnoremap <buffer> P <plug>fugitive:P
+  nnoremap <silent> , ;
+  nnoremap <silent> ; ,
+  inoremap <silent> ( ()<Left>
+  inoremap <silent> [ []<Left>
+  inoremap <silent> { {}<Left>
+  nnoremap <silent> <F8> :TagbarToggle<CR>
+  nnoremap <silent> <F9> :UndotreeToggle<CR>
+  vmap <expr>  ++  VMATH_YankAndAnalyse()
+  nmap         ++  vip++)
+  map , <plug>Sneak_;
+  map ; <plug>Sneak_,
+  xmap gl <Plug>(EasyAlign)
+  nmap gl <Plug>(EasyAlign)
+  nnoremap <silent> <leader>gg :Git<cr>
+  nnoremap <silent> <leader>gc :Git commit<cr>
+  nnoremap <silent> <leader>gv :GV<cr>
+  nnoremap <silent> <leader>tz :Goyo<cr>
+  nnoremap <silent> æ :Files<cr>
+  nnoremap <silent> ø :Rg<cr>
+  nnoremap <silent> <leader>hh :Helptags<cr>
+  nnoremap <silent> <leader>hC :Colors<cr>
+  nnoremap <silent> <leader>ff :Files<cr>
+  nnoremap <silent> <leader>fg :Rg<cr>
+  nnoremap <silent> <leader>fb :Buffers<cr>
+  nnoremap <silent> <leader>fm :Marks<cr>
+end " if nvim or vim
+
+
+" Settings
+
+filetype plugin indent on
+
+set  number
+set  relativenumber
+
+set  ignorecase
+set  smartcase
+set  hlsearch
+set  incsearch
+
+set  confirm
+set  novisualbell
+set  noerrorbells
+
+set  history=1000
+set  undofile
+set  hidden
+set  nobackup
+set  nowritebackup
+set  swapfile
+
+set  tabstop=2
+set  softtabstop=2
+set  shiftwidth=2
+set  expandtab
+set  smartindent
+set  backspace=3
+
+set  wildmenu
+set  wildmode=full
+set  wildoptions=pum
+
+"set colorcolumn=80
+set  showtabline=1
+set  linebreak
+set  nowrap
+set  noruler
+set  scrolloff=10
+set  updatetime=50
+set  fileencoding=UTF-8
+set  background=dark
+set  showmode
+set  cursorline
+set  mouse=a
+set  path=**
+set  conceallevel=2
+set  shell=/bin/sh
+set  lazyredraw
+set  modeline
+set  shortmess=c
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set  list
+" hi Normal guibg=NONE ctermbg=NONE
+" hi NormalFloat guibg=NONE ctermbg=NONE
+" hi NormalNC guibg=NONE ctermbg=NONE
+" hi EndOfBuffer guibg=NONE ctermbg=NONE
+
+
+" Commands
+
+com! -nargs=+ Grep vimgrep <args> **/*
+com! -nargs=+ Ctags !ctags -R --language-force=<args>
+au SwapExists * let v:swapchoice = 'o'
+
+au Filetype markdown set wrap
+au Filetype markdown set colorcolumn=0
+
+au FileType sh set makeprg=shellcheck\ -f\ gcc\ %
+
+au Filetype qf nnoremap <silent><cr> :.cc<cr>
+au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+
+
+" Mappings
+
+" Colemak-dh
+  nnoremap n h
+  nnoremap e j
+  nnoremap i k
+  nnoremap o l
+  nnoremap k nztzv
+  nnoremap j e
+  nnoremap h i
+  nnoremap l o
+  nnoremap E J
+  nnoremap I K
+  nnoremap O L
+  nnoremap K Nztzv
+  nnoremap J E
+  nnoremap H I
+  nnoremap L O
+  vnoremap n h
+  vnoremap e j
+  vnoremap i k
+  vnoremap o l
+  vnoremap k nztzv
+  vnoremap j e
+  vnoremap h i
+  vnoremap l o
+  vnoremap E J
+  vnoremap I K
+  vnoremap O L
+  vnoremap K Nztzv
+  vnoremap J E
+  vnoremap H I
+  vnoremap L O
+  onoremap n h
+  onoremap e j
+  onoremap i k
+  onoremap o l
+  onoremap k n
+  onoremap j e
+  onoremap h i
+  onoremap l o
+  onoremap E J
+  onoremap I K
+  onoremap O L
+  onoremap K N
+  onoremap J E
+  onoremap H I
+  onoremap L O
+  nnoremap gi gk
+  nnoremap ge gj
+  nnoremap gh gi
+  nnoremap gH gI
+  nnoremap gj ge
+  nnoremap gJ gE
+  vnoremap gE gJ
+  au FileType netrw nnoremap <buffer> n h
+  au FileType netrw nnoremap <buffer> e j
+  au FileType netrw nnoremap <buffer> i k
+  au FileType netrw nnoremap <buffer> o l
+  au FileType netrw nnoremap <buffer> h i
+  au FileType netrw nnoremap <buffer> j e
+  au FileType netrw nnoremap <buffer> k n
+  au FileType netrw nnoremap <buffer> l o
+
+let mapleader = " "
+let maplocalleader = "\\"
+
+nmap <silent> Y y$
+nmap <silent> { {zz
+nmap <silent> } }zz
+nmap <silent> Q :echo ''<cr>
+inoremap <silent> , ,<c-g>u
+inoremap <silent> . .<c-g>u
+inoremap <silent> ? ?<c-g>u
+inoremap <silent> ! !<c-g>u
+nmap <silent> ZA :wqa<cr>
+nmap <silent> ZW :wa<cr>
+nmap <silent> gb :e #<cr>
+nnoremap <silent> gd <C-]>zt
+nnoremap <silent> E mzJ`z:delmarks z<cr>
+vnoremap <silent> E :m '>+1<cr>gv=gv
+vnoremap <silent> I :m '<-2<cr>gv=gv
+nnoremap <silent> <c-m> :mode<cr>
+nnoremap <silent> <c-l> :nohl<cr><c-l>
+nnoremap <silent> <leader>hv :e ~/.vimrc<cr>
+
+nnoremap <silent> <leader>r :e<cr>
+nnoremap <silent> <leader>R :so ~/.vimrc<cr>
+nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>
+nnoremap <silent> <leader>tn :set nu!<cr>:set rnu!<cr>
+nnoremap <silent> <leader>tt <cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
+nnoremap <silent> <leader>mm :make<cr>
+nnoremap <silent> <leader>md :make debug<cr>
+nnoremap <silent> <leader>mf :make format<cr>
+nnoremap <silent> <leader>ml :make lint<cr>
+
+nnoremap <silent> QQ :copen<cr>
+nnoremap <silent> QO :cn<cr>
+nnoremap <silent> QN :cp<cr>

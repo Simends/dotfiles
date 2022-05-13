@@ -3,11 +3,8 @@ local M = {
     'junegunn/vim-easy-align',
     requires = 'tpope/vim-repeat',
     config = function ()
-      local maps = {
-        g = {
-          a = {[[<plug>(EasyAlign)]], "Easy align"},
-        }}
-      require('which-key').register(maps, {noremap = true, silent = true})
+      vim.cmd[[nmap gl <plug>(EasyAlign)]]
+      vim.cmd[[xmap gl <plug>(EasyAlign)]]
     end
   }
 }

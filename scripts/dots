@@ -35,6 +35,7 @@ case "$1" in
                 ln -s "$configdir/zsh" "$XDG_CONFIG_HOME/zsh"
                 ln -s "$configdir/shell" "$XDG_CONFIG_HOME/shell"
                 ln -s "$configdir/shell/profile" "$HOME/.zshenv"
+                ln -s "$configdir/vimrc" "$HOME/.vimrc"
             else
                 ln -s "$configdir/$2" "$XDG_CONFIG_HOME/$2"
             fi

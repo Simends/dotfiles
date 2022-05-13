@@ -7,12 +7,7 @@
 --  |_| \_|\___|\___/ \_/ |_|_| |_| |_|
 
 
-vim.cmd("source $XDG_CONFIG_HOME/nvim/settings.vim")
-vim.cmd('set background=dark')
--- vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
--- vim.cmd("hi NormalFloat guibg=NONE ctermbg=NONE")
--- vim.cmd("hi NormalNC guibg=NONE ctermbg=NONE")
--- vim.cmd("hi EndOfBuffer guibg=NONE ctermbg=NONE")
+vim.cmd("source $HOME/.vimrc")
 vim.cmd('colorscheme kanagawa')
 local use = require('util.use')
 require('util.bootstrap').packer()
@@ -64,16 +59,18 @@ require('packer').startup({
     -- Editor
     use.plugin('autopairs')
     use.plugin('apathy')
-    use.plugin('eunuch')
-    use.plugin('vmath')
-    use.plugin('indentguides')
-    use.plugin('surround')                  -- Change brackets and brackets with a motion
-    use.plugin('commentary')            -- Comment with a motion
-    use.plugin('sneak')
-    use.plugin('easyalign')
-    use.plugin('speeddating')
     use.plugin('capslock')
+    use.plugin('characterize')
+    use.plugin('commentary')            -- Comment with a motion
+    use.plugin('eunuch')
+    use.plugin('speeddating')
+    use.plugin('surround')                  -- Change brackets and brackets with a motion
     use.plugin('unimpaired')
+    use.plugin('easyalign')
+    use.plugin('sneak')
+    use.plugin('vmath')
+    use.plugin('radical')
+    use.plugin('indentguides')
     use.plugin('undotree')                  -- Visualize vims powerful revision history
 
     -- Statusline
@@ -153,6 +150,7 @@ local opt = {noremap = true, silent = true}
 local map = {
   ['<leader>'] = {
     r = {":e<cr>", "Reload buffer"},
+    R = {":so ~/.vimrc<cr>", "Reload vimrc"},
     p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
     w = {[[mz:%s/\s\+$//e<cr>`z:delmarks z<cr>]], "Trim trialing whitespace"},
 
@@ -172,6 +170,7 @@ local map = {
     h = {
       name = "Support",
       c = {"<cmd>checkhealth<cr>", "Check health"},
+      v = {":e ~/.vimrc<cr>", "Edit vimrc"},
       p = {
         name = "Packages",
         u = {require('packer').sync, "Update"},
@@ -179,7 +178,9 @@ local map = {
         p = {require('packer').profile, "Profile"},
       }
     }
-  }
+  },
+  ['æ'] = {require('telescope.builtin').find_files, "files"},
+  ['ø'] = {require('telescope.builtin').live_grep, "grep"}
 }
 
 require('which-key').register(map, opt)
