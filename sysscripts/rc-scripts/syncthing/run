@@ -1,6 +1,0 @@
-#!/bin/execlineb -P
-envfile /etc/s6/config/syncthing.conf
-importas -uD "root" USER USER
-importas -uD "/root" HOMEDIR HOMEDIR
-export HOME $HOMEDIR
-exec s6-setuidgid $USER syncthing -logflags 0 -home=${HOMEDIR}/.config/syncthing

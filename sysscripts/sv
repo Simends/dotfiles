@@ -16,7 +16,7 @@ else
   logdir="$XDG_CACHE_HOME/s6/log"
 fi
 
-okprint="\033[1m[ \033[92mOK\033[0m \033[1m]\033[0m"
+okprint="\033[1;34m[ \033[92mOK\033[0m \033[1;34m]\033[0m"
 
 s6gettype() {
   s6-rc-db -l "$livedir" type "$1"
@@ -27,32 +27,32 @@ s6getstatus() {
   svtype=$(s6gettype "$sv" )
   case "${svtype}" in
     "bundle")
-      dry_change=$(s6-rc -l "$livedir" -un0 -v1 change "$sv" | wc -l)
+      dry_change=$(s6-rc -l "$livedir" -un0 -v1 change "$sv" | sed '/.*-log$/d' | wc -l)
       bundle_len=$(s6-rc-db -l "$livedir" contents "$sv" | wc -l)
       if [ "$dry_change" = "0" ]
       then
-        echo "Up"
+        echo "[ ···* ]"
       elif [ "$dry_change" = "$bundle_len" ]
       then
-        echo "Down"
+        echo "[ *··· ]"
       else
-        echo "Partial"
+        echo "[ ·**· ]"
       fi
       ;;
     "longrun")
       stat=$(s6-svstat -o up,wantedup "$servicedirs/$sv")
       case "${stat}" in
         "true true")
-          echo "Up"
+          echo "[ ···* ]"
           ;;
         "true false")
-          echo "Up, want down"
+          echo "[ ··<· ]"
           ;;
         "false true")
-          echo "Down, want up"
+          echo "[ ·>·· ]"
           ;;
         "false false")
-          echo "Down"
+          echo "[ *··· ]"
           ;;
         *)
           echo "ERROR"
@@ -60,8 +60,33 @@ s6getstatus() {
       esac
       ;;
     "oneshot")
-      stat=$(s6-rc -l "$livedir" -a list | grep -c "$sv$" | sed 's/1$/Up/g' | sed 's/0$/Down/g')
-      echo "$stat"
+      stat=$(s6-rc -l "$livedir" -a list | grep -c "$sv$")
+      if [ "$stat" = "1" ]
+      then
+        echo "[ ···* ]"
+      else
+        echo "[ *··· ]"
+      fi
+      ;;
+  esac
+}
+
+s6fstatus() {
+  case "$1" in
+    "[ *··· ]")    # Down
+      echo "\x1b[1;34m[ \x1b[31m*\x1b[0m\x1b[1m··· \x1b[34m]\x1b[0m"
+      ;;
+    "[ ···* ]")    # Up
+      echo "\x1b[1;34m[ \x1b[0m\x1b[1m···\x1b[32m* \x1b[34m]\x1b[0m"
+      ;;
+    "[ ·**· ]")    # Partial
+      echo "\x1b[1;34m[ \x1b[0m\x1b[1m·\x1b[33m**\x1b[0m\x1b[1m· \x1b[34m]\x1b[0m"
+      ;;
+    "[ ··<· ]")    # Up, want down
+      echo "\x1b[1;31m[ \x1b[0m\x1b[1m··\x1b[32m<\x1b[0m\x1b[1m· \x1b[31m]\x1b[0m"
+      ;;
+    "[ ·>·· ]")    # Down, want up
+      echo "\x1b[1;31m[ \x1b[0m\x1b[1m·\x1b[31m>\x1b[0m\x1b[1m·· \x1b[31m]\x1b[0m"
       ;;
   esac
 }
@@ -73,8 +98,16 @@ s6isinpipeline() {
 s6listwithstat() {
   list=""
   for service in "$@"; do
-    stat=$(s6getstatus "$service" | sed 's/Up/\\033[1m\\033[32mUp\\033[0m/g' | sed 's/Down/\\033[1m\\033[31mDown\\033[0m/g' | sed 's/Partial/\\033[1m\\033[33mPartial\\033[0m/g')
-    list="$list\n\033[1m$service\033[0m|$stat"
+    stat=$(s6getstatus "$service")
+    fstat=$(s6fstatus "$stat")
+    if [ -f "$sourcedirs/$service/description" ]
+    then
+      svdesc=$(cat "$sourcedirs/$service/description")
+      fdesc="\nDesc:|$svdesc"
+      list="$list\n\033[1m$service\033[0m|$fstat|$svdesc"
+    else
+      list="$list\n\033[1m$service\033[0m|$fstat| "
+    fi
   done
   echo -e "$list" | column -t -s '|'
 }
@@ -132,7 +165,7 @@ s6printinfo() {
       ;;
     "oneshot")
       svstatus=$(s6getstatus "$svname")
-      fstatus="Status:|$(echo "$svstatus" | sed 's/Up/\\033[1m\\033[32mUp\\033[0m/g' | sed 's/Down/\\033[1m\\033[31mDown\\033[0m/g')"
+      fstatus="Status:|$(echo "$svstatus" | sed 's/\[ ···\* \]/\\033[1m\\033[32mUp\\033[0m/g' | sed 's/\[ \*··· \]/\\033[1m\\033[31mDown\\033[0m/g')"
       echo -e "$fname\n$ftype$fdesc$fdocs\n$fstatus" | column -t -s "|" -o " "
       echo -e "\nDependencies:"
       echo "-------------"
@@ -147,7 +180,7 @@ s6printinfo() {
       ;;
     "bundle")
       svstatus=$(s6getstatus "$svname")
-      fstatus="Status:|$(echo "$svstatus" | sed 's/Up/\\033[1m\\033[32mUp\\033[0m/g' | sed 's/Down/\\033[1m\\033[31mDown\\033[0m/g' | sed 's/Partial/\\033[1m\\033[33mPartial\\033[0m/g')"
+      fstatus="Status:|$(echo "$svstatus" | sed 's/\[ ···\* \]/\\033[1m\\033[32mUp\\033[0m/g' | sed 's/\[ \*··· \]/\\033[1m\\033[31mDown\\033[0m/g' | sed 's/\[ ·\*\*· \]/\\033[1m\\033[33mPartial\\033[0m/g')"
       echo -e "$fname\n$ftype$fdesc$fdocs\n$fstatus\n" | column -t -s "|" -o " "
       echo -e "\nContents:\n---------"
       s6listwithstat $(find "$sourcedirs/$svname/contents.d" -type f -printf '%f\n')
@@ -156,36 +189,54 @@ s6printinfo() {
   esac
 }
 
-s6listfailed() {
-  list=""
-  for service in "$servicedirs"/*/; do
-    list="$list\n$service $(s6-svstat -o up,wantedup "$service")"
-  done
-  echo -e "$list" | grep "false true" | cut -d " " -f 1 | sed "s|/| |g" | cut -d " " -f 5
-}
-
-s6list() {
-  case "$2" in
-    "all" | "services" | "oneshots" | "longruns")
-      s6-rc-db -l "$livedir" list "$2"
+s6stat() {
+  case "$1" in
+    "all")
+      echo -e "\nAll:\n----"
+      s6listwithstat $(s6-rc-db -l "$livedir" list "$1" | sed '/.*-pipeline$/d' | sed '/.*-log$/d')
+      echo ""
+      ;;
+    "services")
+      echo -e "\nServices:\n---------"
+      s6listwithstat $(s6-rc-db -l "$livedir" list "$1")
+      echo ""
+      ;;
+    "oneshots")
+      echo -e "\nOneshots:\n---------"
+      s6listwithstat $(s6-rc-db -l "$livedir" list "$1")
+      echo ""
+      ;;
+    "longruns")
+      echo -e "\nLongruns:\n---------"
+      s6listwithstat $(s6-rc-db -l "$livedir" list "$1" | sed '/.*-log$/d')
+      echo ""
       ;;
     "bundles")
-      s6-rc-db -l "$livedir" list "$2" | sed '/.*-pipeline$/d'
+      echo -e "\nBundles:\n--------"
+      s6listwithstat $(s6-rc-db -l "$livedir" list "$1" | sed '/.*-pipeline$/d')
+      echo ""
       ;;
     "up")
-      s6-rc -l "$livedir" -a list
+      echo -e "\nUp:\n---"
+      s6listwithstat $(s6-rc -l "$livedir" -a list)
+      echo ""
       ;;
     "down")
-      s6-rc -l "$livedir" -da list
+      echo -e "\nDown:\n-----"
+      s6listwithstat $(s6-rc -l "$livedir" -da list)
+      echo ""
       ;;
-    "in")
-      s6-rc-db -l "$livedir" contents "$3"
-      ;;
-    "failed")
-      s6listfailed
+    "help")
+      echo "usage: sv stat all|services|oneshots|longruns|bundles|up|down|[ service ]"
+      echo -e "\nStatus symbol meaning:"
+      echo -e "\x1b[1;34m[ \x1b[31m*\x1b[0m\x1b[1m··· \x1b[34m]\x1b[0m  Down"
+      echo -e "\x1b[1;34m[ \x1b[0m\x1b[1m···\x1b[32m* \x1b[34m]\x1b[0m  Up"
+      echo -e "\x1b[1;34m[ \x1b[0m\x1b[1m·\x1b[33m**\x1b[0m\x1b[1m· \x1b[34m]\x1b[0m  Partial"
+      echo -e "\x1b[1;31m[ \x1b[0m\x1b[1m··\x1b[32m<\x1b[0m\x1b[1m· \x1b[31m]\x1b[0m  Up, want down"
+      echo -e "\x1b[1;31m[ \x1b[0m\x1b[1m·\x1b[31m>\x1b[0m\x1b[1m·· \x1b[31m]\x1b[0m  Down, want up"
       ;;
     *)
-      echo "usage: sv list all|services|oneshots|longruns|bundles|up|down|failed|in [ bundle ]"
+      s6-rc-db -l "$livedir" type "$1" 1>/dev/null && s6printinfo "$1"
       ;;
   esac
 }
@@ -200,8 +251,8 @@ s6doc() {
 }
 
 s6compile() {
-  stamp=$(date +"%d-%m-%Y-%H:%M:%N")
-  newdir="$compileddir/compiled@$stamp"
+  stamp=$(s6-clock)
+  newdir="$compileddir/compiled$stamp"
 
   echo -e "\n\033[1mCompiling new database...\033[0m"
   s6-rc-compile "$newdir" "$sourcedirs" && echo -e "$okprint" || exit
@@ -259,10 +310,50 @@ s6iter() {
       echo ""
       ;;
     "list")
-      ls "$compileddir" | grep 'compiled@.*' | sed 's/compiled@//'
+      cursel=$(stat -c %N "$compileddir/current" | cut -d"'" -f4)
+      echo -e "\nDatabases:\n----------"
+      for db in "$compileddir"/compiled@*
+      do
+        stamp=$(echo "$db" | sed "s|^$compileddir/compiled||g")
+        lstamp=$(echo "$stamp" | s6-tai64nlocal)
+        stamp=$(echo "$stamp" | sed 's/^@//')
+        string="$stamp compiled at \x1b[1m$lstamp\x1b[0m"
+        if [ "$db" = "$cursel" ]
+        then
+          string="$string  \x1b[1;34m[\x1b[32m*\x1b[34m]\x1b[0m"
+        fi
+        echo -e "$string"
+      done
+      echo ""
+      ;;
+    "stat")
+      db="$compileddir/compiled@$2"
+      if [ -d "$db" ]
+      then
+        echo -e "\nContents:\n--------"
+        s6-rc-db -c "$db" list all
+        echo ""
+      else
+        echo "Not a database"
+      fi
+      ;;
+    "delete" | "del")
+      dir="$compileddir/compiled@$2"
+      if [ -d "$dir" ]
+      then
+        cursel=$(stat -c %N "$compileddir/current" | cut -d"'" -f4)
+        if [ "$dir" != "$cursel" ]
+        then
+          rm -rf "$compileddir/compiled@$2" && echo -e "\x1b[1;31mRemoved\x1b[0m the database compiled at \x1b[1m$(echo "$2" | s6-tai64nlocal)\x1b[0m"
+        else
+          echo "Will not remove the running database"
+        fi
+      else
+        echo "Not a database"
+      fi
       ;;
     *)
-      echo "usage: sv database list|set [ database ]"
+      echo "usage: sv database list|stat|delete|set [ database ]"
       ;;
   esac
 }
@@ -278,9 +369,10 @@ s6conf() {
 }
 
 
+# TODO: Death tally with s6-svdt
 case "$1" in
   "stat" | "i")
-    s6printinfo "$2"
+    s6stat "$2"
     ;;
   "up" | "u")
     s6-rc -l "$livedir" -u change "$2" && echo -e "Service \033[1m$2\033[0m is now \033[32mup\033[0m"
@@ -309,9 +401,6 @@ case "$1" in
   "logrotate")
     s6-svc -a "$servicedirs/$2-log" && echo -e "The logger for \033[1m$2\033[0m has rotated it's logs"
     ;;
-  "list" | "l")
-    s6list "$@"
-    ;;
   "update")
     s6compile
     ;;
@@ -331,6 +420,21 @@ case "$1" in
     s6conf "$2"
     ;;
   *)
-    echo "usage: sv stat|up|down|restart|reload|in|log|logrotate|list|update|doctor|import-env|set-env|database|conf"
+    echo "usage: sv <command>"
+    echo -e "\nAccepted commands:"
+    echo "    stat [ service ]"
+    echo "    up [ service ]"
+    echo "    down [ service ]"
+    echo "    restart [ service ]"
+    echo "    reload [ service ]"
+    echo "    in [ bundle ] add|remove [ service ]"
+    echo "    log [ service ]"
+    echo "    logrotate [ service ]"
+    echo "    update"
+    echo "    doctor"
+    echo "    import-env [ envvar ]"
+    echo "    set-env [ envvar ] [ value ]"
+    echo "    database list|set|stat|delete [ database ]"
+    echo "    conf [ service ]"
     ;;
 esac

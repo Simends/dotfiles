@@ -90,15 +90,15 @@ export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 # export TASKDATA="$XDG_DATA_HOME/task"
 
 if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-	svctl import-env XDG_CONFIG_HOME
-	svctl import-env XDG_DATA_HOME
-	svctl import-env XDG_CACHE_HOME
-	svctl import-env XDG_RUNTIME_DIR
-	svctl import-env XAUTHORITY
-	svctl import-env GNUPGHOME
-	svctl import-env GPG_TTY
-	svctl import-env PASSWORD_STORE_DIR
-	svctl import-env DBUS_SESSION_BUS_ADDRESS && svctl up session-tty1
+	sv import-env XDG_CONFIG_HOME
+	sv import-env XDG_DATA_HOME
+	sv import-env XDG_CACHE_HOME
+	sv import-env XDG_RUNTIME_DIR
+	sv import-env XAUTHORITY
+	sv import-env GNUPGHOME
+	sv import-env GPG_TTY
+	sv import-env PASSWORD_STORE_DIR
+	sv import-env DBUS_SESSION_BUS_ADDRESS && sv up session-tty1
 
 	exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
 fi
