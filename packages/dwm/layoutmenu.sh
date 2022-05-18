@@ -3,11 +3,11 @@
 cat <<EOF | xmenu
 ||= Columns	0
 []= Tiled	1
-><> Floating	2
-### Grid	3
-LLL Topstack	4
-TTT Bottomstack	5
-=== Bottomstack Horizontal	6
-[M] Monocle	7
-[]D Deck	8
+### Grid	2
+LLL Topstack	3
+TTT Bottomstack	4
+=== Bottomstack Horizontal	5
+[M] Monocle	6
+[]D Deck	7
+><> Floating	8
 EOF

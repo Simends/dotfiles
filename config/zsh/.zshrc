@@ -37,6 +37,12 @@ bindkey '^[.' cdParentKey
 # Load aliases
 source $XDG_CONFIG_HOME/shell/aliases
 
+# Base16 Shell
+#BASE16_SHELL="/home/simen/.base16-manager/chriskempson/base16-shell/"
+#[ -n "$PS1" ] && \
+  #[ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+    #eval "$("$BASE16_SHELL/profile_helper.sh")"
+
 # Load plugins
 plugdir=$XDG_CONFIG_HOME/zsh/plugins
 # source "$plugdir"/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh

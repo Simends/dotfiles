@@ -8,3 +8,11 @@ map e scroll down
 map i scroll up
 map o scroll right
 map O goto page-bottom
+map k search forward
+map K search backward
+map [index] e navigate_index down
+map [index] i navigate_index up
+map [index] o navigate_index expand
+map [index] n navigate_index collapse
+map [index] O navigate_index expand-all
+map [index] N navigate_index collapse-all

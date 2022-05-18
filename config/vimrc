@@ -1,8 +1,14 @@
 
+if has('autocmd')
+    filetype plugin indent on
+endif
+
+let mapleader = " "
+let maplocalleader = "\\"
+
 if has('nvim')
   au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
   set laststatus=3
-  set termguicolors
   set signcolumn=yes
   nnoremap <silent> , ;
   nnoremap <silent> ; ,
@@ -14,6 +20,18 @@ else
     silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
+  let g:vimtex_view_method = 'zathura'
+  let g:vimtex_compiler_method = 'latexrun'
+  let g:undotree_WindowLayout = 3
+  let g:tagbar_position = 'botright vertical'
+  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+  let g:fugitive_defer_to_existing_maps = 1
+  let g:SuperTabDefaultCompletionType = "context"
+  let g:polyglot_disabled = ['markdown']
+  let g:textobj_datetime_no_default_key_mappings = 1
+  let g:textobj_indent_no_default_key_mappings = 1
+  let g:textobj_between_no_default_key_mappings = 1
+  " let base16colorspace=256
   " Install plugins
   call plug#begin()
     Plug 'tpope/vim-apathy'
@@ -40,20 +58,36 @@ else
     Plug 'glts/vim-radical'           " gA, crd, crx, cro, crb
     Plug 'glts/vim-magnum'
     Plug 'atweiden/vim-betterdigraphs'
+    Plug 'ervandew/supertab'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'kana/vim-textobj-user'
     Plug 'kana/vim-textobj-indent'    " (a/i)i
     Plug 'thinca/vim-textobj-between' " (a/i)f<char>
-    Plug 'somini/vim-textobj-fold'    " (a/i)z
-    Plug 'mattn/vim-textobj-url'      " (a/i)u
+    "Plug 'mattn/vim-textobj-url'      " (a/i)u
+    Plug 'preservim/vim-textobj-sentence' " (a/i)s
     Plug 'sheerun/vim-polyglot'
     Plug 'lervag/vimtex'
+    Plug 'lervag/lists.vim'
     Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
     Plug 'mbbill/undotree', { 'on':  'UndotreeToggle' }
+    " Colors
     Plug 'morhetz/gruvbox'
+    Plug 'rakr/vim-one'
+    Plug 'junegunn/seoul256.vim'
+    Plug 'ghifarit53/tokyonight-vim'
+    Plug 'iandwelker/rose-pine-vim'
+    Plug 'franbach/miramare'
+    Plug 'catppuccin/vim'
+    Plug 'savq/melange'
+    Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
+    Plug 'juanedi/predawn.vim'
+    Plug 'olivertaylor/vacme'
+    Plug 'sainnhe/everforest'
+    Plug 'kadekillary/skull-vim'
   call plug#end()
-  colorscheme gruvbox
-  syntax on
+  if has('syntax') && !exists('g:syntax_on')
+    syntax enable
+  endif
   set nocp
   set laststatus=2
   set foldmethod=indent
@@ -61,10 +95,6 @@ else
   set statusline=▊\ \ %y\ %f%h%q%m%r\ %=%=%l/%L:%c\ %p%%\ %{FugitiveStatusline()}\ %{&fileencoding?&fileencoding:&encoding}[%{&fileformat}]\ \ ▊
   highlight ColorColumn ctermbg=magenta
   call matchadd('ColorColumn', '\%81v', 100)
-  let g:undotree_WindowLayout = 3
-  let g:tagbar_position = 'botright vertical'
-  let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
-  let g:fugitive_defer_to_existing_maps = 1
   au User FugitiveIndex nnoremap <buffer> h <plug>fugitive:i
   au User FugitiveIndex nnoremap <buffer> k <plug>fugitive:n
   au User FugitiveIndex nnoremap <buffer> o <plug>fugitive:l
@@ -92,6 +122,18 @@ else
   map ; <plug>Sneak_,
   xmap gl <Plug>(EasyAlign)
   nmap gl <Plug>(EasyAlign)
+  xmap hi <Plug>(textobj-indent-same-i)
+  xmap hb <Plug>(textobj-between-i)
+  xmap hT <Plug>(textobj-datetime-time1)
+  omap hi <Plug>(textobj-indent-same-i)
+  omap hb <Plug>(textobj-between-i)
+  omap hT <Plug>(textobj-datetime-time1)
+  xmap ai <Plug>(textobj-indent-same-a)
+  xmap ab <Plug>(textobj-between-a)
+  xmap aT <Plug>(textobj-datetime-time1)
+  omap ai <Plug>(textobj-indent-same-a)
+  omap ab <Plug>(textobj-between-a)
+  omap aT <Plug>(textobj-datetime-time1)
   nnoremap <silent> <leader>gg :Git<cr>
   nnoremap <silent> <leader>gc :Git commit<cr>
   nnoremap <silent> <leader>gv :GV<cr>
@@ -109,74 +151,121 @@ end " if nvim or vim
 
 " Settings
 
-filetype plugin indent on
+set number
+set relativenumber
 
-set  number
-set  relativenumber
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
 
-set  ignorecase
-set  smartcase
-set  hlsearch
-set  incsearch
+set confirm
+set novisualbell
+set noerrorbells
 
-set  confirm
-set  novisualbell
-set  noerrorbells
+set history=1000
+set undofile
+set hidden
+set nobackup
+set nowritebackup
+set swapfile
+set autoread
 
-set  history=1000
-set  undofile
-set  hidden
-set  nobackup
-set  nowritebackup
-set  swapfile
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set smarttab
+set expandtab
+set smartindent
+set backspace=indent,eol,start
 
-set  tabstop=2
-set  softtabstop=2
-set  shiftwidth=2
-set  expandtab
-set  smartindent
-set  backspace=3
+set wildmode=full
+if has('wildmenu')
+  set wildmenu
+endif
+if has('wildignore')
+  set wildoptions=pum,fuzzy
+  set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+endif
 
-set  wildmenu
-set  wildmode=full
-set  wildoptions=pum
-
-"set colorcolumn=80
-set  showtabline=1
-set  linebreak
-set  nowrap
-set  noruler
-set  scrolloff=10
-set  updatetime=50
-set  fileencoding=UTF-8
-set  background=dark
-set  showmode
-set  cursorline
-set  mouse=a
-set  path=**
-set  conceallevel=2
-set  shell=/bin/sh
-set  lazyredraw
-set  modeline
-set  shortmess=c
+" set colorcolumn=80
+set complete-=i
+set showtabline=1
+set linebreak
+set nowrap
+set noruler
+set sidescrolloff=7
+set scrolloff=10
+set updatetime=50
+set fileencoding=UTF-8
+set background=dark
+set showmode
+set cursorline
+set mouse=a
+set path=**
+set conceallevel=2
+set shell=/bin/sh
+set lazyredraw
+set modeline
+set shortmess+=mrxc
+set shortmess-=I
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
-set  list
-" hi Normal guibg=NONE ctermbg=NONE
-" hi NormalFloat guibg=NONE ctermbg=NONE
-" hi NormalNC guibg=NONE ctermbg=NONE
-" hi EndOfBuffer guibg=NONE ctermbg=NONE
+set list
+
+  " Set colors
+  if &term =~ '256color'
+    " Enable true (24-bit) colors instead of (8-bit) 256 colors.
+    " :h true-color
+    if has('termguicolors')
+      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+    endif
+    colorscheme gruvbox
+  endif
+  " hi Normal guibg=NONE ctermbg=NONE
+  " hi NormalFloat guibg=NONE ctermbg=NONE
+  " hi NormalNC guibg=NONE ctermbg=NONE
+  " hi EndOfBuffer guibg=NONE ctermbg=NONE
 
 
 " Commands
 
-com! -nargs=+ Grep vimgrep <args> **/*
-com! -nargs=+ Ctags !ctags -R --language-force=<args>
-au SwapExists * let v:swapchoice = 'o'
+com! -nargs=+ Grep vimgrep <args> **/*                        " Use vimgrep in folder
+com! -nargs=1 Ctags !ctags -R --language-force=<args>         " Generate tags file for specific lang and for all files in folder
+com! -nargs=1 Temp read $XDG_CONFIG_HOME/templates/<args>     " Insert template
 
-au Filetype markdown set wrap
-au Filetype markdown set colorcolumn=0
+au SwapExists * let v:swapchoice = 'o'
+" autocmd InsertLeave * write
+
+function! SetTextPrefs()
+  com! -nargs=1 KeyWordPrgDict !dict <args> | less
+  setlocal keywordprg=:KeyWordPrgDict
+  setlocal spell
+  setlocal colorcolumn=0
+  setlocal wrap
+  setlocal textwidth=80 formatoptions+=t
+  setlocal infercase
+  exec "set listchars=tab:\uBB\uBB,multispace:\uB7,trail:\uB7,nbsp:~"
+  iab wifi WiFi
+
+  " Auto-capitalize script
+  augroup SENTENCES
+    au!
+    autocmd InsertCharPre * if search('\v(%^|[.!?#*]\_s+|\_^\-\s|\_^title\:\s|\n\n)%#', 'bcnw') != 0 | let v:char = toupper(v:char) | endif
+  augroup END
+endfunction
+au Filetype text,mail,markdown call SetTextPrefs()
+
+au Filetype markdown inoremap [<Tab> [](<++>)<++><esc>F[a
 
 au FileType sh set makeprg=shellcheck\ -f\ gcc\ %
+
+au Filetype lua inoremap l<Tab> local 
+au Filetype lua inoremap f<Tab> function()<cr><cr>end<up>
+au Filetype lua inoremap m<Tab> local M = {}<cr><cr><cr><cr>return M<up><up>
+
+au Filetype python set keywordprg=pydoc
 
 au Filetype qf nnoremap <silent><cr> :.cc<cr>
 au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
@@ -246,13 +335,12 @@ au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
   au FileType netrw nnoremap <buffer> k n
   au FileType netrw nnoremap <buffer> l o
 
-let mapleader = " "
-let maplocalleader = "\\"
 
 nmap <silent> Y y$
 nmap <silent> { {zz
 nmap <silent> } }zz
 nmap <silent> Q :echo ''<cr>
+nmap <silent> gs z=
 inoremap <silent> , ,<c-g>u
 inoremap <silent> . .<c-g>u
 inoremap <silent> ? ?<c-g>u
@@ -267,12 +355,21 @@ vnoremap <silent> I :m '<-2<cr>gv=gv
 nnoremap <silent> <c-m> :mode<cr>
 nnoremap <silent> <c-l> :nohl<cr><c-l>
 nnoremap <silent> <leader>hv :e ~/.vimrc<cr>
+nnoremap <silent> <Tab><Tab> <C-w>w
+nnoremap <silent> <Tab>v <C-w>v
+nnoremap <silent> <Tab>s <C-w>s
+nnoremap <silent> <Tab>o <C-w>l
+nnoremap <silent> <Tab>i <C-w>k
+nnoremap <silent> <Tab>e <C-w>j
+nnoremap <silent> <Tab>n <C-w>h
+nnoremap <silent> <leader><leader> /<++><cr>4cl
 
 nnoremap <silent> <leader>r :e<cr>
 nnoremap <silent> <leader>R :so ~/.vimrc<cr>
-nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>
+nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove all trailing whitespace
 nnoremap <silent> <leader>tn :set nu!<cr>:set rnu!<cr>
 nnoremap <silent> <leader>tt <cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
+nnoremap <silent> <leader>tf :20Lexplore<cr>
 nnoremap <silent> <leader>mm :make<cr>
 nnoremap <silent> <leader>md :make debug<cr>
 nnoremap <silent> <leader>mf :make format<cr>

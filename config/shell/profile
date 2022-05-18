@@ -8,8 +8,8 @@
 #
 
 # Standard applications
-export EDITOR='nvim'
-export VISUAL='nvim'
+export EDITOR='vim'
+export VISUAL='vim'
 export BROWSER=firefox
 export PAGER='less -R --use-color'
 export MANPAGER="less -R --use-color -Dd+c -Du+b"
@@ -45,19 +45,20 @@ export FZF_DEFAULT_OPTS="--layout=default --info=inline --cycle -1 -0 --color='f
 # export FZF_ALT_C_OPTS="--reverse --preview 'tree -C {} | head -200'"
 # export FZF_CTRL_T_OPTS="--reverse --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 
-# Other variables
-# export QT_STYLE_OVERRIDE="qt5ct"
-export QT_QPA_PLATFORMTHEME="qt5ct"
-#export QT_QPA_PLATFORM=wayland
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
-#export MOZ_ENABLE_WAYLAND=1
-export MOZ_DBUS_REMOTE=1
-export GPG_TTY=$(tty)
+# Wayland
 #export XDG_CURRENT_DESKTOP=sway
 #export XDG_SESSION_TYPE=wayland
+#export QT_QPA_PLATFORM=wayland
+#export MOZ_ENABLE_WAYLAND=1
+# export QT_STYLE_OVERRIDE="qt5ct"
+
+# Other variables
+export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export MOZ_DBUS_REMOTE=1
+export GPG_TTY=$(tty)
 export ABDUCO_CMD="zsh"
 export ABDUCO_SOCKET_DIR="$XDG_CACHE_HOME"
-#export NIX_PATH="$HOME/.nix-defexpr/channels/"
 
 # Home cleaning
 export XDG_CONFIG_HOME="$HOME/.local/config"

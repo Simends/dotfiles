@@ -17,8 +17,8 @@ local M = {
         require("zen-mode").setup {
           window = {
             backdrop = 1.0, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
-            width = 100, -- width of the Zen window
-            height = 1, -- height of the Zen window
+            width = 80, -- width of the Zen window
+            height = 0.8, -- height of the Zen window
             options = {
               signcolumn = "no", -- disable signcolumn
               number = true, -- disable number column
@@ -45,12 +45,14 @@ local M = {
           -- callback where you can add custom code when the Zen window opens
           on_open = function(win)
             -- vim.cmd("IndentBlanklineDisable")
-            vim.cmd("set colorcolumn=0")
+            -- vim.cmd("set colorcolumn=0")
+            vim.cmd("FocusDisable")
           end,
           -- callback where you can add custom code when the Zen window closes
           on_close = function()
             -- vim.cmd("IndentBlanklineEnable")
-            vim.cmd("set colorcolumn=80")
+            -- vim.cmd("set colorcolumn=80")
+            vim.cmd("FocusEnable")
           end
         }
       end
