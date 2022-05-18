@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+envfile /etc/conf.d/dictd
+/usr/bin/dictd -d nofork -L /dev/null $DICTD_ARGS -- $DICTD_EARGS
