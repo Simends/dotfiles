@@ -241,13 +241,21 @@ au SwapExists * let v:swapchoice = 'o'
 function! SetTextPrefs()
   com! -nargs=1 KeyWordPrgDict !dict <args> | less
   setlocal keywordprg=:KeyWordPrgDict
+  setlocal errorformat=%f:%l:%c:%m
+  setlocal makeprg=proselint\ %
   setlocal spell
   setlocal colorcolumn=0
   setlocal wrap
   setlocal textwidth=80 formatoptions+=t
   setlocal infercase
+  noremap <buffer> e gj
+  noremap <buffer> i gk
+  noremap <buffer> ge j
+  noremap <buffer> gi k
   exec "set listchars=tab:\uBB\uBB,multispace:\uB7,trail:\uB7,nbsp:~"
-  iab wifi WiFi
+  if filereadable(expand("$XDG_CONFIG_HOME/templates/abbrevations"))
+    source $XDG_CONFIG_HOME/templates/abbrevations
+  endif
 
   " Auto-capitalize script
   augroup SENTENCES
@@ -256,16 +264,17 @@ function! SetTextPrefs()
   augroup END
 endfunction
 au Filetype text,mail,markdown call SetTextPrefs()
+com! TextMode call SetTextPrefs()
 
 au Filetype markdown inoremap [<Tab> [](<++>)<++><esc>F[a
 
-au FileType sh set makeprg=shellcheck\ -f\ gcc\ %
+au FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ %
 
 au Filetype lua inoremap l<Tab> local 
 au Filetype lua inoremap f<Tab> function()<cr><cr>end<up>
 au Filetype lua inoremap m<Tab> local M = {}<cr><cr><cr><cr>return M<up><up>
 
-au Filetype python set keywordprg=pydoc
+au Filetype python setlocal keywordprg=pydoc
 
 au Filetype qf nnoremap <silent><cr> :.cc<cr>
 au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
