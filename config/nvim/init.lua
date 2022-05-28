@@ -120,25 +120,26 @@ require('statusline')
 
 local nolint = {lsp = true, treesitter = true, dap = true, linter = false, formatter = true}
 local lint = {lsp = true, treesitter = true, dap = true, linter = true, formatter = true}
+local light = {lsp = false, treesitter = true, dap = false, linter = false, formatter = true}
 
 
-use.lang('asm',        nolint)
-use.lang('c',          nolint)
-use.lang('python',     nolint)
+use.lang('asm',           {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('c',             {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('python',        {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 -- use.lang('haskell',    nolint)
-use.lang('lua',        nolint)
-use.lang('fennel',     nolint)
+use.lang('lua',           {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
+use.lang('fennel',        {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 -- use.lang('hdl',        nolint)
-use.lang('makefile',   lint)
-use.lang('dockerfile', nolint)
-use.lang('sh',         lint)
-use.lang('html',       nolint)
-use.lang('javascript', nolint)
-use.lang('css',        lint)
-use.lang('json',       nolint)
-use.lang('yaml',       nolint)
-use.lang('latex',      nolint)
-use.lang('markdown',   lint)
+use.lang('makefile',      {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('dockerfile',    {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
+use.lang('sh',            {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('html',          {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('javascript',    {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('css',           {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('json',          {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('yaml',          {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
+use.lang('latex',         {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
+use.lang('markdown',      {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 
 
 ------------------------------------------

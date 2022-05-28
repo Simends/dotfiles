@@ -7,6 +7,9 @@ case "${file}" in
     *.[1-8])
         man -- "${file}" && exit 0
         ;;
+    *.chm)
+        xchm "${file}" && exit 0
+        ;;
     *.od[cbdfgipstm]|*.odft|*.ot[cgipsth]|*.do[ct]|*.do[ct]x|*.p[po]t|*.p[po]tx|\
     *.xl[st]|*.xl[st]x)
       libreoffice "${file}" && exit 0

@@ -75,9 +75,8 @@ else
     Plug 'rakr/vim-one'
     Plug 'junegunn/seoul256.vim'
     Plug 'ghifarit53/tokyonight-vim'
-    Plug 'iandwelker/rose-pine-vim'
+    Plug 'preservim/vim-colors-pencil'
     Plug 'franbach/miramare'
-    Plug 'catppuccin/vim'
     Plug 'savq/melange'
     Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
     Plug 'juanedi/predawn.vim'
@@ -141,7 +140,7 @@ else
   nnoremap <silent> æ :Files<cr>
   nnoremap <silent> ø :Rg<cr>
   nnoremap <silent> <leader>hh :Helptags<cr>
-  nnoremap <silent> <leader>hC :Colors<cr>
+  nnoremap <silent> <leader>hc :Colors<cr>
   nnoremap <silent> <leader>ff :Files<cr>
   nnoremap <silent> <leader>fg :Rg<cr>
   nnoremap <silent> <leader>fb :Buffers<cr>
@@ -179,17 +178,21 @@ set expandtab
 set smartindent
 set backspace=indent,eol,start
 
+set foldnestmax=10
+set foldlevelstart=99
+
 set wildmode=full
 if has('wildmenu')
   set wildmenu
 endif
 if has('wildignore')
-  set wildoptions=pum,fuzzy
+  set wildoptions=pum
   set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store
 endif
 
 " set colorcolumn=80
 set complete-=i
+set completeopt=menu,preview,longest
 set showtabline=1
 set linebreak
 set nowrap
@@ -206,11 +209,14 @@ set path=**
 set conceallevel=2
 set shell=/bin/sh
 set lazyredraw
+set ttyfast
 set modeline
-set shortmess+=mrxc
-set shortmess-=I
+set shortmess+=mrxcI
 exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set list
+" set guioptions-=m
+" set guioptions-=T
+" set guioptions-=r
 
   " Set colors
   if &term =~ '256color'
@@ -248,6 +254,7 @@ function! SetTextPrefs()
   setlocal wrap
   setlocal textwidth=80 formatoptions+=t
   setlocal infercase
+  setlocal nocursorline
   noremap <buffer> e gj
   noremap <buffer> i gk
   noremap <buffer> ge j
@@ -379,6 +386,7 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
 nnoremap <silent> <leader>tn :set nu!<cr>:set rnu!<cr>
 nnoremap <silent> <leader>tt <cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
 nnoremap <silent> <leader>tf :20Lexplore<cr>
+nnoremap <silent> <leader>tl :let &background = ( &background == "dark"? "light" : "dark" )<cr>
 nnoremap <silent> <leader>mm :make<cr>
 nnoremap <silent> <leader>md :make debug<cr>
 nnoremap <silent> <leader>mf :make format<cr>
