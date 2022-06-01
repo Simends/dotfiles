@@ -8,8 +8,8 @@
 #
 
 # Standard applications
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nim'
+export VISUAL='nim'
 export BROWSER=firefox
 export PAGER='less -R --use-color'
 export MANPAGER="less -R --use-color -Dd+c -Du+b"

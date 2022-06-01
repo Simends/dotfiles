@@ -11,7 +11,7 @@ M.attach = function (_, bufnr)
       vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
       vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
       vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
-      vim.keymap.set('n', 'I', vim.lsp.buf.hover, opt)
+      vim.keymap.set('n', 'gI', vim.lsp.buf.hover, opt)
       local maps = {
         g = {
           d = {vim.lsp.buf.definition, "Goto definition"},

@@ -150,6 +150,7 @@ local opt = {noremap = true, silent = true}
 
 local map = {
   ['<leader>'] = {
+    ['<leader>'] = {"/<++><cr>4cl", "Insert at marker"},
     r = {":e<cr>", "Reload buffer"},
     R = {":so ~/.vimrc<cr>", "Reload vimrc"},
     p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
@@ -157,11 +158,16 @@ local map = {
 
     m = {
       name = "Make",
-      m = {"<cmd>make<cr>", "Make project"},
+      m = {"<cmd>make<cr>", "Build project"},
+      d = {"<cmd>make debug<cr>", "Debug project"},
+      f = {"<cmd>make format<cr>", "Format project"},
+      l = {"<cmd>make lint<cr>", "Lint project"},
     },
 
     t = {
       name = "Toggle",
+      f = {":29Lexplore<cr>", "File manager"},
+      l = {":ToggleLightMode<cr>", "Toggle light mode"},
       t = {[[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]], "Show comments"},
       n = {":set nu!<cr>:set rnu!<cr>", "Linenumbers"},
       o = {":set cc=80<cr>", "Show colorcolumn"},
@@ -170,7 +176,7 @@ local map = {
 
     h = {
       name = "Support",
-      c = {"<cmd>checkhealth<cr>", "Check health"},
+      C = {"<cmd>checkhealth<cr>", "Check health"},
       v = {":e ~/.vimrc<cr>", "Edit vimrc"},
       p = {
         name = "Packages",

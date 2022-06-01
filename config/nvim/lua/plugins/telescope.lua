@@ -29,7 +29,7 @@ local M = {
         h = {
           h = {tsb.help_tags, "Documentation"},
           H = {tsb.highlights, "Highlight groups"},
-          C = {tsb.colorscheme, "Colorscheme"},
+          c = {tsb.colorscheme, "Colorscheme"},
           m = {tsb.man_pages, "Manuals"},
           s = {tsb.vim_options, "Settings"},
         }}}

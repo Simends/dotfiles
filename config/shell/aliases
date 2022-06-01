@@ -40,9 +40,10 @@ alias slcomp='sudo rm config.h && sudo make install'
 alias fcd='cd $(find -L . -path "*/\\.*" -prune -o -type d | fzf --reverse --height=40% --border=sharp --preview="ls -l {}")'
 
 alias e="$EDITOR"
-alias f='lfimg'
 alias se='sudoedit'
 alias sush='sudo -E -s'
+alias f='lfimg'
+alias t='tmux'
 alias g='git'
 alias o='opener'
 alias rss='newsboat -q'
