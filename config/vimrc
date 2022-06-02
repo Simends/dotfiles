@@ -275,6 +275,7 @@ au Filetype text,mail,markdown call SetTextPrefs()
 com! TextMode call SetTextPrefs()
 
 au Filetype markdown inoremap [<Tab> [](<++>)<++><esc>F[a
+au Filetype markdown nnoremap <leader>nt <cmd>vimgrep /^##* / %<cr>
 
 au FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ %
 
@@ -394,6 +395,9 @@ nnoremap <silent> <leader>mm :make<cr>
 nnoremap <silent> <leader>md :make debug<cr>
 nnoremap <silent> <leader>mf :make format<cr>
 nnoremap <silent> <leader>ml :make lint<cr>
+nnoremap <silent> <leader>nsn :setlocal spelllang nb
+nnoremap <silent> <leader>nsN :setlocal spelllang nn
+nnoremap <silent> <leader>nse :setlocal spelllang en
 
 nnoremap <silent> QQ :copen<cr>
 nnoremap <silent> QO :cn<cr>

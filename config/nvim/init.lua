@@ -164,6 +164,17 @@ local map = {
       l = {"<cmd>make lint<cr>", "Lint project"},
     },
 
+    n = {
+      name = "Notes",
+      t = {"<cmd>vimgrep /^##* / %<cr>", "Show table of contents"},
+      s = {
+        name = "Spell",
+        n = {"<cmd>setlocal spelllang nb<cr>", "Set language to Norwegian Bokmål"},
+        N = {"<cmd>setlocal spelllang nn<cr>", "Set language to Norwegian Nynorsk"},
+        e = {"<cmd>setlocal spelllang en<cr>", "Set language to English"},
+      }
+    },
+
     t = {
       name = "Toggle",
       f = {":29Lexplore<cr>", "File manager"},
