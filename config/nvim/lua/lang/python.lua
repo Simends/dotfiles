@@ -15,7 +15,7 @@ local M = {
     local dap = require('dap')
     dap.adapters.python = {
       type = 'executable';
-      command = 'path/to/virtualenvs/debugpy/bin/python';
+      command = '/usr/bin/python';
       args = { '-m', 'debugpy.adapter' };
     }
     dap.configurations.python = {

@@ -59,7 +59,7 @@ require('packer').startup({
     -- Editor
     use.plugin('autopairs')
     use.plugin('apathy')
-    use.plugin('capslock')
+    use.plugin('capslock')              -- Set <C-g>c as capslock
     use.plugin('characterize')
     use.plugin('commentary')            -- Comment with a motion
     use.plugin('eunuch')
@@ -118,17 +118,13 @@ require('statusline')
 ----------------- LANGS -----------------
 -----------------------------------------
 
-local nolint = {lsp = true, treesitter = true, dap = true, linter = false, formatter = true}
-local lint = {lsp = true, treesitter = true, dap = true, linter = true, formatter = true}
-local light = {lsp = false, treesitter = true, dap = false, linter = false, formatter = true}
-
-
 use.lang('asm',           {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 use.lang('c',             {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 use.lang('python',        {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 -- use.lang('haskell',    nolint)
 use.lang('lua',           {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 use.lang('fennel',        {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
+use.lang('vim',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = false})
 -- use.lang('hdl',        nolint)
 use.lang('makefile',      {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 use.lang('dockerfile',    {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})

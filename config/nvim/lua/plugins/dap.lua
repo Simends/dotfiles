@@ -36,10 +36,10 @@ local M = {
       local opt = {noremap = true, silent = true}
       local map = {
         ['<F5>'] = {[[<cmd>lua require'dap'.continue()<CR>]], "Continue"},
+        ['<F9>'] = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "Toggle breakpoint"},
         ['<F10>'] = {[[<cmd>lua require'dap'.step_over()<cr>]], "Step over"},
         ['<F11>'] = {[[<cmd>lua require'dap'.step_into()<cr>]], "Step into"},
         ['<F12>'] = {[[<cmd>lua require'dap'.step_out()<CR>]], "Step out"},
-        ['<F9>'] = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "Toggle breakpoint"},
         ['<leader>'] = {
           d = {
             name = "Debug",
@@ -56,6 +56,10 @@ local M = {
         }
       }
       require('which-key').register(map, opt)
+      vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
+      vim.fn.sign_define('DapBreakpointCondition', {text='', texthl='', linehl='', numhl=''})
+      vim.fn.sign_define('DapLogPoint', {text='', texthl='', linehl='', numhl=''})
+      vim.fn.sign_define('DapBreakpointRejected', {text='', texthl='', linehl='', numhl=''})
     end
   }
 }

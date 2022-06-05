@@ -41,6 +41,7 @@ xwallpaper --zoom ~/Multimedia/Pictures/Wallpapers/current
 # Configure keyboard
 # setxkbmap no
 setxkbmap -model 'pc105' -layout 'no(cmk_ed_ks)' -option 'misc:extend,lv5:caps_switch_lock,grp:shifts_toggle,compose:menu,misc:cmk_curl_dh'
+xcape -e 'Shift_L=Escape'
 xset r rate 300 50
 xset m default
 xset b off

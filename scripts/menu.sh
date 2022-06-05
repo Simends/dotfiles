@@ -148,6 +148,9 @@ MainMenu=$(echo -e "Applications\
 \nOpen Document\
 \nSystem Info\
 \nToggle Screensaver\
+\nSet keymap norwegian qwerty\
+\nSet keymap us qwerty\
+\nSet keymap norwegian colemak-dh\
 \nTask Manager\
 \nSound Settings\
 \nNetwork Settings\
@@ -306,6 +309,17 @@ case "$MainMenu" in
         ;;
     "Toggle Screensaver")
         ToggleDPMS
+        ;;
+    "Set keymap norwegian qwerty")
+        setxkbmap no -option '' && \
+          setxkbmap no -option 'misc:extend,lv5:caps_switch_lock'
+        ;;
+    "Set keymap us qwerty")
+        setxkbmap us -option '' && \
+          setxkbmap us -option 'misc:extend,lv5:caps_switch_lock'
+        ;;
+    "Set keymap norwegian colemak-dh")
+        setxkbmap -model 'pc105' -layout 'no(cmk_ed_ks)' -option 'misc:extend,lv5:caps_switch_lock,grp:shifts_toggle,compose:menu,misc:cmk_curl_dh'
         ;;
     "Task Manager")
         $Terminal btop
