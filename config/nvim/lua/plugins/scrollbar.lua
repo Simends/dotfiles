@@ -1,14 +1,6 @@
 local M = {
-  preconf = function()
-    local ok, which_key = pcall(require, 'which-key')
-    if ok then
-      local maps = {['<leader>'] = {t = {
-        s = {"<cmd>ScrollbarToggle<cr>", "Scrollbar"},
-      }}}
-      which_key.register(maps, {noremap = true, silent = true})
-    end
-  end,
   packer = {
+    scrollbar = {
     'petertriho/nvim-scrollbar',
     opt = true,
     cmd = {"ScrollbarToggle", "ScrollbarShow"},
@@ -93,6 +85,7 @@ local M = {
       })
       require("scrollbar.handlers.search").setup()
     end
+  },
   }
 }
 

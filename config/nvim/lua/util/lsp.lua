@@ -1,44 +1,69 @@
 local M = {}
 
 M.attach = function (_, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-      local opt = {buffer = bufnr, noremap = true, silent = true}
-      vim.cmd [[ command! LspFormat execute 'lua vim.lsp.buf.formatting()' ]]
-      vim.cmd [[ command! LspCodelensRun execute 'lua vim.lsp.codelens.run()' ]]
-      vim.cmd [[ command! LspCodelensRefresh execute 'lua vim.lsp.codelens.refresh()' ]]
-      vim.cmd [[ command! LspCodelensDisplay execute 'lua vim.lsp.codelens.display()' ]]
-      vim.cmd [[ command! LspCodeAction execute 'lua vim.lsp.buf.code_action()' ]]
-      vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
-      vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
-      vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
-      vim.keymap.set('n', 'I', vim.lsp.buf.hover, opt)
-      local maps = {
-        g = {
-          d = {vim.lsp.buf.definition, "Goto definition"},
-          D = {vim.lsp.buf.declaration, "Goto declaration"},
-          h = {vim.lsp.buf.implementation, "Goto implementation"},
-          r = {vim.lsp.buf.references, "Goto references"},
-          ['['] = {vim.lsp.diagnostic.goto_prev, "Goto previous diagnostic"},
-          [']'] = {vim.lsp.diagnostic.goto_next, "Goto next diagnostic"}
-        },
-        ['<leader>'] = {
-          e = {
-            name = "LSP",
-            o = {[[<cmd>SymbolsOutline<cr>]], "Show symbols"},
-            O = {require('telescope.builtin').lsp_workspace_symbols, "Find symbols"},
-            r = {require('telescope.builtin').lsp_references, "Find symbols"},
-            e = {vim.lsp.diagnostic.show_line_diagnostics, "Show diagnostic"},
-            d = {vim.lsp.diagnostic.set_qflist, "Show all diagnostics"},
-            n = {vim.lsp.buf.rename, "Rename"},
-            s = {vim.lsp.buf.signature_help, "Show signature"},
-            l = {vim.lsp.codelens.display, "Show codelens"},
-            L = {vim.lsp.codelens.run, "Run codelens"},
-            f = {vim.lsp.buf.formatting, "Format buffer"},
-            a = {vim.lsp.buf.code_action, "Code actions"}
-          }
-        }
-      }
-      require('which-key').register(maps, opt)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  local opt = {buffer = bufnr, noremap = true, silent = true}
+  vim.cmd [[ command! LspFormat execute 'lua vim.lsp.buf.formatting()' ]]
+  vim.cmd [[ command! LspCodelensRun execute 'lua vim.lsp.codelens.run()' ]]
+  vim.cmd [[ command! LspCodelensRefresh execute 'lua vim.lsp.codelens.refresh()' ]]
+  vim.cmd [[ command! LspCodelensDisplay execute 'lua vim.lsp.codelens.display()' ]]
+  vim.cmd [[ command! LspCodeAction execute 'lua vim.lsp.buf.code_action()' ]]
+  vim.cmd [[ command! LspWorkspaceList execute 'lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))' ]]
+  vim.cmd [[ command! -nargs=+ LspWorkspaceAdd execute 'lua vim.lsp.buf.add_workspace_folder(<args>)' ]]
+  vim.cmd [[ command! LspWorkspaceRemove execute 'lua vim.lsp.buf.remove_workspace_folder()' ]]
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opt)
+  local Hydra = require('hydra')
+  local lsp = vim.lsp
+
+  lsp_hydra = Hydra({ -- Git Hydra
+    hint = [[
+
+  _H_: Prev diagnostic    _J_: Signature        _c_: Show diagnostic
+  _L_: Next diagnostic    _K_: Hover            _C_: Show all diagnostics
+  _d_: Definition         _D_: Decleration      _r_: References
+  _m_: Implementation     _s_: Show codelenses  _S_: Run Codelens
+  _n_: Rename             _f_: Format           _a_: Code actions
+      _i_: Lsp Status                 ^^_I_: NullLS Status
+
+                            _<Esc>_: Exit
+
+]],
+    name = 'Code',
+    config = {
+      color = 'pink',
+      invoke_on_body = true,
+      hint = {
+        position = 'top-right',
+        border = 'rounded'
+      },
+    },
+    mode = 'n',
+    body = '<leader>c',
+    heads = {
+      { 'H', lsp.diagnostic.goto_prev },
+      { 'L', lsp.diagnostic.goto_next },
+      { 'J', lsp.buf.signature_help },
+      { 'K', lsp.buf.hover },
+      { 'c', lsp.diagnostic.show_line_diagnostics },
+      { 'C', lsp.diagnostic.set_qflist },
+      { 'd', lsp.buf.definition },
+      { 'D', lsp.buf.declaration },
+      { 'm', lsp.buf.implementation },
+      { 'r', lsp.buf.references },
+      { 'n', lsp.buf.rename },
+      { 'f', lsp.buf.formatting },
+      { 'a', lsp.buf.code_action },
+      { 's', lsp.codelens.display },
+      { 'S', lsp.codelens.run },
+      { 'i', ':LspInfo<cr>' },
+      { 'I', ':NullLSInfo<cr>' },
+      { '<Esc>', nil, { exit = true, nowait = true } },
+    }
+  })
+  local maps = {['<leader>'] = {
+    c = {":lua lsp_hydra:activate()<cr>", "Code"},
+  }}
+    require('which-key').register(maps, opt)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

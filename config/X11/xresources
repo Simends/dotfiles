@@ -23,33 +23,48 @@ dwm.selfgcolor: c0
 
 ! Black
 *.color0: c0
+
 ! Dark Red
 *.color1: c1
+
 ! Dark Green
 *.color2: c2
+
 ! Dark Yellow
 *.color3: c3
+
 ! Dark Blue
 *.color4: c4
+
 ! Dark Magenta
 *.color5: c5
+
 ! Dark Cyan
 *.color6: c6
+
 ! Light Gray
 *.color7: c7
+
 ! Dark Gray
 *.color8: c8
+
 ! Red
 *.color9: c9
+
 ! Green
 *.color10: c10
+
 ! Yellow
 *.color11: c11
+
 ! Blue
 *.color12: c12
+
 ! Magenta
 *.color13: c13
+
 ! Cyan
 *.color14: c14
+
 ! White
 *.color15: c15

@@ -1,5 +1,6 @@
 local M = {
   packer = {
+    gps = {
     "SmiteshP/nvim-gps",
     after = 'treesitter',
     config = function()
@@ -28,6 +29,7 @@ local M = {
         depth_limit_indicator = "..."
       })
     end
+  },
   }
 }
 

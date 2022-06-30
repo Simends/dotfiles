@@ -2,22 +2,20 @@ local lsputil = require('util.lsp')
 
 local M = {
   lsp = function()
+    local capabilities = lsputil.capabilities
+    capabilities.offsetEncoding = { "utf-16" }
     require('lspconfig').clangd.setup {
       on_attach = lsputil.attach,
-      capabilities = lsputil.capabilities,
+      capabilities = capabilities,
       flags = {
           debounce_text_changes = lsputil.debounce,
-      }
+      },
     }
   end,
 
   treesitter = {'c', 'cpp'},
 
   template = [[]],
-
-  snippets = function ()
-    print('Hei')
-  end,
 
   dap = function ()
     local dap = require('dap')

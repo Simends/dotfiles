@@ -32,7 +32,7 @@ while true; do
     # Battery
     batdir="/sys/class/power_supply/BAT0"
     if [ -d "$batdir" ]; then
-        baticon=" "
+        baticon="  "
         batstaus=$(cat "$batdir/status")
         if [ "$batstaus" == "Charging" ]; then
             baticon=" "

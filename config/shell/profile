@@ -99,7 +99,7 @@ if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
 	sv import-env GNUPGHOME
 	sv import-env GPG_TTY
 	sv import-env PASSWORD_STORE_DIR
-	sv import-env DBUS_SESSION_BUS_ADDRESS && sv up session-tty1
+	sv import-env DBUS_SESSION_BUS_ADDRESS
 
 	exec startx "$XDG_CONFIG_HOME/X11/xinitrc"
 fi

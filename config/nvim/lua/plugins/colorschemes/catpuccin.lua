@@ -46,7 +46,7 @@ local M = {
             show_root = false,
             transparent_panel = false,
           },
-          which_key = true,
+          which_key = false,
           indent_blankline = {
             enabled = true,
             colored_indent_levels = false,

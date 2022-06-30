@@ -1,5 +1,6 @@
 local M = {
   packer = {
+    wk = {
     "folke/which-key.nvim",
     as = 'which-key',
     config = function()
@@ -38,7 +39,7 @@ local M = {
         },
         icons = {
           breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
-          separator = "➜", -- symbol used between a key and it's label
+          separator = " ➜  ", -- symbol used between a key and it's label
           group = "+", -- symbol prepended to a group
         },
         popup_mappings = {
@@ -72,6 +73,7 @@ local M = {
         },
       }
     end
+  },
   }
 }
 

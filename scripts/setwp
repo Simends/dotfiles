@@ -1,6 +1,6 @@
 #!/bin/sh
 
-wallpaperdir="$HOME/Multimedia/Pictures/Wallpapers"
+wallpaperdir="$HOME/Pictures/Wallpapers"
 
 sel=$(sxiv -o "$wallpaperdir")
 ln -sf "$sel" "$wallpaperdir/current"

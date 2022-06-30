@@ -3,9 +3,6 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-#define MAINFONT  "Hermit:pixelsize=12:style=Regular"
-/* #define MAINFONT  "Terminus:pixelsize=14:style=Regular" */
-
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const int startwithgaps[]    = { 0 };	/* 1 means gaps are used by default, this can be customized for each tag */
 static const unsigned int gappx[]   = { 10 };   /* default gap between windows in pixels, this can be customized for each tag */
@@ -14,8 +11,8 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { MAINFONT, "FontAwesome:style=Regular:size=10" };
-static const char dmenufont[]       = MAINFONT;
+static const char *fonts[]          = { "Hurmit Nerd Font:pixelsize=18:style=Regular" };
+static const char dmenufont[]       = "Hermit:pixelsize=18:style=Regular" ;
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -109,14 +106,14 @@ static Key keys[] = {
 	{ MODKEY,			XK_w,			spawn,		{.v = webcmd } },
 	{ MODKEY,			XK_a,			spawn,		SHCMD("st vim ~/Documents/notatsys/skrivebord.md") },
 	{ MODKEY,			XK_b,			togglebar,	{0} },
-	{ MODKEY,			XK_n,			setmfact,	{.f = -0.05} },
-	{ MODKEY,			XK_o,			setmfact,	{.f = +0.05} },
-	{ MODKEY,			XK_e,			focusstack,	{.i = +1 } },
-	{ MODKEY,			XK_i,			focusstack,	{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_n,			incnmaster,	{.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_o,			incnmaster,	{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_i,			layoutscroll,	{.i = -1 } },
-	{ MODKEY|ShiftMask,		XK_e,			layoutscroll,	{.i = +1 } },
+	{ MODKEY,			XK_h,			setmfact,	{.f = -0.05} },
+	{ MODKEY,			XK_l,			setmfact,	{.f = +0.05} },
+	{ MODKEY,			XK_j,			focusstack,	{.i = +1 } },
+	{ MODKEY,			XK_k,			focusstack,	{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_h,			incnmaster,	{.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_l,			incnmaster,	{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_k,			layoutscroll,	{.i = -1 } },
+	{ MODKEY|ShiftMask,		XK_j,			layoutscroll,	{.i = +1 } },
 	{ MODKEY,			XK_r,			resetlayout,	{0} },
 	{ MODKEY,			XK_Return,		zoom,		{0} },
 	{ MODKEY|ControlMask,		XK_Return,		focusmaster,	{0} },

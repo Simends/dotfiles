@@ -9,12 +9,14 @@ local M = {
     end
   end,
   packer = {
-    'mbbill/undotree',
-    opt = true,
-    cmd = {'UndotreeToggle'},
-    config = function()
-      vim.g.undotree_WindowLayout = 3
-    end
+    undotree = {
+      'mbbill/undotree',
+      opt = true,
+      cmd = {'UndotreeToggle'},
+      config = function()
+        vim.g.undotree_WindowLayout = 3
+      end
+    }
   }
 }
 

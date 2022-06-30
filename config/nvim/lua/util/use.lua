@@ -7,7 +7,10 @@ M.plugin = function (plugin)
   if pack.preconf then
     pack.preconf()
   end
-  require('packer').use(pack.packer)
+  -- require('packer').use(pack.packer)
+  for _, package in pairs(pack.packer) do
+    require('packer').use(package)
+  end
   return true
 end
 
@@ -39,6 +42,9 @@ M.lang = function (lang, opt)
   if (opt.formatter and pack.formatter) then
     vim.cmd [[packadd null-ls.nvim]]
     pack.formatter()
+  end
+  if (pack.general) then
+    pack.general()
   end
 end
 

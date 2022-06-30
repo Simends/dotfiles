@@ -1,5 +1,6 @@
 local M = {
   packer = {
+    autosession = {
     'rmagatti/session-lens',
     requires = {'rmagatti/auto-session', 'telescope.nvim'},
     config = function()
@@ -21,6 +22,7 @@ local M = {
       }
       require('which-key').register(maps, {noremap = true, silent = true})
     end
+  }
   }
 }
 

@@ -1,0 +1,14 @@
+#!/usr/bin/execlineb -P
+
+fdmove -c 2 1
+s6-envdir /home/simen/.local/config/s6/env
+multisubstitute
+{
+	importas DISPLAY DISPLAY
+	importas XAUTHORITY XAUTHORITY
+}
+exec -c
+export DISPLAY ${DISPLAY}
+export XAUTHORITY ${XAUTHORITY}
+foreground { xset r rate 300 50 }
+setxkbmap no -option 'misc:extend,lv5:caps_switch_lock'

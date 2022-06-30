@@ -1,14 +1,4 @@
 local M = {
-  preconf = function()
-    local ok, which_key = pcall(require, 'which-key')
-    if ok then
-      local maps = {['<leader>'] = {t = {
-        i = {"<cmd>IndentBlanklineToggle<cr>", "Indent guides"},
-        I = {"<cmd>IndentBlanklineToggle!<cr>", "Indent guides globally"},
-      }}}
-      which_key.register(maps, {noremap = true, silent = true})
-    end
-  end,
   packer = {
     'lukas-reineke/indent-blankline.nvim',
     opt = true,

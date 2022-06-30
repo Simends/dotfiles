@@ -1,5 +1,6 @@
 local M = {
   packer = {
+    dap = {
     'mfussenegger/nvim-dap',
     as = 'dap',
     requires = {'nvim-lua/plenary.nvim'},
@@ -34,34 +35,63 @@ local M = {
         keymap_restore = {}
       end
       local opt = {noremap = true, silent = true}
-      local map = {
-        ['<F5>'] = {[[<cmd>lua require'dap'.continue()<CR>]], "Continue"},
-        ['<F9>'] = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "Toggle breakpoint"},
-        ['<F10>'] = {[[<cmd>lua require'dap'.step_over()<cr>]], "Step over"},
-        ['<F11>'] = {[[<cmd>lua require'dap'.step_into()<cr>]], "Step into"},
-        ['<F12>'] = {[[<cmd>lua require'dap'.step_out()<CR>]], "Step out"},
-        ['<leader>'] = {
-          d = {
-            name = "Debug",
-            r = {[[<cmd>lua require'dap'.repl.toggle()<CR>]], "Toggle REPL"},
-            b = {[[<cmd>lua require'dap'.toggle_breakpoint()<CR>]], "Toggle breakpoint"},
-            B = {[[<cmd>lua require'dap'.clear_breakpoints()<CR>]], "Clear all breakpoints"},
-            s = {
-              name = "Show",
-              s = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes)]], "Show scopes"},
-              e = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').expression)]], "Show expression"},
-              t = {[[<cmd>lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').threads)]], "Show threads"},
-            }
-          }
-        }
-      }
-      require('which-key').register(map, opt)
+      -- local Hydra = require('hydra')
+
+        -- Hydra({
+        --   hint = [[
+ -- _H_: Step Out   _J_: Step into     _K_: Step Over   _L_: Continue
+ -- _b_: Toggle breakpoint             _B_: Clear all breakpoints
+ -- ^
+ -- ^ ^              _<Enter>_: Repl              _q_: exit
+-- ]],
+        --   config = {
+        --     color = 'pink',
+        --     invoke_on_body = true,
+        --     hint = {
+        --       position = 'top',
+        --       border = 'rounded'
+        --     },
+        --     on_enter = function()
+        --       vim.bo.modifiable = false
+        --     end,
+        --     on_exit = function()
+        --       vim.bo.modifiable = true
+        --     end
+        --   },
+        --   mode = {'n','x'},
+        --   body = '<leader>d',
+        --   heads = {
+        --     { 'H', dap.step_out() },
+        --     { 'J', dap.step_into() },
+        --     { 'K', dap.step_over() },
+        --     { 'L', dap.continue() },
+        --     { 'b', dap.toggle_breakpoint() },
+        --     { 'B', dap.clear_breakpoints() },
+        --     { '<Enter>', dap.repl.toggle(), { exit = true } },
+        --     { 'q', dap.terminate(), { exit = true, nowait = true } },
+        --   }
+        -- })
       vim.fn.sign_define('DapBreakpoint', {text='', texthl='', linehl='', numhl=''})
       vim.fn.sign_define('DapBreakpointCondition', {text='', texthl='', linehl='', numhl=''})
       vim.fn.sign_define('DapLogPoint', {text='', texthl='', linehl='', numhl=''})
       vim.fn.sign_define('DapBreakpointRejected', {text='', texthl='', linehl='', numhl=''})
     end
-  }
+  },
+  virtualtext = {
+    'theHamsta/nvim-dap-virtual-text',
+    after = {'treesitter', 'dap'},
+    config = function ()
+      require("nvim-dap-virtual-text").setup()
+    end
+  },
+  telescope = {
+    'nvim-telescope/telescope-dap.nvim',
+    after = {'telescope.nvim', 'dap'},
+    config = function ()
+      require('telescope').load_extension('dap')
+    end
+  },
+}
 }
 
 return M

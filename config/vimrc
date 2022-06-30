@@ -8,13 +8,25 @@ let maplocalleader = "\\"
 
 if has('nvim')
   au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=40}
+  autocmd TermOpen * setlocal nonumber norelativenumber
+  au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+  au BufEnter * if &buftype == 'nofile' | :set nonu | :set nornu | :set nolist | endif
   set laststatus=3
+  " set cmdheight=0
   set signcolumn=yes
+  set noshowmode
   nnoremap <silent> , ;
   nnoremap <silent> ; ,
+  tnoremap <Esc><Esc> <C-\><C-n>
+  tnoremap <C-w> <C-\><C-n><C-w>
+  tnoremap <M-h> <C-\><C-n><C-w>h
+  tnoremap <M-j> <C-\><C-n><C-w>j
+  tnoremap <M-k> <C-\><C-n><C-w>k
+  tnoremap <M-l> <C-\><C-n><C-w>l
 else
 
   " Automatically install vim-plug
+nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove all trailing whitespace
   let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
   if empty(glob(data_dir . '/autoload/plug.vim'))
     silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -89,25 +101,12 @@ else
   endif
   set nocp
   set laststatus=2
+  set showmode
   set foldmethod=indent
   set nrformats=alpha,hex
   set statusline=▊\ \ %y\ %f%h%q%m%r\ %=%=%l/%L:%c\ %p%%\ %{FugitiveStatusline()}\ %{&fileencoding?&fileencoding:&encoding}[%{&fileformat}]\ \ ▊
   highlight ColorColumn ctermbg=magenta
   call matchadd('ColorColumn', '\%81v', 100)
-  au User FugitiveIndex nnoremap <buffer> h <plug>fugitive:i
-  au User FugitiveIndex nnoremap <buffer> k <plug>fugitive:n
-  au User FugitiveIndex nnoremap <buffer> o <plug>fugitive:l
-  au User FugitiveIndex nnoremap <buffer> s <plug>fugitive:s
-  au User FugitiveIndex nnoremap <buffer> u <plug>fugitive:u
-  au User FugitiveIndex nnoremap <buffer> - <plug>fugitive:-
-  au User FugitiveIndex nnoremap <buffer> U <plug>fugitive:U
-  au User FugitiveIndex nnoremap <buffer> X <plug>fugitive:X
-  au User FugitiveIndex nnoremap <buffer> = <plug>fugitive:=
-  au User FugitiveIndex nnoremap <buffer> < <plug>fugitive:<
-  au User FugitiveIndex nnoremap <buffer> > <plug>fugitive:>
-  au User FugitiveIndex nnoremap <buffer> H <plug>fugitive:I
-  au User FugitiveIndex nnoremap <buffer> p <plug>fugitive:p
-  au User FugitiveIndex nnoremap <buffer> P <plug>fugitive:P
   nnoremap <silent> , ;
   nnoremap <silent> ; ,
   inoremap <silent> ( ()<Left>
@@ -121,18 +120,6 @@ else
   map ; <plug>Sneak_,
   xmap gl <Plug>(EasyAlign)
   nmap gl <Plug>(EasyAlign)
-  xmap hi <Plug>(textobj-indent-same-i)
-  xmap hb <Plug>(textobj-between-i)
-  xmap hT <Plug>(textobj-datetime-time1)
-  omap hi <Plug>(textobj-indent-same-i)
-  omap hb <Plug>(textobj-between-i)
-  omap hT <Plug>(textobj-datetime-time1)
-  xmap ai <Plug>(textobj-indent-same-a)
-  xmap ab <Plug>(textobj-between-a)
-  xmap aT <Plug>(textobj-datetime-time1)
-  omap ai <Plug>(textobj-indent-same-a)
-  omap ab <Plug>(textobj-between-a)
-  omap aT <Plug>(textobj-datetime-time1)
   nnoremap <silent> <leader>gg :Git<cr>
   nnoremap <silent> <leader>gc :Git commit<cr>
   nnoremap <silent> <leader>gv :GV<cr>
@@ -216,7 +203,6 @@ set scrolloff=10
 set updatetime=50
 set fileencoding=UTF-8
 set background=dark
-set showmode
 set cursorline
 set mouse=a
 set path=**
@@ -256,10 +242,10 @@ function! SetTextPrefs()
   setlocal textwidth=80 formatoptions+=t
   setlocal infercase
   setlocal nocursorline
-  noremap <buffer> e gj
-  noremap <buffer> i gk
-  noremap <buffer> ge j
-  noremap <buffer> gi k
+  noremap <buffer> j gj
+  noremap <buffer> k gk
+  noremap <buffer> gj j
+  noremap <buffer> gk k
   exec "set listchars=tab:\uBB\uBB,multispace:\uB7,trail:\uB7,nbsp:~"
   if filereadable(expand("$XDG_CONFIG_HOME/templates/abbrevations"))
     source $XDG_CONFIG_HOME/templates/abbrevations
@@ -281,9 +267,6 @@ au FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ %
 
 com! -nargs=1 KeyWordPrgLua !qutebrowser https://www.lua.org/manual/5.4/manual.html\#pdf-<args>
 au FileType lua setlocal keywordprg=:KeyWordPrgLua
-au Filetype lua inoremap <silent><buffer>l<Tab> local 
-au Filetype lua inoremap <silent><buffer>f<Tab> function()<cr><cr>end<up>
-au Filetype lua inoremap <silent><buffer>m<Tab> local M = {}<cr><cr><cr><cr>return M<up><up>
 
 au Filetype python setlocal keywordprg=pydoc
 
@@ -294,69 +277,6 @@ au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 " Mappings
 
 nnoremap <F1> K
-" Colemak-dh
-  nnoremap n h
-  nnoremap e j
-  nnoremap i k
-  nnoremap o l
-  nnoremap k nztzv
-  nnoremap j e
-  nnoremap h i
-  nnoremap l o
-  nnoremap E J
-  nnoremap I K
-  nnoremap O L
-  nnoremap K Nztzv
-  nnoremap J E
-  nnoremap H I
-  nnoremap L O
-  vnoremap n h
-  vnoremap e j
-  vnoremap i k
-  vnoremap o l
-  vnoremap k nztzv
-  vnoremap j e
-  vnoremap h i
-  vnoremap l o
-  vnoremap E J
-  vnoremap I K
-  vnoremap O L
-  vnoremap K Nztzv
-  vnoremap J E
-  vnoremap H I
-  vnoremap L O
-  onoremap n h
-  onoremap e j
-  onoremap i k
-  onoremap o l
-  onoremap k n
-  onoremap j e
-  onoremap h i
-  onoremap l o
-  onoremap E J
-  onoremap I K
-  onoremap O L
-  onoremap K N
-  onoremap J E
-  onoremap H I
-  onoremap L O
-  nnoremap gi gk
-  nnoremap ge gj
-  nnoremap gh gi
-  nnoremap gH gI
-  nnoremap gj ge
-  nnoremap gJ gE
-  vnoremap gE gJ
-  au FileType netrw nnoremap <buffer> n h
-  au FileType netrw nnoremap <buffer> e j
-  au FileType netrw nnoremap <buffer> i k
-  au FileType netrw nnoremap <buffer> o l
-  au FileType netrw nnoremap <buffer> h i
-  au FileType netrw nnoremap <buffer> j e
-  au FileType netrw nnoremap <buffer> k n
-  au FileType netrw nnoremap <buffer> l o
-
-
 nmap <silent> Y y$
 nmap <silent> { {zz
 nmap <silent> } }zz
@@ -370,24 +290,23 @@ nmap <silent> ZA :wqa<cr>
 nmap <silent> ZW :wa<cr>
 nmap <silent> gb :e #<cr>
 nnoremap <silent> gd <C-]>zt
-nnoremap <silent> E mzJ`z:delmarks z<cr>
-vnoremap <silent> E :m '>+1<cr>gv=gv
-vnoremap <silent> I :m '<-2<cr>gv=gv
+nnoremap <silent> J mzJ`z:delmarks z<cr>
+vnoremap <silent> J :m '>+1<cr>gv=gv
+vnoremap <silent> K :m '<-2<cr>gv=gv
 nnoremap <silent> <c-m> :mode<cr>
 nnoremap <silent> <c-l> :nohl<cr><c-l>
 nnoremap <silent> <leader>hv :e ~/.vimrc<cr>
 nnoremap <silent> <Tab><Tab> <C-w>w
 nnoremap <silent> <Tab>v <C-w>v
 nnoremap <silent> <Tab>s <C-w>s
-nnoremap <silent> <Tab>o <C-w>l
-nnoremap <silent> <Tab>i <C-w>k
-nnoremap <silent> <Tab>e <C-w>j
-nnoremap <silent> <Tab>n <C-w>h
+nnoremap <silent> <Tab>l <C-w>l
+nnoremap <silent> <Tab>k <C-w>k
+nnoremap <silent> <Tab>j <C-w>j
+nnoremap <silent> <Tab>h <C-w>h
 nnoremap <silent> <leader><leader> /<++><cr>4cl
 
 nnoremap <silent> <leader>r :e<cr>
 nnoremap <silent> <leader>R :so ~/.vimrc<cr>
-nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove all trailing whitespace
 nnoremap <silent> <leader>tn :set nu!<cr>:set rnu!<cr>
 nnoremap <silent> <leader>tt <cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
 nnoremap <silent> <leader>tf :20Lexplore<cr>
@@ -396,10 +315,13 @@ nnoremap <silent> <leader>mm :make<cr>
 nnoremap <silent> <leader>md :make debug<cr>
 nnoremap <silent> <leader>mf :make format<cr>
 nnoremap <silent> <leader>ml :make lint<cr>
-nnoremap <silent> <leader>nsn :setlocal spelllang nb
-nnoremap <silent> <leader>nsN :setlocal spelllang nn
-nnoremap <silent> <leader>nse :setlocal spelllang en
+nnoremap <silent> <leader>nsn :setlocal spelllang=nb
+nnoremap <silent> <leader>nsN :setlocal spelllang=nn
+nnoremap <silent> <leader>nse :setlocal spelllang=en
 
 nnoremap <silent> QQ :copen<cr>
-nnoremap <silent> QO :cn<cr>
-nnoremap <silent> QN :cp<cr>
+nnoremap <silent> QL :cn<cr>
+nnoremap <silent> QH :cp<cr>
+inoremap <c-s> <esc>:w<cr>a
+imap <c-l> <esc><c-l>a
+imap <c-w> <esc><c-w>

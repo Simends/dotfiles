@@ -1,12 +1,14 @@
 local M = {}
 
 M.packer = {
+  packer = {
   'wbthomason/packer.nvim',
   config = function ()
     vim.api.nvim_set_keymap('n', '<leader>hpu', '<cmd>PackerSync<cr>', {noremap = true, silent = true})
     vim.api.nvim_set_keymap('n', '<leader>hps', '<cmd>PackerStatus<cr>', {noremap = true, silent = true})
     vim.api.nvim_set_keymap('n', '<leader>hpp', '<cmd>PackerProfile<cr>', {noremap = true, silent = true})
   end
+}
 }
 
 M.config = {

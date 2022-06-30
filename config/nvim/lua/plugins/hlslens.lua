@@ -1,14 +1,6 @@
 local M = {
-  preconf = function ()
-    local ok, which_key = pcall(require, 'which-key')
-    if ok then
-      local maps = {['<leader>'] = {t = {
-        h = {"<cmd>HlSearchLensToggle<cr>", "Hlsearch Lens"}
-      }}}
-      which_key.register(maps, {noremap = true, silent = true})
-    end
-  end,
   packer = {
+    hlslens = {
     'kevinhwang91/nvim-hlslens',
     config = function()
       require('hlslens').setup({
@@ -20,9 +12,9 @@ local M = {
           local indicator, text, chunks
           local absRelIdx = math.abs(relIdx)
           if absRelIdx > 1 then
-            indicator = ('%d%s'):format(absRelIdx, sfw ~= (relIdx > 1) and 'K' or 'k')
+            indicator = ('%d%s'):format(absRelIdx, sfw ~= (relIdx > 1) and 'N' or 'n')
           elseif absRelIdx == 1 then
-            indicator = sfw ~= (relIdx == 1) and 'K' or 'k'
+            indicator = sfw ~= (relIdx == 1) and 'N' or 'n'
           else
             indicator = ''
           end
@@ -43,8 +35,8 @@ local M = {
         end
       })
       local kopts = {noremap = true, silent = true}
-      vim.api.nvim_set_keymap('n', 'k', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
-      vim.api.nvim_set_keymap('n', 'K', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       local maps = {g = {
@@ -59,6 +51,7 @@ local M = {
     hi! link HlSearchFloat Search 
     ]])
     end
+  },
   }
 }
 

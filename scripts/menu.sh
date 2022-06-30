@@ -22,13 +22,13 @@ SelPower() {
             loginctl kill-user $(whoami)
             ;;
         "Reboot")
-            sudo reboot
+            loginctl reboot
             ;;
         "Shutdown")
-            sudo poweroff
+            loginctl poweroff
             ;;
         "Reboot to UEFI Menu")
-            sudo loginctl reboot --firmware-setup
+            loginctl reboot --firmware-setup
             ;;
         "Reboot to something else")
             efibootmgr \
@@ -162,6 +162,7 @@ MainMenu=$(echo -e "Applications\
 \nTheme Settings\
 \nCompositor\
 \nShow Fonts\
+\nAll Settings\
 \nPower" | $MenuProg)
 case "$MainMenu" in
     "Applications")
@@ -292,7 +293,7 @@ case "$MainMenu" in
         $Terminal fzcht
         ;;
     "File Manager")
-        pcmanfm
+        pcmanfm-qt
         ;;
     "View Images")
         SelImg=$(sxiv -r "$(xdg-user-dir PICTURES)")
@@ -349,7 +350,7 @@ case "$MainMenu" in
         setwp
         ;;
     "Theme Settings")
-        lxappearance
+        lxqt-config-appearance
         ;;
     "Compositor")
         SelWm
@@ -358,6 +359,9 @@ case "$MainMenu" in
         fntnme=$(fc-list | awk '{$1=""; print $0}' | $MenuProg)
         fntpth=$(fc-list | grep "$fntnme" | sed '1!d' | awk '{print $1}' | sed 's/://g')
         display "$fntpth"
+        ;;
+    "All Settings")
+        lxqt-config
         ;;
     "Power")
         SelPower

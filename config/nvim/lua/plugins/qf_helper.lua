@@ -1,5 +1,6 @@
 local M = {
   packer = {
+    qf = {
     'stevearc/qf_helper.nvim',
     config = function()
       require'qf_helper'.setup({
@@ -27,15 +28,16 @@ local M = {
       local map = {
         Q = {"<cmd>QFToggle<cr>", "Toggle quickfix"},
         q = {"<cmd>QFToggle!<cr>", "Toggle silent quickfix"},
-        L = {"<cmd>LLToggle<cr>", "Toggle loclist"},
-        l = {"<cmd>LLToggle!<cr>", "Toggle silent loclist"},
-        O = {"<cmd>QNext<cr>", "Next in list"},
-        o = {"<cmd>QNext!<cr>", "Next silent in list"},
-        N = {"<cmd>QPrev<cr>", "Prev in list"},
-        n = {"<cmd>QPrev!<cr>", "Prev silent in list"}
+        C = {"<cmd>LLToggle<cr>", "Toggle loclist"},
+        c = {"<cmd>LLToggle!<cr>", "Toggle silent loclist"},
+        L = {"<cmd>QNext<cr>", "Next in list"},
+        l = {"<cmd>QNext!<cr>", "Next silent in list"},
+        H = {"<cmd>QPrev<cr>", "Prev in list"},
+        h = {"<cmd>QPrev!<cr>", "Prev silent in list"}
       }
       require('which-key').register(map, opt)
     end
+  },
   }
 }
 
