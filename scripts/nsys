@@ -5,7 +5,7 @@ wikipath="$notatsyspath/wiki"
 templatepath="$notatsyspath/.templates"
 journalpath="$notatsyspath/journal"
 contactspath="$notatsyspath/kontakter"
-calfile="$notatsyspath/kalender.txt"
+calfile="$notatsyspath/kalender.md"
 litdir="$notatsyspath/doks/litteratur"
 finder="fzf --reverse --border=rounded --cycle --height=40%"
 
@@ -55,43 +55,6 @@ newTask() {
   echo " [ ] $1" >> "$day_file"
 }
 
-journal() {
-  date_format="%Y/%m/%d.md"
-  today=$(date +"$date_format")
-  case "$2" in
-    "print" | "p")
-      if [ "$3" == "" ] || [ "$3" == "today" ]
-      then
-        day="$today"
-      else
-        day=$(date +"$date_format" -d "$3")
-      fi
-      printDay "$day"
-      ;;
-    "add-note" | "n")
-      if [ "$4" == "" ] || [ "$4" == "today" ]
-      then
-        day="$today"
-      else
-        day=$(date +"$date_format" -d "$4")
-      fi
-      newNote "$3" "$day"
-      ;;
-    "add-task" | "t")
-      if [ "$4" == "" ] || [ "$4" == "today" ]
-      then
-        day="$today"
-      else
-        day=$(date +"$date_format" -d "$4")
-      fi
-      newTask "$3" "$day"
-      ;;
-    *)
-      printDay "$today"
-      ;;
-  esac
-}
-
 wiki() {
   case "$2" in
     "tags" | "t")
@@ -123,12 +86,6 @@ wiki tags
   Search notes based on tag
 wiki find
   Search notes
-journal print [DAY]
-  Print a day (or today if no day is given)
-journal add-note NOTE [DAY]
-  Add a note to a day (or today if no day is given)
-journal add-task TASK [DAY]
-  Add a task to a day (or today if no day is given)
 desktop
   Open desktop file in EDITOR
 cal DATE
@@ -137,6 +94,14 @@ edcal
   Edit calender
 lit
   Open document and notes
+pdf
+  Convert note to pdf
+commit
+  Commit changes
+log
+  Show all changes
+checkout
+  View specific commit
 "
 }
 
@@ -159,6 +124,18 @@ case "$1" in
     ;;
   "lit")
     lit
+    ;;
+  "pdf")
+    pandoc -t pdf "$2" -o - | zathura -
+    ;;
+  "commit")
+    git commit -am "Endringer"
+    ;;
+  "log")
+    git log
+    ;;
+  "checkout")
+    git checkout "$2"
     ;;
   *)
     printHelp

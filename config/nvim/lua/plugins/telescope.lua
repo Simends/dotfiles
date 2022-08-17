@@ -60,7 +60,7 @@ local M = {
 
             -- These are passed to nvim_open_win
             anchor = "SW",
-            border = "rounded",
+            border = "single",
             -- 'editor' and 'win' will default to being centered
             relative = "cursor",
 
@@ -73,7 +73,7 @@ local M = {
             min_width = { 20, 0.2 },
 
             -- Window transparency (0-100)
-            winblend = 10,
+            winblend = 0,
             -- Change default highlight groups (see :help winhl)
             winhighlight = "",
 
@@ -97,7 +97,7 @@ local M = {
             builtin = {
               -- These are passed to nvim_open_win
               anchor = "NW",
-              border = "rounded",
+              border = "single",
               -- 'editor' and 'win' will default to being centered
               relative = "editor",
 

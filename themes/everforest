@@ -1,0 +1,36 @@
+! special
+#define colorforeground #d8caac
+#define colorbackground #323d43
+! *.cursorColor:  #d8caac
+
+! black
+#define c0 #868d80
+#define c8 #868d80
+
+! red
+#define c1 #e68183
+#define c9 #e68183
+
+! green
+#define c2 #a7c080
+#define c10 #a7c080
+
+! yellow
+#define c3 #d9bb80
+#define c11 #d9bb80
+
+! blue
+#define c4 #89beba
+#define c12 #89beba
+
+! magenta
+#define c5 #d3a0bc
+#define c13 #d3a0bc
+
+! cyan
+#define c6 #87c095
+#define c14 #87c095
+
+! white
+#define c7 #d8caac
+#define c15 #d8caac

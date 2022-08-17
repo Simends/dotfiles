@@ -58,7 +58,7 @@ local M = {
             invoke_on_body = false,
             hint = {
               position = 'top-right',
-              border = 'rounded'
+              border = 'single'
             },
             on_enter = function()
               vim.bo.modifiable = false
@@ -82,75 +82,81 @@ local M = {
           }
         })
 
-        local splits = require('smart-splits')
-        window_hydra = Hydra({
-          hint = [[
- ^^^^^^     Move     ^^^^^^   ^^    Size   ^^   ^^     Split
- ^^^^^^--------------^^^^^^   ^^-----------^^   ^^---------------
- ^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    ^   _<C-k>_   ^   _s_: horizontally
- _h_ ^ ^ _l_   _H_ ^ ^ _L_    _<C-h>_ _<C-l>_   _v_: vertically
- ^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    ^   _<C-j>_   ^   _q_: close
- focus^^^^^^   window^^^^^^   ^_=_: equalize    ^ ^
- ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^^ ^          ^   _b_: choose buffer 
-]],
-          name = 'Windows',
-          config = {
-            color = 'red',
-            invoke_on_body = true,
-            hint = {
-              border = 'rounded',
-              position = 'top-right'
-            }
-          },
-          mode = 'n',
-          body = '<c-w>',
-          heads = {
-            { 'h', '<C-w>h' },
-            { 'j', '<C-w>j' },
-            { 'k', [[<cmd>try | wincmd k | catch /^Vim\%((\a\+)\)\=:E11:/ | close | endtry<CR>]] },
-            { 'l', '<C-w>l' },
-            { 'H', '<Cmd>WinShift left<CR>' },
-            { 'J', '<Cmd>WinShift down<CR>' },
-            { 'K', '<Cmd>WinShift up<CR>' },
-            { 'L', '<Cmd>WinShift right<CR>' },
-            { 's', '<C-w>s' },
-            { 'v', '<C-w>v' },
-            { 'V', ':vsp | :term zsh<cr>i' },
-            { 'S', ':sp | :term zsh<cr>i' },
-            { '<C-h>', function() splits.resize_left(10)  end },
-            { '<C-j>', function() splits.resize_down(10)  end },
-            { '<C-k>', function() splits.resize_up(10)    end },
-            { '<C-l>', function() splits.resize_right(10) end },
-            { '=', '<C-w>=', { desc = 'equalize'} },
-            { 'b', '<Cmd>BufExplorer<CR>', { exit = true, desc = 'choose buffer' } },
-            { 'q', [[<Cmd>try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry<CR>]],
-              { desc = 'close window' } },
-            { '<Esc>', nil,  { exit = true, desc = false }}
-          }
-        })
+        -- local splits = require('smart-splits')
+        -- window_hydra = Hydra({
+        --   hint = [[
 
-        toggle_hydra = Hydra({
-              name = 'Toggle',
-              hint = [[
-  _f_: File Explorer    _l_: Light mode     _t_: Todo comments    _n_: Line numbers
-              ]],
-              config = {
-                color = 'red',
-                invoke_on_body = true,
-                hint = {
-                  position = 'top-right',
-                  border = 'rounded'
-                }
-              },
-              mode = 'n',
-              body = '<leader>t',
-              heads = {
-                { 'f', ':29Lexplore<cr>'},
-                { 'l', 'ToggleLightMode<cr>'},
-                { 't', [[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]]},
-                { 'n', ':set nu!<cr>:set rnu!<cr>'},
-              }
-            })
+ -- ^^^^^^     Move     ^^^^^^   ^^    Size   ^^   ^^     Split
+ -- ^^^^^^--------------^^^^^^   ^^-----------^^   ^^---------------
+ -- ^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    ^   _<C-k>_   ^   _s_: horizontally
+ -- _h_ ^ ^ _l_   _H_ ^ ^ _L_    _<C-h>_ _<C-l>_   _v_: vertically
+ -- ^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    ^   _<C-j>_   ^   _z_: zoom
+ -- focus^^^^^^   window^^^^^^   ^_=_: equalize^   _t_: terminal
+ -- ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^^ ^          ^   _q_: close
+ -- ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^^ ^          ^   _b_: choose buffer 
+
+-- ]],
+        --   name = 'Windows',
+        --   config = {
+        --     color = 'red',
+        --     invoke_on_body = true,
+        --     hint = {
+        --       border = 'single',
+        --       position = 'top-right'
+        --     }
+        --   },
+        --   mode = 'n',
+        --   body = '<c-w>',
+        --   heads = {
+        --     { 'h', '<C-w>h' },
+        --     { 'j', '<C-w>j' },
+        --     { 'k', [[<cmd>try | wincmd k | catch /^Vim\%((\a\+)\)\=:E11:/ | close | endtry<CR>]] },
+        --     { 'l', '<C-w>l' },
+        --     { 'H', '<Cmd>WinShift left<CR>' },
+        --     { 'J', '<Cmd>WinShift down<CR>' },
+        --     { 'K', '<Cmd>WinShift up<CR>' },
+        --     { 'L', '<Cmd>WinShift right<CR>' },
+        --     { 's', '<C-w>s' },
+        --     { 'v', '<C-w>v' },
+        --     { '<C-h>', function() splits.resize_left(10)  end },
+        --     { '<C-j>', function() splits.resize_down(10)  end },
+        --     { '<C-k>', function() splits.resize_up(10)    end },
+        --     { '<C-l>', function() splits.resize_right(10) end },
+        --     { '=', '<C-w>=', { desc = 'equalize'} },
+        --     { 't', ':ToggleTerm<cr>', { exit = true } },
+        --     { 'z', ':ZenMode<cr>', { exit = true } },
+        --     { 'b', '<Cmd>JABSOpen<CR>', { exit = true, desc = 'choose buffer' } },
+        --     { 'q', [[<Cmd>try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry<CR>]],
+        --       { desc = 'close window' } },
+        --     { '<Esc>', nil,  { exit = true, desc = false }}
+        --   }
+        -- })
+
+        -- toggle_hydra = Hydra({
+        --       name = 'Toggle',
+        --       hint = [[
+  -- _f_: File Explorer    _l_: Light mode     _t_: Todo comments
+  -- _n_: Line numbers     _c_: Colorizer      _s_: Scrollbar
+        --       ]],
+        --       config = {
+        --         color = 'red',
+        --         invoke_on_body = true,
+        --         hint = {
+        --           position = 'top-right',
+        --           border = 'single'
+        --         }
+        --       },
+        --       mode = 'n',
+        --       body = '<leader>t',
+        --       heads = {
+        --         { 'f', ':29Lexplore<cr>'},
+        --         { 'l', ':ToggleLightMode<cr>'},
+        --         { 'c', ':ColorizerToggle<cr>'},
+        --         { 's', ':ScrollbarToggle<cr>'},
+        --         { 't', [[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]]},
+        --         { 'n', ':set nu!<cr>:set rnu!<cr>'},
+        --       }
+        --     })
 
         telescope_hydra = Hydra({
           name = 'Telescope',
@@ -170,7 +176,7 @@ local M = {
             invoke_on_body = true,
             hint = {
               position = 'top-right',
-              border = 'rounded',
+              border = 'single',
             },
           },
           mode = 'n',
@@ -203,10 +209,10 @@ local M = {
         local ok, which_key = pcall(require, 'which-key')
         if ok then
           local maps = {['<leader>'] = {
-            w = {":lua window_hydra:activate()<cr>", "Windows"},
+            -- w = {":lua window_hydra:activate()<cr>", "Windows"},
             d = {":lua dap_hydra:activate()<cr>", "Debug"},
             f = {":lua telescope_hydra:activate()<cr>", "Telescope"},
-            t = {":lua toggle_hydra:activate()<cr>", "Toggle"},
+            -- t = {":lua toggle_hydra:activate()<cr>", "Toggle"},
           }}
           which_key.register(maps, {noremap = true, silent = true})
         end

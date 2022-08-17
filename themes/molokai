@@ -1,0 +1,35 @@
+! terminal colours
+#define colorforeground #CCCCCC
+#define colorbackground #1B1D1E
+
+!black darkgray
+#define c0 #1B1D1E
+#define c8 #808080
+
+!darkred red
+#define c1 #FF0044
+#define c9 #F92672
+
+!darkgreen green
+#define c2 #82B414
+#define c10 #A6E22E
+
+!darkyellow yellow
+#define c3 #FD971F
+#define c11 #E6DB74
+
+!darkblue blue
+#define c4 #266C98
+#define c12 #7070F0
+
+!darkmagenta magenta
+#define c5 #AC0CB1
+#define c13 #D63AE1
+
+!darkcyan cyan
+#define c6 #AE81FF
+#define c14 #66D9EF
+
+!gray white
+#define c7 #CCCCCC
+#define c15 #F8F8F2

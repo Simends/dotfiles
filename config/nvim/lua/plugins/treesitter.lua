@@ -126,13 +126,13 @@ local M = {
       }
     end
   },
-  spellsitter = {
-    'lewis6991/spellsitter.nvim',
-    as = 'spellsitter',
-    config = function()
-      require('spellsitter').setup()
-    end
-  },
+  -- spellsitter = {
+  --   'lewis6991/spellsitter.nvim',
+  --   as = 'spellsitter',
+  --   config = function()
+  --     require('spellsitter').setup()
+  --   end
+  -- },
 }
 }
 

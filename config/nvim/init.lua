@@ -31,12 +31,11 @@ require('packer').startup({
     use.plugin('undotree')                  -- Visualize vims powerful revision history
     use.plugin('tmux')
     use.plugin('gps')                  -- Simple statusline component that shows what scope you are working inside
-    use.plugin('autosession')
+    -- use.plugin('autosession')
     use.plugin('windows')                   -- Improved window management
-    use.plugin('dispatch')
-    use.plugin('hlslens')
+    -- use.plugin('hlslens')
     use.plugin('qf_helper')                 -- Better quickfix and loclist
-    use.plugin('scrollbar')
+    -- use.plugin('scrollbar')
     use.plugin('devicons')                  -- Pretty filetype icons
     use.plugin('which_key')                 -- Remember all the keybindings
     use.plugin('mkdnflow')                -- Better notetaking TODO: Something wrongmk
@@ -63,6 +62,7 @@ use.lang('python',        {lsp = true,  treesitter = true,  dap = true,   linter
 use.lang('lua',           {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 use.lang('fennel',        {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 use.lang('vim',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = false})
+use.lang('zig',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = false})
 -- use.lang('hdl',        nolint)
 use.lang('makefile',      {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 use.lang('dockerfile',    {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
@@ -86,8 +86,6 @@ local map = {
   ['<leader>'] = {
     r = {":e<cr>", "Reload buffer"},
     R = {":so ~/.vimrc<cr>", "Reload vimrc"},
-    p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
-    W = {[[mz:%s/\s\+$//e<cr>`z:delmarks z<cr>]], "Trim trialing whitespace"},
 
     n = {
       name = "Notes",
@@ -98,6 +96,12 @@ local map = {
         N = {"<cmd>setlocal spelllang=nn<cr>", "Set language to Norwegian Nynorsk"},
         e = {"<cmd>setlocal spelllang=en<cr>", "Set language to English"},
       }
+    },
+
+    e = {
+      name = 'Edit',
+      w = {[[mz:%s/\s\+$//e<cr>`z:delmarks z<cr>]], "Trim trialing whitespace"},
+      p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
     },
 
     h = {

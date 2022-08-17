@@ -39,7 +39,11 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
   let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
   let g:fugitive_defer_to_existing_maps = 1
   let g:SuperTabDefaultCompletionType = "context"
-  let g:polyglot_disabled = ['markdown']
+  " let g:polyglot_disabled = ['markdown']
+  let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+  let g:pandoc#filetypes#pandoc_markdown = 0
+  let g:vim_markdown_no_extensions_in_markdown = 1
+  let g:markdown_fenced_languages = ['c', 'html', 'vim', 'ruby', 'python', 'bash=sh', 'vhdl']
   let g:textobj_datetime_no_default_key_mappings = 1
   let g:textobj_indent_no_default_key_mappings = 1
   let g:textobj_between_no_default_key_mappings = 1
@@ -82,19 +86,19 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
     Plug 'lervag/lists.vim'
     Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
     Plug 'mbbill/undotree', { 'on':  'UndotreeToggle' }
+    Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax' 
     " Colors
     Plug 'morhetz/gruvbox'
     Plug 'rakr/vim-one'
-    Plug 'junegunn/seoul256.vim'
-    Plug 'ghifarit53/tokyonight-vim'
-    Plug 'preservim/vim-colors-pencil'
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'arcticicestudio/nord-vim'
+    Plug 'tomasr/molokai'
+    Plug 'ayu-theme/ayu-vim'
     Plug 'franbach/miramare'
     Plug 'savq/melange'
-    Plug 'https://gitlab.com/yorickpeterse/vim-paper.git'
-    Plug 'juanedi/predawn.vim'
     Plug 'olivertaylor/vacme'
     Plug 'sainnhe/everforest'
-    Plug 'kadekillary/skull-vim'
   call plug#end()
   if has('syntax') && !exists('g:syntax_on')
     syntax enable
@@ -107,11 +111,9 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
   set statusline=▊\ \ %y\ %f%h%q%m%r\ %=%=%l/%L:%c\ %p%%\ %{FugitiveStatusline()}\ %{&fileencoding?&fileencoding:&encoding}[%{&fileformat}]\ \ ▊
   highlight ColorColumn ctermbg=magenta
   call matchadd('ColorColumn', '\%81v', 100)
+  au VimEnter * RainbowParentheses
   nnoremap <silent> , ;
   nnoremap <silent> ; ,
-  inoremap <silent> ( ()<Left>
-  inoremap <silent> [ []<Left>
-  inoremap <silent> { {}<Left>
   nnoremap <silent> <F8> :TagbarToggle<CR>
   nnoremap <silent> <F9> :UndotreeToggle<CR>
   vmap <expr>  ++  VMATH_YankAndAnalyse()
@@ -124,14 +126,16 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
   nnoremap <silent> <leader>gc :Git commit<cr>
   nnoremap <silent> <leader>gv :GV<cr>
   nnoremap <silent> <leader>tz :Goyo<cr>
-  nnoremap <silent> æ :Files<cr>
-  nnoremap <silent> ø :Rg<cr>
+  nnoremap <silent> ø :Files<cr>
+  nnoremap <silent> æ :Rg<cr>
   nnoremap <silent> <leader>hh :Helptags<cr>
   nnoremap <silent> <leader>hc :Colors<cr>
   nnoremap <silent> <leader>ff :Files<cr>
   nnoremap <silent> <leader>fg :Rg<cr>
   nnoremap <silent> <leader>fb :Buffers<cr>
   nnoremap <silent> <leader>fm :Marks<cr>
+  let g:everforest_background = 'soft'
+  let g:everforest_enable_italic = 1
   " Set colors
   if &term =~ '256color'
     " Enable true (24-bit) colors instead of (8-bit) 256 colors.
@@ -141,7 +145,7 @@ nnoremap <silent> <leader>w mz:%s/\s\+$//e<cr>`z:delmarks z<cr>       " Remove a
       let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
       set termguicolors
     endif
-    colorscheme gruvbox
+    colorscheme everforest
   endif
   " set guioptions-=m
   " set guioptions-=T
@@ -223,9 +227,9 @@ set list
 
 " Commands
 
-com! -nargs=+ Grep vimgrep <args> **/*                        " Use vimgrep in folder
-com! -nargs=1 Ctags !ctags -R --language-force=<args>         " Generate tags file for specific lang and for all files in folder
-com! -nargs=1 Temp read $XDG_CONFIG_HOME/templates/<args>     " Insert template
+com! -nargs=+ Grep vimgrep <args> **/*
+com! -nargs=1 Ctags !ctags -R --language-force=<args>
+com! -nargs=1 Temp read $XDG_CONFIG_HOME/templates/<args>
 com! ToggleLightMode let &background = ( &background == "dark"? "light" : "dark" )
 
 au SwapExists * let v:swapchoice = 'o'
@@ -260,8 +264,11 @@ endfunction
 au Filetype text,mail,markdown call SetTextPrefs()
 com! TextMode call SetTextPrefs()
 
-au Filetype markdown inoremap [<Tab> [](<++>)<++><esc>F[a
-au Filetype markdown nnoremap <leader>nt <cmd>vimgrep /^##* / %<cr>
+au Filetype pandoc,markdown inoremap [<Tab> [](<++>)<++><esc>F[a
+au Filetype pandoc,markdown nnoremap <leader>nt <cmd>vimgrep /^##* / %<cr>
+au Filetype pandoc nnoremap <buffer> <silent> <cr> <Plug>(Markdown_EditUrlUnderCursor)
+au Filetype pandoc nnoremap <buffer> <silent> gb <Plug>(pandoc-keyboard-links-back)
+au Filetype pandoc nnoremap <buffer> <silent> gB <Plug>(pandoc-keyboard-links-file-back)
 
 au FileType sh setlocal makeprg=shellcheck\ -f\ gcc\ %
 
@@ -296,14 +303,9 @@ vnoremap <silent> K :m '<-2<cr>gv=gv
 nnoremap <silent> <c-m> :mode<cr>
 nnoremap <silent> <c-l> :nohl<cr><c-l>
 nnoremap <silent> <leader>hv :e ~/.vimrc<cr>
-nnoremap <silent> <Tab><Tab> <C-w>w
-nnoremap <silent> <Tab>v <C-w>v
-nnoremap <silent> <Tab>s <C-w>s
-nnoremap <silent> <Tab>l <C-w>l
-nnoremap <silent> <Tab>k <C-w>k
-nnoremap <silent> <Tab>j <C-w>j
-nnoremap <silent> <Tab>h <C-w>h
+nnoremap <silent> <leader>ht :Colors<cr>
 nnoremap <silent> <leader><leader> /<++><cr>4cl
+inoremap <silent> <C-x> <esc>/<++><cr>4cl
 
 nnoremap <silent> <leader>r :e<cr>
 nnoremap <silent> <leader>R :so ~/.vimrc<cr>
@@ -311,13 +313,13 @@ nnoremap <silent> <leader>tn :set nu!<cr>:set rnu!<cr>
 nnoremap <silent> <leader>tt <cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>
 nnoremap <silent> <leader>tf :20Lexplore<cr>
 nnoremap <silent> <leader>tl :ToggleLightMode<cr>
-nnoremap <silent> <leader>mm :make<cr>
-nnoremap <silent> <leader>md :make debug<cr>
-nnoremap <silent> <leader>mf :make format<cr>
-nnoremap <silent> <leader>ml :make lint<cr>
-nnoremap <silent> <leader>nsn :setlocal spelllang=nb
-nnoremap <silent> <leader>nsN :setlocal spelllang=nn
-nnoremap <silent> <leader>nse :setlocal spelllang=en
+" nnoremap <silent> <leader>mm :make<cr>
+" nnoremap <silent> <leader>md :make debug<cr>
+" nnoremap <silent> <leader>mf :make format<cr>
+" nnoremap <silent> <leader>ml :make lint<cr>
+nnoremap <silent> <leader>nsn :setlocal spelllang=nb<cr>
+nnoremap <silent> <leader>nsN :setlocal spelllang=nn<cr>
+nnoremap <silent> <leader>nse :setlocal spelllang=en<cr>
 
 nnoremap <silent> QQ :copen<cr>
 nnoremap <silent> QL :cn<cr>

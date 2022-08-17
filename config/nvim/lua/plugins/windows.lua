@@ -47,109 +47,138 @@ local M = {
         }
       end
     },
-    smartsplits = {
-      'mrjones2014/smart-splits.nvim',
-      config = function()
-        require('smart-splits').setup({
-          -- Ignored filetypes (only while resizing)
-          ignored_filetypes = {
-            'nofile',
-            'quickfix',
-            'prompt',
-          },
-          -- Ignored buffer types (only while resizing)
-          ignored_buftypes = { 'NvimTree' },
-          -- when moving cursor between splits left or right,
-          -- place the cursor on the same row of the *screen*
-          -- regardless of line numbers. False by default.
-          -- Can be overridden via function parameter, see Usage.
-          move_cursor_same_row = false,
-          -- resize mode options
-          resize_mode = {
-            -- key to exit persistent resize mode
-            quit_key = '<ESC>',
-            -- set to true to silence the notifications
-            -- when entering/exiting persistent resize mode
-            silent = false,
-            -- must be functions, they will be executed when
-            -- entering or exiting the resize mode
-            hooks = {
-              on_enter = nil,
-              on_leave = nil
-            }
-          }
-        })
-      end
-    },
-    winshift = {
-      'sindrets/winshift.nvim',
-      config = function()
-        require("winshift").setup({
-          highlight_moving_win = true,  -- Highlight the window being moved
-          focused_hl_group = "Visual",  -- The highlight group used for the moving window
-          moving_win_options = {
-            -- These are local options applied to the moving window while it's
-            -- being moved. They are unset when you leave Win-Move mode.
-            wrap = false,
-            cursorline = false,
-            cursorcolumn = false,
-            colorcolumn = "",
-          },
-          keymaps = {
-            disable_defaults = false, -- Disable the default keymaps
-            win_move_mode = {
-              ["h"] = "left",
-              ["j"] = "down",
-              ["k"] = "up",
-              ["l"] = "right",
-              ["H"] = "far_left",
-              ["J"] = "far_down",
-              ["K"] = "far_up",
-              ["L"] = "far_right",
-              ["<left>"] = "left",
-              ["<down>"] = "down",
-              ["<up>"] = "up",
-              ["<right>"] = "right",
-              ["<S-left>"] = "far_left",
-              ["<S-down>"] = "far_down",
-              ["<S-up>"] = "far_up",
-              ["<S-right>"] = "far_right",
-            },
-          },
-          ---A function that should prompt the user to select a window.
-          ---
-          ---The window picker is used to select a window while swapping windows with
-          ---`:WinShift swap`.
-          ---@return integer? winid # Either the selected window ID, or `nil` to
-          ---   indicate that the user cancelled / gave an invalid selection.
-          window_picker = function()
-            return require("winshift.lib").pick_window({
-              -- A string of chars used as identifiers by the window picker.
-              picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-              filter_rules = {
-                -- This table allows you to indicate to the window picker that a window
-                -- should be ignored if its buffer matches any of the following criteria.
-                cur_win = true, -- Filter out the current window
-                floats = true,  -- Filter out floating windows
-                filetype = {},  -- List of ignored file types
-                buftype = {},   -- List of ignored buftypes
-                bufname = {},   -- List of vim regex patterns matching ignored buffer names
-              },
-              ---A function used to filter the list of selectable windows.
-              ---@param winids integer[] # The list of selectable window IDs.
-              ---@return integer[] filtered # The filtered list of window IDs.
-              filter_func = nil,
-            })
-          end,
-        })
-      end
-    },
-  BufExplorer = {
-      'jlanzarotta/bufexplorer',
-      config = function()
-        vim.g.bufExplorerDisableDefaultKeyMapping = 1
-      end
-    },
+    -- smartsplits = {
+    --   'mrjones2014/smart-splits.nvim',
+    --   config = function()
+    --     require('smart-splits').setup({
+    --       -- Ignored filetypes (only while resizing)
+    --       ignored_filetypes = {
+    --         'nofile',
+    --         'quickfix',
+    --         'prompt',
+    --       },
+    --       -- Ignored buffer types (only while resizing)
+    --       ignored_buftypes = { 'NvimTree' },
+    --       -- when moving cursor between splits left or right,
+    --       -- place the cursor on the same row of the *screen*
+    --       -- regardless of line numbers. False by default.
+    --       -- Can be overridden via function parameter, see Usage.
+    --       move_cursor_same_row = false,
+    --       -- resize mode options
+    --       resize_mode = {
+    --         -- key to exit persistent resize mode
+    --         quit_key = '<ESC>',
+    --         -- set to true to silence the notifications
+    --         -- when entering/exiting persistent resize mode
+    --         silent = false,
+    --         -- must be functions, they will be executed when
+    --         -- entering or exiting the resize mode
+    --         hooks = {
+    --           on_enter = nil,
+    --           on_leave = nil
+    --         }
+    --       }
+    --     })
+    --   end
+    -- },
+    --winshift = {
+    --  'sindrets/winshift.nvim',
+    --  config = function()
+    --    require("winshift").setup({
+    --      highlight_moving_win = true,  -- Highlight the window being moved
+    --      focused_hl_group = "Visual",  -- The highlight group used for the moving window
+    --      moving_win_options = {
+    --        -- These are local options applied to the moving window while it's
+    --        -- being moved. They are unset when you leave Win-Move mode.
+    --        wrap = false,
+    --        cursorline = false,
+    --        cursorcolumn = false,
+    --        colorcolumn = "",
+    --      },
+    --      keymaps = {
+    --        disable_defaults = false, -- Disable the default keymaps
+    --        win_move_mode = {
+    --          ["h"] = "left",
+    --          ["j"] = "down",
+    --          ["k"] = "up",
+    --          ["l"] = "right",
+    --          ["H"] = "far_left",
+    --          ["J"] = "far_down",
+    --          ["K"] = "far_up",
+    --          ["L"] = "far_right",
+    --          ["<left>"] = "left",
+    --          ["<down>"] = "down",
+    --          ["<up>"] = "up",
+    --          ["<right>"] = "right",
+    --          ["<S-left>"] = "far_left",
+    --          ["<S-down>"] = "far_down",
+    --          ["<S-up>"] = "far_up",
+    --          ["<S-right>"] = "far_right",
+    --        },
+    --      },
+    --      ---A function that should prompt the user to select a window.
+    --      ---
+    --      ---The window picker is used to select a window while swapping windows with
+    --      ---`:WinShift swap`.
+    --      ---@return integer? winid # Either the selected window ID, or `nil` to
+    --      ---   indicate that the user cancelled / gave an invalid selection.
+    --      window_picker = function()
+    --        return require("winshift.lib").pick_window({
+    --          -- A string of chars used as identifiers by the window picker.
+    --          picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+    --          filter_rules = {
+    --            -- This table allows you to indicate to the window picker that a window
+    --            -- should be ignored if its buffer matches any of the following criteria.
+    --            cur_win = true, -- Filter out the current window
+    --            floats = true,  -- Filter out floating windows
+    --            filetype = {},  -- List of ignored file types
+    --            buftype = {},   -- List of ignored buftypes
+    --            bufname = {},   -- List of vim regex patterns matching ignored buffer names
+    --          },
+    --          ---A function used to filter the list of selectable windows.
+    --          ---@param winids integer[] # The list of selectable window IDs.
+    --          ---@return integer[] filtered # The filtered list of window IDs.
+    --          filter_func = nil,
+    --        })
+    --      end,
+    --    })
+    --  end
+    --},
+    -- jabs = {
+    --   'matbme/JABS.nvim',
+    --   config = function()
+    --     require 'jabs'.setup {
+    --       -- Options for the main window
+    --       position = 'corner', -- center, corner. Default corner
+    --       width = 80, -- default 50
+    --       height = 20, -- default 10
+    --       border = 'single', -- none, single, double, rounded, solid, shadow, (or an array or chars). Default shadow
+
+    --       -- Options for preview window
+    --       preview_position = 'top', -- top, bottom, left, right. Default top
+    --       preview = {
+    --         width = 80, -- default 70
+    --         height = 60, -- default 30
+    --         border = 'single', -- none, single, double, rounded, solid, shadow, (or an array or chars). Default double
+    --       },
+    --     }
+    --   end
+    -- },
+    -- toggleterm = {
+    --   "akinsho/toggleterm.nvim",
+    --   tag = 'v1.*',
+    --   config = function()
+    --     require("toggleterm").setup({
+    --       hide_numbers = true,
+    --       start_in_insert = true,
+    --       close_on_exit = true,
+    --       shell = '/bin/zsh',
+    --       border = 'single',
+    --       size = 100,
+    --       direction = 'vertical',
+    --     })
+    --   end
+    -- },
   }
 }
 

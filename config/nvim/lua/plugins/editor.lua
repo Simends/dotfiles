@@ -65,7 +65,6 @@ local M = {
       vim.cmd('nmap         ++  vip++)')
     end
   },
-  apathy = {'tpope/apathy'},
   capslock = {'tpope/vim-capslock'},
   characterize = {'tpope/vim-characterize'},
   editorconfig = {'editorconfig/editorconfig-vim'},

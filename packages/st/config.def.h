@@ -10,9 +10,9 @@
 /* static char *font = "TerminessTTF Nerd Font:pixelsize=15:style=Regular"; */
 /* static char *font = "BlexMono Nerd Font:pixelsize=13:antialias=true:autohint=false"; */
 static char *fonts[] = {
+  "BlexMono Nerd Font:pixelsize=18:antialias=true:autohint=false",
   "Hurmit Nerd Font:pixelsize=18:antialias=true:autohint=false",
   "Hack Nerd Font:pixelsize=18:antialias=true:autohint=false",
-  "BlexMono Nerd Font:pixelsize=18:antialias=true:autohint=false",
   "TerminessTTF Nerd Font:pixelsize=18:antialias=true:autohint=false",
 };
 static size_t currentfont = 0;

@@ -11,8 +11,8 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int focusonwheel       = 0;
-static const char *fonts[]          = { "Hurmit Nerd Font:pixelsize=18:style=Regular" };
-static const char dmenufont[]       = "Hermit:pixelsize=18:style=Regular" ;
+static const char *fonts[]          = { "BlexMono Nerd Font:pixelsize=18:style=Regular" };
+static const char dmenufont[]       = "Plex:pixelsize=18:style=Regular" ;
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
