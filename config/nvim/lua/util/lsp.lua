@@ -14,52 +14,6 @@ M.attach = function (_, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, opt)
   local Hydra = require('hydra')
   local lsp = vim.lsp
-
-  -- lsp_hydra = Hydra({ -- Git Hydra
-  --   hint = [[
-
-  -- _H_: Prev diagnostic    _J_: Signature        _c_: Show diagnostic
-  -- _L_: Next diagnostic    _K_: Hover            _C_: Show all diagnostics
-  -- _d_: Definition         _D_: Decleration      _r_: References
-  -- _m_: Implementation     _s_: Show codelenses  _S_: Run Codelens
-  -- _n_: Rename             _f_: Format           _a_: Code actions
-  --     _i_: Lsp Status                 ^^_I_: NullLS Status
-
-  --                           _<Esc>_: Exit
-
--- ]],
-  --   name = 'Code',
-  --   config = {
-  --     color = 'pink',
-  --     invoke_on_body = true,
-  --     hint = {
-  --       position = 'top-right',
-  --       border = 'rounded'
-  --     },
-  --   },
-  --   mode = 'n',
-  --   body = '<leader>c',
-  --   heads = {
-  --     { 'H', lsp.diagnostic.goto_prev },
-  --     { 'L', lsp.diagnostic.goto_next },
-  --     { 'J', lsp.buf.signature_help },
-  --     { 'K', lsp.buf.hover },
-  --     { 'c', vim.diagnostic.open_float },
-  --     { 'C', lsp.diagnostic.set_qflist },
-  --     { 'd', lsp.buf.definition },
-  --     { 'D', lsp.buf.declaration },
-  --     { 'm', lsp.buf.implementation },
-  --     { 'r', lsp.buf.references },
-  --     { 'n', lsp.buf.rename },
-  --     { 'f', lsp.buf.formatting },
-  --     { 'a', lsp.buf.code_action },
-  --     { 's', lsp.codelens.display },
-  --     { 'S', lsp.codelens.run },
-  --     { 'i', ':LspInfo<cr>', { exit = true } },
-  --     { 'I', ':NullLsInfo<cr>', { exit = true } },
-  --     { '<Esc>', nil, { exit = true, nowait = true } },
-  --   }
-  -- })
   local maps = {['<leader>'] = {
     c = {
       name = "Code",

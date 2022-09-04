@@ -266,7 +266,7 @@ case "$MainMenu" in
             | xargs -r mpv
         ;;
     "lofi hip hop radio - beats to relax/study to")
-        mpv "https://www.youtube.com/watch?v=5qap5aO4i9A"
+        mpv "https://www.youtube.com/watch?v=jfKfPfyJRdk"
         ;;
     "Libreoffice")
         libreoffice

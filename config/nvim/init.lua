@@ -8,7 +8,6 @@
 
 
 vim.cmd("source $HOME/.vimrc")
-vim.cmd('colorscheme kanagawa')
 local use = require('util.use')
 require('util.bootstrap').packer()
 require('packer').startup({
@@ -29,7 +28,7 @@ require('packer').startup({
     use.plugin('dap')                       -- Debugger
     use.plugin('git')                       -- Git integration
     use.plugin('undotree')                  -- Visualize vims powerful revision history
-    use.plugin('tmux')
+    -- use.plugin('tmux')
     use.plugin('gps')                  -- Simple statusline component that shows what scope you are working inside
     -- use.plugin('autosession')
     use.plugin('windows')                   -- Improved window management
@@ -44,11 +43,14 @@ require('packer').startup({
 
     -- Colorschemes
     use.plugin('colorschemes.kanagawa')
+    use.plugin('colorschemes.everforest')
 
   end,
   config = require('plugins.packer').config
 })
 require('statusline')
+require('neovide')
+vim.cmd('colorscheme everforest')
 
 
 -----------------------------------------
@@ -59,7 +61,7 @@ use.lang('asm',           {lsp = true,  treesitter = true,  dap = true,   linter
 use.lang('c',             {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 use.lang('python',        {lsp = true,  treesitter = true,  dap = true,   linter = false,   formatter = true})
 -- use.lang('haskell',    nolint)
-use.lang('lua',           {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
+use.lang('lua',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = true})
 use.lang('fennel',        {lsp = false, treesitter = true,  dap = false,  linter = false,   formatter = true})
 use.lang('vim',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = false})
 use.lang('zig',           {lsp = true,  treesitter = true,  dap = false,  linter = false,   formatter = false})
@@ -102,6 +104,14 @@ local map = {
       name = 'Edit',
       w = {[[mz:%s/\s\+$//e<cr>`z:delmarks z<cr>]], "Trim trialing whitespace"},
       p = {":e /tmp/scratchpad<cr>", "Open scratchpad"},
+    },
+
+    t = {
+      name = 'Toggle',
+      f = {':29Lexplore<cr>', 'File explorer'},
+      l = {':ToggleLightMode<cr>', 'Light mode'},
+      c = {':ColorizerToggle<cr>', 'Colorizer'},
+      n = {':set nu!<cr>:set rnu!<cr>', 'Line numbering'}
     },
 
     h = {

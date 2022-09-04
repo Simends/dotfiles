@@ -8,7 +8,6 @@ local M = {
       {"saadparwaiz1/cmp_luasnip", after = 'luasnip'},
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
-      'andersevenrud/cmp-tmux',
       "hrsh7th/cmp-nvim-lsp-signature-help"
     },
     config = {
@@ -18,31 +17,31 @@ local M = {
           return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
         end
         local kind_icons = {
-          Text = "",
-          Method = "",
-          Function = "",
-          Constructor = "",
-          Field = "",
-          Variable = "",
-          Class = "ﴯ",
-          Interface = "",
-          Module = "",
-          Property = "ﰠ",
-          Unit = "",
-          Value = "",
-          Enum = "",
-          Keyword = "",
-          Snippet = "",
-          Color = "",
-          File = "",
-          Reference = "",
-          Folder = "",
-          EnumMember = "",
-          Constant = "",
-          Struct = "",
-          Event = "",
-          Operator = "",
-          TypeParameter = ""
+          Text = " ",
+          Method = " ",
+          Function = " ",
+          Constructor = " ",
+          Field = " ",
+          Variable = " ",
+          Class = "ﴯ ",
+          Interface = " ",
+          Module = " ",
+          Property = "ﰠ ",
+          Unit = " ",
+          Value = " ",
+          Enum = " ",
+          Keyword = " ",
+          Snippet = " ",
+          Color = " ",
+          File = " ",
+          Reference = " ",
+          Folder = " ",
+          EnumMember = " ",
+          Constant = " ",
+          Struct = " ",
+          Event = " ",
+          Operator = " ",
+          TypeParameter = " "
         }
 
         local luasnip = require("luasnip")
@@ -52,13 +51,13 @@ local M = {
             completeopt = 'menu,menuone,noselect'
           },
           mapping = {
-            ['<C-p>'] = cmp.mapping.select_prev_item(),
-            ['<C-n>'] = cmp.mapping.select_next_item(),
-            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-p>']     = cmp.mapping.select_prev_item(),
+            ['<C-n>']     = cmp.mapping.select_next_item(),
+            ['<C-d>']     = cmp.mapping.scroll_docs(-4),
+            ['<C-f>']     = cmp.mapping.scroll_docs(4),
             ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-e>'] = cmp.mapping.close(),
-            ["<Tab>"] = cmp.mapping(function(fallback)
+            ['<C-e>']     = cmp.mapping.close(),
+            ["<Tab>"]     = cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_next_item()
               elseif luasnip.expand_or_jumpable() then
@@ -92,10 +91,10 @@ local M = {
               vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
               -- Source
               vim_item.menu = ({
-                buffer = "[Buffer]",
+                buffer   = "[Buffer]",
                 nvim_lsp = "[LSP]",
-                path = "[Path]",
-                luasnip = "[LuaSnip]",
+                path     = "[Path]",
+                luasnip  = "[Snippet]",
               })[entry.source.name]
               return vim_item
             end
@@ -105,7 +104,6 @@ local M = {
             { name = 'nvim_lsp' },
             { name = 'path' },
             { name = 'nvim_lsp_signature_help' },
-            { name = 'tmux' },
             { name = 'buffer' },
           },
         }

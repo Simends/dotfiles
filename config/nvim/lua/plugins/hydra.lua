@@ -39,6 +39,68 @@ local M = {
           }
         })
 
+        git_hydra = Hydra({ -- Git Hydra
+          hint = [[
+
+  _J_: Next hunk   _s_: Stage hunk        _d_: Show deleted   _b_: Blame line  
+  _K_: Prev hunk   _u_: Undo stage hunk   _p_: Preview hunk   _B_: BLame show full  
+  _r_: Branches    _S_: Stage buffer      ^ ^                 _/_: Show base file  
+  _c_: Commit      _C_: Show commits      _t_: Status         _T_: Stash  
+ ^
+ ^ ^              _<Enter>_: Fugitive              _<Esc>_: Exit  
+
+]],
+          name = 'Git',
+          config = {
+            color = 'pink',
+            invoke_on_body = true,
+            hint = {
+              position = 'top-right',
+              border = 'rounded'
+            },
+            on_enter = function()
+              vim.bo.modifiable = false
+              gitsigns.toggle_signs(true)
+              gitsigns.toggle_linehl(true)
+            end,
+            on_exit = function()
+              gitsigns.toggle_signs(true)
+              gitsigns.toggle_linehl(false)
+              gitsigns.toggle_deleted(false)
+              vim.cmd 'echo' -- clear the echo area
+            end
+          },
+          mode = {'n','x'},
+          body = '<leader>g',
+          heads = {
+            { 'J', function()
+              if vim.wo.diff then return ']c' end
+              vim.schedule(function() gitsigns.next_hunk() end)
+              return '<Ignore>'
+            end, { expr = true } },
+            { 'K', function()
+              if vim.wo.diff then return '[c' end
+              vim.schedule(function() gitsigns.prev_hunk() end)
+              return '<Ignore>'
+            end, { expr = true } },
+            { 'r', ':Telescope git_branches<cr>'},
+            { 'C', ':Telescope git_commits<cr>'},
+            { 't', ':Telescope git_status<cr>'},
+            { 'T', ':Telescope git_stash<cr>'},
+            { 'c', ':Git commit<cr>'},
+            { 's', ':Gitsigns stage_hunk<CR>', { silent = true } },
+            { 'u', gitsigns.undo_stage_hunk },
+            { 'S', gitsigns.stage_buffer },
+            { 'p', gitsigns.preview_hunk },
+            { 'd', gitsigns.toggle_deleted, { nowait = true } },
+            { 'b', gitsigns.blame_line },
+            { 'B', function() gitsigns.blame_line{ full = true } end },
+            { '/', gitsigns.show, { exit = true } }, -- show the base of the file
+            { '<Enter>', '<cmd>Git<CR>', { exit = true } },
+            { '<Esc>', nil, { exit = true, nowait = true } },
+          }
+        })
+
         dap_hydra = Hydra({ -- DAP Hydra
           hint = [[
 
@@ -82,137 +144,11 @@ local M = {
           }
         })
 
-        -- local splits = require('smart-splits')
-        -- window_hydra = Hydra({
-        --   hint = [[
-
- -- ^^^^^^     Move     ^^^^^^   ^^    Size   ^^   ^^     Split
- -- ^^^^^^--------------^^^^^^   ^^-----------^^   ^^---------------
- -- ^ ^ _k_ ^ ^   ^ ^ _K_ ^ ^    ^   _<C-k>_   ^   _s_: horizontally
- -- _h_ ^ ^ _l_   _H_ ^ ^ _L_    _<C-h>_ _<C-l>_   _v_: vertically
- -- ^ ^ _j_ ^ ^   ^ ^ _J_ ^ ^    ^   _<C-j>_   ^   _z_: zoom
- -- focus^^^^^^   window^^^^^^   ^_=_: equalize^   _t_: terminal
- -- ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^^ ^          ^   _q_: close
- -- ^ ^ ^ ^ ^ ^   ^ ^ ^ ^ ^ ^    ^^ ^          ^   _b_: choose buffer 
-
--- ]],
-        --   name = 'Windows',
-        --   config = {
-        --     color = 'red',
-        --     invoke_on_body = true,
-        --     hint = {
-        --       border = 'single',
-        --       position = 'top-right'
-        --     }
-        --   },
-        --   mode = 'n',
-        --   body = '<c-w>',
-        --   heads = {
-        --     { 'h', '<C-w>h' },
-        --     { 'j', '<C-w>j' },
-        --     { 'k', [[<cmd>try | wincmd k | catch /^Vim\%((\a\+)\)\=:E11:/ | close | endtry<CR>]] },
-        --     { 'l', '<C-w>l' },
-        --     { 'H', '<Cmd>WinShift left<CR>' },
-        --     { 'J', '<Cmd>WinShift down<CR>' },
-        --     { 'K', '<Cmd>WinShift up<CR>' },
-        --     { 'L', '<Cmd>WinShift right<CR>' },
-        --     { 's', '<C-w>s' },
-        --     { 'v', '<C-w>v' },
-        --     { '<C-h>', function() splits.resize_left(10)  end },
-        --     { '<C-j>', function() splits.resize_down(10)  end },
-        --     { '<C-k>', function() splits.resize_up(10)    end },
-        --     { '<C-l>', function() splits.resize_right(10) end },
-        --     { '=', '<C-w>=', { desc = 'equalize'} },
-        --     { 't', ':ToggleTerm<cr>', { exit = true } },
-        --     { 'z', ':ZenMode<cr>', { exit = true } },
-        --     { 'b', '<Cmd>JABSOpen<CR>', { exit = true, desc = 'choose buffer' } },
-        --     { 'q', [[<Cmd>try | close | catch /^Vim\%((\a\+)\)\=:E444:/ | endtry<CR>]],
-        --       { desc = 'close window' } },
-        --     { '<Esc>', nil,  { exit = true, desc = false }}
-        --   }
-        -- })
-
-        -- toggle_hydra = Hydra({
-        --       name = 'Toggle',
-        --       hint = [[
-  -- _f_: File Explorer    _l_: Light mode     _t_: Todo comments
-  -- _n_: Line numbers     _c_: Colorizer      _s_: Scrollbar
-        --       ]],
-        --       config = {
-        --         color = 'red',
-        --         invoke_on_body = true,
-        --         hint = {
-        --           position = 'top-right',
-        --           border = 'single'
-        --         }
-        --       },
-        --       mode = 'n',
-        --       body = '<leader>t',
-        --       heads = {
-        --         { 'f', ':29Lexplore<cr>'},
-        --         { 'l', ':ToggleLightMode<cr>'},
-        --         { 'c', ':ColorizerToggle<cr>'},
-        --         { 's', ':ScrollbarToggle<cr>'},
-        --         { 't', [[<cmd>vimgrep /\C[TODO\|NOTE\|HACK\|FIXME\|BUG\|FIX\|ISSUE\|WARN\|PERF]: /jg **/*<cr>]]},
-        --         { 'n', ':set nu!<cr>:set rnu!<cr>'},
-        --       }
-        --     })
-
-        telescope_hydra = Hydra({
-          name = 'Telescope',
-          hint = [[
-
-  _f_: Files      _m_: Marks              _o_: Old files   _g_: Live grep  
-  _p_: Projects   _/_: Search in file     _h_: Vim help    _c_: Execute command  
-  _b_: Buffers    _j_: Jumplist           _l_: Loclist     _q_: Quickfix  
-  _H_: Higlights  _C_: Colorschemes       _M_: Manuals     _s_: Settings  
-  _k_: Keymap     _;_: Commands history   _r_: Registers   _?_: Search history  
-
-                _<Enter>_: Telescope           _<Esc>_: Exit 
-
-]],
-          config = {
-            color = 'teal',
-            invoke_on_body = true,
-            hint = {
-              position = 'top-right',
-              border = 'single',
-            },
-          },
-          mode = 'n',
-          body = '<leader>f',
-          heads = {
-            { 'f', ':Telescope find_files<cr>' },
-            { 'g', ':Telescope live_grep<cr>' },
-            { 'h', ':Telescope help_tags<cr>', { desc = 'Vim help' } },
-            { 'o', ':Telescope oldfiles<cr>', { desc = 'Recently opened files' } },
-            { 'm', ':Telescope marks<cr>', { desc = 'Marks' } },
-            { 'k', ':Telescope keymaps<cr>' },
-            { 'r', ':Telescope registers<cr>' },
-            { 'p', ':Telescope projects<cr>', { desc = 'Projects' } },
-            { '/', ':Telescope current_buffer_fuzzy_find<cr>', { desc = 'Search in file' } },
-            { '?', ':Telescope search_history<cr>',  { desc = 'Search history' } },
-            { ';', ':Telescope command_history<cr>', { desc = 'Command-line history' } },
-            { 'c', ':Telescope commands<cr>', { desc = 'Execute command' } },
-            { 'b', ':Telescope buffers<cr>' },
-            { 'j', ':Telescope jumplist<cr>' },
-            { 'l', ':Telescope loclist<cr>' },
-            { 'q', ':Telescope quickfix<cr>' },
-            { 'H', ':Telescope highlights<cr>' },
-            { 'C', ':Telescope colorscheme<cr>' },
-            { 'M', ':Telescope man_pages<cr>' },
-            { 's', ':Telescope vim_options<cr>' },
-            { '<Enter>', ':Telescope<cr>', { exit = true, desc = 'List all pickers' } },
-            { '<Esc>', nil, { exit = true, nowait = true } },
-          }
-        })
         local ok, which_key = pcall(require, 'which-key')
         if ok then
           local maps = {['<leader>'] = {
-            -- w = {":lua window_hydra:activate()<cr>", "Windows"},
+            g = {":lua git_hydra:activate()<cr>", "Git"},
             d = {":lua dap_hydra:activate()<cr>", "Debug"},
-            f = {":lua telescope_hydra:activate()<cr>", "Telescope"},
-            -- t = {":lua toggle_hydra:activate()<cr>", "Toggle"},
           }}
           which_key.register(maps, {noremap = true, silent = true})
         end

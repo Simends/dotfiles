@@ -1,4 +1,35 @@
 local M = {
+  preconf = function ()
+    local ok, which_key = pcall(require, 'which-key')
+    if ok then
+      local tsb = require('telescope.builtin')
+      local maps = {['<leader>'] = {
+        f = {
+          name = "Find",
+          b = {tsb.buffers, "Buffers"},
+          [':'] = {tsb.command_history, "Commands"},
+          f = {tsb.find_files, "Files"},
+          g = {tsb.live_grep, "Grep"},
+          j = {tsb.jumplist, "Jumplist"},
+          l = {tsb.loclist, "Loclist"},
+          m = {tsb.marks, "Marks"},
+          o = {tsb.oldfiles, "Oldfiles"},
+          q = {tsb.quickfix, "Quickfix"},
+          ['?'] = {tsb.search_history, "Searches"},
+          r = {tsb.registers, "Registers"},
+          ['<cr>'] = {':Telescope<cr>', "All pickers"}
+        },
+        h = {
+          h = {tsb.help_tags, "Documentation"},
+          H = {tsb.highlights, "Highlight groups"},
+          c = {tsb.colorscheme, "Colorscheme"},
+          m = {tsb.man_pages, "Manuals"},
+          s = {tsb.vim_options, "Settings"},
+          k = {tsb.keymaps, "Keymaps"},
+      }}}
+      which_key.register(maps, {noremap = true, silent = true})
+    end
+  end,
   packer = {
     telescope = {
       'nvim-telescope/telescope-fzf-native.nvim',
